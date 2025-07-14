@@ -1162,8 +1162,10 @@ public class DerbyDatabase implements IDatabase {
 			public Boolean execute(Connection conn) throws SQLException {
 				
 				PreparedStatement stmt1 = null;
-				/*PreparedStatement stmt2 = null;
-				PreparedStatement stmt3 = null;	
+				PreparedStatement stmt2 = null;
+				PreparedStatement stmt3 = null;
+				
+				/*PreparedStatement stmt3 = null;	
 				PreparedStatement stmt4 = null;	
 				PreparedStatement stmt5 = null;	
 				PreparedStatement stmt6 = null;	
@@ -1189,13 +1191,44 @@ public class DerbyDatabase implements IDatabase {
 					stmt1.executeUpdate();					
 					System.out.println("Bit table created");
 					
+					stmt2 = conn.prepareStatement(
+						"create table clients (" +
+						"	client_id integer primary key " +
+						"		generated always as identity (start with 1, increment by 1), " +									
+						"	first_name varchar(40)," +
+						"	last_name varchar(40)," +
+						"	address varchar(40)," +
+						"	horse_1 integer," +
+						"	horse_2 integer," +
+						"	horse_3 integer," +
+						"	comment varchar(100)" +
+						")"
+					);	
+					stmt2.executeUpdate();					
+					System.out.println("Client table created");
+					
+					stmt3 = conn.prepareStatement(
+						"create table horses (" +
+						"	horse_id integer primary key " +
+						"		generated always as identity (start with 1, increment by 1), " +	
+						"	client_id integer," +
+						"	barn_name varchar(40)," +
+						"	show_name varchar(40)," +
+						"	breed varchar(40)," +
+						"	height varchar(40)," +
+						"	sport varchar(30)" +
+						")"
+					);	
+					stmt3.executeUpdate();					
+					System.out.println("Horse table created");
+					
 					return true;
 					
 				} finally {
 					DBUtil.closeQuietly(stmt1);
-					/*DBUtil.closeQuietly(stmt2);
+					DBUtil.closeQuietly(stmt2);
 					DBUtil.closeQuietly(stmt3);
-					DBUtil.closeQuietly(stmt4);
+					/*DBUtil.closeQuietly(stmt4);
 					DBUtil.closeQuietly(stmt5);
 					DBUtil.closeQuietly(stmt6);
 					DBUtil.closeQuietly(stmt7);*/
@@ -1223,7 +1256,7 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement insertBit     		= null;
 
 				try {
-					// must completely populate Authors table before populating BookAuthors table because of primary keys
+					// must completely populate B table before populating BookAuthors table because of primary keys
 					insertBit = conn.prepareStatement("insert into bits (type, cheekpiece, size, purpose, comment1, comment2, comment3) values (?, ?, ?, ?, ?, ?, ?)");
 					for (Bit bit : bitList) {
 						
