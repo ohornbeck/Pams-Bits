@@ -410,6 +410,50 @@ public class DerbyDatabase implements IDatabase {
 	}
 	
 	@Override
+	public ArrayList<Bit> findAllBits() {
+		return executeTransaction(new Transaction<ArrayList<Bit>>() {
+			@Override
+			public ArrayList<Bit> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					stmt = conn.prepareStatement(
+							"select * from bits " +
+							" order by type"
+					);
+					
+					ArrayList<Bit> result = new ArrayList<Bit>();
+					
+					resultSet = stmt.executeQuery();
+					
+					// for testing that a result was returned
+					Boolean found = false;
+					
+					while (resultSet.next()) {
+						found = true;
+						
+						Bit bit = new Bit();
+						loadBit(bit, resultSet, 1);
+						
+						result.add(bit);
+					}
+					
+					// check if any authors were found
+					if (!found) {
+						System.out.println("No bits were found in the database");
+					}
+					
+					return result;
+				} finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+	}
+	
+	@Override
 	public ArrayList<Session> findAllSessions() {
 		return executeTransaction(new Transaction<ArrayList<Session>>() {
 			@Override
