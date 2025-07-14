@@ -978,6 +978,95 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	
+	// no horses in here because they will be automatically inserted 
+	// when the horses are entered into their table
+	@Override
+	public Integer insertClient(final String firstName, final String lastName, final String farmName, 
+		final String address, final String comment) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				PreparedStatement stmt1 = null;
+				PreparedStatement stmt2 = null;
+				PreparedStatement stmt3 = null;			
+				
+				ResultSet resultSet1 = null;
+				ResultSet resultSet2 = null;
+				ResultSet resultSet3 = null;				
+				
+				// for saving client_id
+				Integer client_id   = -1;
+
+				// try to retrieve client_id (if it exists) from DB, for Author's full name, passed into query
+				// do this after
+				try {
+					// now insert new client into client table
+					// prepare SQL insert statement to add new client to client table w/o horses
+					stmt1 = conn.prepareStatement(
+							"insert into clients (first_name, last_name, farm_name, address, comment) " +
+							"  values(?, ?, ?, ?, ?) "
+					);
+					stmt1.setString(1, firstName);
+					stmt1.setString(2, lastName);
+					stmt1.setString(3, farmName);
+					stmt1.setString(4, address);
+					stmt1.setString(5, comment);
+					
+					
+					// execute the update
+					stmt1.executeUpdate();
+					
+					System.out.println("New Client <" + firstName + " " + lastName + "> inserted into Client Table");					
+
+					// now retrieve client_id for new client, so that we can set up horse entry for client
+					// and return the client_id, which the DB auto-generates
+					// prepare SQL statement to retrieve client_id for new Client
+					stmt2 = conn.prepareStatement(
+							"select client_id from clients  " +
+							"  where firstName = ? and lastName = ? "
+									
+					);
+					stmt2.setString(1, firstName);
+					stmt2.setString(2, lastName);
+
+					// execute the query
+					resultSet2 = stmt2.executeQuery();
+					
+					// get the result - there had better be one
+					if (resultSet2.next())
+					{
+						client_id = resultSet2.getInt(1);
+						System.out.println("New Client ID: <" + client_id + ">");						
+					}
+					else	// really should throw an exception here - the new client should have been inserted, but we didn't find it
+					{
+						System.out.println("New Client ID: <" + client_id + "> not found in Client table");
+					}
+					
+					return client_id;
+					
+				} finally {
+					DBUtil.closeQuietly(resultSet1);
+					DBUtil.closeQuietly(stmt1);				
+					DBUtil.closeQuietly(resultSet2);
+					DBUtil.closeQuietly(stmt2);	
+					DBUtil.closeQuietly(resultSet3);
+					DBUtil.closeQuietly(stmt3);
+				}
+			}
+		});
+		
+	}
+	
+	// here it will be given the client ID, create the horse entry in the table, then retrieve the new horse ID
+	// and update the client entry with that new horse ID that it retrieved in a few sql methods
+	@Override
+	public Integer insertHorse(final int clientID, final String barnName, final String showName, final String breed, 
+			final String height, final String sport) {
+		
+		return 0;
+	}
+	
 
 	
 	/*@Override
