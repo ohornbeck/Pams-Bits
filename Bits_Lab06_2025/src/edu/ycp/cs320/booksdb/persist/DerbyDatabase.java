@@ -1189,160 +1189,6 @@ public class DerbyDatabase implements IDatabase {
 					stmt1.executeUpdate();					
 					System.out.println("Bit table created");
 					
-					
-					/*stmt2 = conn.prepareStatement(
-							"create table books (" +
-							"	book_id integer primary key " +
-							"		generated always as identity (start with 1, increment by 1), " +
-							"	title varchar(70)," +
-							"	isbn varchar(15)," +
-							"   published integer" +
-							")"
-					);
-					stmt2.executeUpdate();					
-					System.out.println("Books table created");					
-					
-					
-					stmt3 = conn.prepareStatement(
-							"create table bookAuthors (" +
-							"	book_id   integer constraint book_id references books, " +
-							"	author_id integer constraint author_id references authors " +
-							")"
-					);
-					stmt3.executeUpdate();
-					System.out.println("BookAuthors table created");	
-					
-					
-					stmt4 = conn.prepareStatement(
-							"create table establishments (" +
-									"	establishment_id integer primary key " +
-									"		generated always as identity (start with 1, increment by 1), " +
-									"	longname varchar(60), " +
-									"	shortname varchar(30), " +
-									"	address varchar(60), " +
-									"	phone varchar(60), " +
-									"	lanes integer, " +
-									"	type varchar(60) " +
-							")"
-					);	
-					stmt4.executeUpdate();
-					System.out.println("Establishment table created");
-					
-					
-					stmt5 = conn.prepareStatement(
-							"create table events (" +
-									"	event_id integer primary key " +
-									"		generated always as identity (start with 1, increment by 1), " +
-									"	longname varchar(60), " +
-									"	shortname varchar(30), " +
-									"   type varchar(30), " +
-									"	establishment varchar(30), " +
-									"   season varchar(30), " +
-									"   team integer, " +
-									"   composition varchar(60), " +
-									"	day varchar(10), " +
-									"   time varchar(30), " +
-									"	start_date varchar(10), " +
-									"	end_date varchar(10), " +
-									"	games_per_session integer, " +
-									"   weeks integer, " +
-									"   playoffs integer " +
-							")"
-					);	
-					stmt5.executeUpdate();
-					System.out.println("Events table created");
-					
-					
-					stmt6 = conn.prepareStatement(
-							"create table arsenal (" +
-									"	ball_id integer primary key " +
-									"		generated always as identity (start with 1, increment by 1), " +
-									"	long_name varchar(60), " +
-									"	short_name varchar(30), " +
-									"	brand varchar(30), " +
-									"	type varchar(30), " +
-									"	core varchar(30), " +
-									"	cover varchar(30), " +
-									"	color varchar(30), " +
-									"	surface varchar(30), " +
-									"	ball_year varchar(10), " +
-									"	serial_number varchar(20), " +
-									"	weight varchar(10), " +
-									"	mapping varchar(30) " +
-							")"
-					);	
-					stmt6.executeUpdate();
-					System.out.println("Arsenal table created");
-					
-					stmt7 = conn.prepareStatement(
-							"create table sessions (" +
-									"	session_id integer primary key " +
-									"		generated always as identity (start with 1, increment by 1), " +
-									"	league varchar(30), " +
-									"	season varchar(30), " +
-									"	week integer, " +
-									"	date_bowled Date, " +
-									"	reg_sub varchar(10), " +
-									"	opponent varchar(50), " +
-									"	start_lane integer, " +
-									"	ball varchar(10), " +
-									"	game_one integer, " +
-									"	game_two integer, " +
-									"	game_three integer, " +
-									"	series integer " +
-									")"
-					);
-					stmt7.executeUpdate();
-					System.out.println("Sessions table created");
-					
-					
-					stmt7 = conn.prepareStatement(
-							"create table games (" +
-									"	game_id integer primary key " +
-									"		generated always as identity (start with 1, increment by 1), " +
-									"	league varchar(30), " +
-									"	season varchar(10), " +
-									"	week varchar(10), " +
-									"	date varchar(10), " +
-									"	game varchar(10), " +
-									"	lane varchar(10) " +
-									")"
-					);
-					stmt7.executeUpdate();
-					System.out.println("Games table created");
-					
-					
-					stmt8 = conn.prepareStatement(
-							"create table frames (" +
-									"	frame_id integer primary key " +
-									"		generated always as identity (start with 1, increment by 1), " +
-									"	game_id varchar(30), " +
-									"	frame_number varchar(10) " +
-									")"
-					);
-					stmt8.executeUpdate();
-					System.out.println("Frames table created");
-					
-					
-					stmt8 = conn.prepareStatement(
-							"create table shots (" +
-									"	shot_id integer primary key " +
-									"		generated always as identity (start with 1, increment by 1), " +
-									"	game_id varchar(30), " +
-									"	frame_number varchar(30), " +
-									"	shot_number Integer, " +
-									"	count varchar(30), " +
-									"	leave varchar(30), " +
-									"	score varchar(30), " +
-									"	type varchar(30), " +
-									"	board varchar(30), " +
-									"	lane varchar(30), " +
-									"	ball varchar(10) " +
-									")"
-					);
-					stmt8.executeUpdate();
-					System.out.println("Shots table created");		*/							
-					
 					return true;
 					
 				} finally {
@@ -1365,50 +1211,22 @@ public class DerbyDatabase implements IDatabase {
 			public Boolean execute(Connection conn) throws SQLException {
 				
 				List<Bit> bitList;
-				/*List<Book> bookList;
-				List<BookAuthor> bookAuthorList;
-				List<Establishment> establishmentList;		// new
-				List<Event> eventList;						// new
-				List<Ball> arsenal;
-				List<Session> sessionList;					// new
-				List<Game> gameList;
-				List<Frame> frameList;	
-				List<Shot> shotList;	*/
 				
 				try {
 					
 					bitList         = InitialData.getBits();
-					/*bookList           = InitialData.getBooks();
-					bookAuthorList     = InitialData.getBookAuthors();	
-					establishmentList  = InitialData.getEstablishments();
-					eventList 	   	   = InitialData.getEvents();
-					arsenal 	       = InitialData.getArsenal();
-					sessionList		   = InitialData.getSessions();
-					gameList		   = (List<Game>)InitialData.getGames().get(0);
-					frameList		   = (List<Frame>)InitialData.getGames().get(1);
-					shotList		   = (List<Shot>)InitialData.getGames().get(2);*/
 					
 				} catch (IOException e) {
 					throw new SQLException("Couldn't read initial data", e);
 				}
 
 				PreparedStatement insertBit     		= null;
-				/*PreparedStatement insertBook       		= null;
-				PreparedStatement insertBookAuthor 		= null;
-				
-				PreparedStatement insertEstablishment 	= null;		// new
-				PreparedStatement insertEvent       	= null;		// new
-				PreparedStatement insertBall       		= null;		// new
-				PreparedStatement insertSession 		= null;
-				PreparedStatement insertGame	 		= null;
-				PreparedStatement insertFrame	 		= null;
-				PreparedStatement insertShot	 		= null; */
 
 				try {
 					// must completely populate Authors table before populating BookAuthors table because of primary keys
 					insertBit = conn.prepareStatement("insert into bits (type, cheekpiece, size, purpose, comment1, comment2, comment3) values (?, ?, ?, ?, ?, ?, ?)");
 					for (Bit bit : bitList) {
-//						insertAuthor.setInt(1, author.getAuthorId());	// auto-generated primary key, don't insert this
+						
 						insertBit.setString(1, bit.getType());
 						insertBit.setString(2, bit.getCheekpiece());
 						insertBit.setString(3, bit.getSize());
@@ -1421,166 +1239,9 @@ public class DerbyDatabase implements IDatabase {
 					insertBit.executeBatch();
 					System.out.println("Bit table populated");
 					
-					
-					// must completely populate Books table before populating BookAuthors table because of primary keys
-					/* insertBook = conn.prepareStatement("insert into books (title, isbn, published) values (?, ?, ?)");
-					for (Book book : bookList) {
-						insertBook.setString(1, book.getTitle());
-						insertBook.setString(2, book.getIsbn());
-						insertBook.setInt(3, book.getPublished());
-						insertBook.addBatch();
-					}
-					insertBook.executeBatch();
-					System.out.println("Books table populated");					
-					
-					
-					// must wait until all Books and all Authors are inserted into tables before creating BookAuthor table
-					// since this table consists entirely of foreign keys, with constraints applied
-					insertBookAuthor = conn.prepareStatement("insert into bookAuthors (book_id, author_id) values (?, ?)");
-					for (BookAuthor bookAuthor : bookAuthorList) {
-						insertBookAuthor.setInt(1, bookAuthor.getBookId());
-						insertBookAuthor.setInt(2, bookAuthor.getAuthorId());
-						insertBookAuthor.addBatch();
-					}
-					insertBookAuthor.executeBatch();	
-					System.out.println("BookAuthors table populated");	
-					
-					
-					// must completely populate Establishment table before events
-					insertEstablishment = conn.prepareStatement("insert into establishments (longname, shortname, address, phone, lanes, type) values (?, ?, ?, ?, ?, ?)");
-					for (Establishment establishment : establishmentList) {
-						insertEstablishment.setString(1, establishment.getLongname());
-						insertEstablishment.setString(2, establishment.getShortname());
-						insertEstablishment.setString(3, establishment.getAddress());
-						insertEstablishment.setString(4, establishment.getPhone());
-						insertEstablishment.setInt(5, establishment.getLanes());
-						insertEstablishment.setString(6, establishment.getType());
-						insertEstablishment.addBatch();
-					}
-					insertEstablishment.executeBatch();
-					System.out.println("Establishment table populated");
-					
-					
-					// must completely populate Establishment table before events
-					insertEvent = conn.prepareStatement("insert into events (longname, shortname, type, establishment, season, team, composition, day, time, start_date, end_date, games_per_session, weeks, playoffs) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-					for (Event event : eventList) {
-						insertEvent.setString(1, event.getLongname());
-						insertEvent.setString(2, event.getShortname());
-						insertEvent.setString(3, event.getType());
-						insertEvent.setString(4, event.getEstablishment());
-						insertEvent.setString(5, event.getSeason());
-						insertEvent.setInt(6, event.getTeam());
-						insertEvent.setString(7,  event.getComposition());
-						insertEvent.setString(8, event.getDay());
-						insertEvent.setString(9,  event.getTime());
-						insertEvent.setString(10, event.getStart());
-						insertEvent.setString(11, event.getEnd());
-						insertEvent.setInt(12, event.getGamesPerSession());
-						insertEvent.setInt(13, event.getWeeks());
-						insertEvent.setInt(14,  event.getPlayoffs());
-						insertEvent.addBatch();
-					}
-					insertEvent.executeBatch();
-					System.out.println("Event table populated");
-					
-					
-					// must completely populate Establishment table before events
-					insertBall = conn.prepareStatement("insert into arsenal (long_name, short_name, brand, type, core, cover, color, surface, ball_year, serial_number, weight, mapping) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-					for (Ball ball : arsenal) {
-						insertBall.setString(1, ball.getLongname());
-						insertBall.setString(2, ball.getShortname());
-						insertBall.setString(3, ball.getBrand());
-						insertBall.setString(4, ball.getType());
-						insertBall.setString(5, ball.getCore());
-						insertBall.setString(6, ball.getCover());
-						insertBall.setString(7, ball.getColor());
-						insertBall.setString(8, ball.getSurface());
-						insertBall.setString(9, ball.getYear());
-						insertBall.setString(10, ball.getSerialNumber());
-						insertBall.setString(11, ball.getWeight());
-						insertBall.setString(12, ball.getMapping());
-						insertBall.addBatch();
-					}
-					insertBall.executeBatch();
-					System.out.println("Arsenal table populated");
-					
-					
-					insertSession = conn.prepareStatement("insert into sessions (league, season, week, date_bowled, reg_sub, opponent, start_lane, ball, game_one, game_two, game_three, series) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-					for(Session session : sessionList) {
-						insertSession.setString(1, session.getLeague());
-						insertSession.setString(2,  session.getSeason());
-						insertSession.setInt(3, session.getWeek());
-						insertSession.setDate(4, session.getBowled());
-						insertSession.setString(5, session.getRegSub());
-						insertSession.setString(6, session.getOpponent());
-						insertSession.setInt(7, session.getStart());
-						insertSession.setString(8, session.getBall());
-						insertSession.setInt(9, session.getGameOneScore());
-						insertSession.setInt(10, session.getGameTwoScore());
-						insertSession.setInt(11, session.getGameThreeScore());
-						insertSession.setInt(12, session.getSeries());
-						insertSession.addBatch();
-					}
-					insertSession.executeBatch();
-					System.out.println("Session table populated!");
-					//YIPPEE
-					
-					
-					insertGame = conn.prepareStatement("insert into games (league, season, week, date, game, lane) values (?, ?, ?, ?, ?, ?)");
-					for(Game game : gameList) {
-						insertGame.setString(1, game.getLeague());
-						insertGame.setString(2, game.getSeason());
-						insertGame.setString(3, game.getWeek());
-						insertGame.setString(4, game.getDate());
-						insertGame.setString(5, game.getGame());
-						insertGame.setString(6, game.getLane());
-						insertGame.addBatch();
-					}
-					insertGame.executeBatch();
-					System.out.println("Game table populated!");
-					//YIPPEE
-					
-					
-					insertFrame = conn.prepareStatement("insert into frames (game_id, frame_number) values (?, ?)");
-					for(Frame frame : frameList) {
-						insertFrame.setString(1, String.valueOf(frame.getGameID()));
-						insertFrame.setString(2, frame.getFrameNumber());
-					}
-					insertFrame.executeBatch();
-					System.out.println("Frame table populated!");
-					//YIPPEE
-					
-					
-					insertShot = conn.prepareStatement("insert into shots (game_id, frame_number, shot_number, count, leave, score, type, board, lane, ball) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-					for(Shot shot : shotList) {
-						insertShot.setString(1, String.valueOf(shot.getGameID())); // game ID
-						insertShot.setString(2, String.valueOf(shot.getFrameNumber()));
-						insertShot.setInt(3, Integer.valueOf(shot.getShotNumber()));
-						insertShot.setString(4, shot.getCount());
-						insertShot.setString(5, shot.getLeave());
-						insertShot.setString(6, shot.getScore());
-						insertShot.setString(7, shot.getType());
-						insertShot.setString(8, shot.getBoard());
-						insertShot.setString(9, shot.getLane());
-						insertShot.setString(10, shot.getBall());
-						insertShot.addBatch();
-					}
-					insertShot.executeBatch();
-					System.out.println("Shot table populated!");
-					//YIPPEE */
-					
-					return true;
+					return true;	
 				} finally {
 					DBUtil.closeQuietly(insertBit);
-					/*DBUtil.closeQuietly(insertAuthor);
-					DBUtil.closeQuietly(insertBookAuthor);	
-					DBUtil.closeQuietly(insertEstablishment);
-					DBUtil.closeQuietly(insertEvent);	
-					DBUtil.closeQuietly(insertBall);
-					DBUtil.closeQuietly(insertSession);
-					DBUtil.closeQuietly(insertGame);
-					DBUtil.closeQuietly(insertFrame);
-					DBUtil.closeQuietly(insertShot);*/
 				}
 			}
 		});
