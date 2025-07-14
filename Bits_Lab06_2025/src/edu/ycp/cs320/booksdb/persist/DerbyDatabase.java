@@ -222,7 +222,7 @@ public class DerbyDatabase implements IDatabase {
 
 
 	
-	@Override
+	/*@Override
 	public ArrayList<Session> findGamesWithSessionDate(final String date) {
 		return executeTransaction(new Transaction<ArrayList<Session>>() {
 			@Override
@@ -260,56 +260,8 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 
+	*/
 
-
-
-	
-	
-	// transaction that retrieves all Authors in Library
-	@Override
-	public List<Author> findAllAuthors() {
-		return executeTransaction(new Transaction<List<Author>>() {
-			@Override
-			public List<Author> execute(Connection conn) throws SQLException {
-				PreparedStatement stmt = null;
-				ResultSet resultSet = null;
-				
-				try {
-					stmt = conn.prepareStatement(
-							"select * from authors " +
-							" order by lastname asc, firstname asc"
-					);
-					
-					List<Author> result = new ArrayList<Author>();
-					
-					resultSet = stmt.executeQuery();
-					
-					// for testing that a result was returned
-					Boolean found = false;
-					
-					while (resultSet.next()) {
-						found = true;
-						
-						Author author = new Author();
-						loadAuthor(author, resultSet, 1);
-						
-						result.add(author);
-					}
-					
-					// check if any authors were found
-					if (!found) {
-						System.out.println("No authors were found in the database");
-					}
-					
-					return result;
-				} finally {
-					DBUtil.closeQuietly(resultSet);
-					DBUtil.closeQuietly(stmt);
-				}
-			}
-		});
-	}
-	
 	
 	@Override
 	public ArrayList<Bit> findAllBits() {
@@ -355,50 +307,8 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	
-	@Override
-	public ArrayList<Session> findAllSessions() {
-		return executeTransaction(new Transaction<ArrayList<Session>>() {
-			@Override
-			public ArrayList<Session> execute(Connection conn) throws SQLException {
-				PreparedStatement stmt = null;
-				ResultSet resultSet = null;
-				
-				try {
-					stmt = conn.prepareStatement(
-							"select * from sessions " +
-							" order by week asc, date_bowled asc"
-					);
-					
-					ArrayList<Session> result = new ArrayList<Session>();
-					
-					resultSet = stmt.executeQuery();
-					
-					// for testing that a result was returned
-					Boolean found = false;
-					
-					while (resultSet.next()) {
-						found = true;
-						
-						Session session = new Session();
-						loadSession(session, resultSet, 1);
-						
-						result.add(session);
-					}
-					
-					// check if any authors were found
-					if (!found) {
-						System.out.println("No sessions were found in the database");
-					}
-					
-					return result;
-				} finally {
-					DBUtil.closeQuietly(resultSet);
-					DBUtil.closeQuietly(stmt);
-				}
-			}
-		});
-	}
-	@Override
+
+	/*@Override
 	public ArrayList<Shot> findAllShotsInGame(String gameID) {
 		return executeTransaction(new Transaction<ArrayList<Shot>>() {
 			@Override
@@ -443,44 +353,8 @@ public class DerbyDatabase implements IDatabase {
 				}
 			}
 		});
-	}
+	}*/
 	
-	@Override
-	public ArrayList<Shot> findAllShots() {
-	    return executeTransaction(new Transaction<ArrayList<Shot>>() {
-	        @Override
-	        public ArrayList<Shot> execute(Connection conn) throws SQLException {
-	            PreparedStatement stmt = null;
-	            ResultSet resultSet = null;
-	            
-	            ArrayList<Shot> result = new ArrayList<>();
-
-	            try {
-	                stmt = conn.prepareStatement(
-	                    "SELECT * FROM shots"
-	                );
-	                
-	                resultSet = stmt.executeQuery();
-
-	                while (resultSet.next()) {
-	                   Shot shot = new Shot();
-	                   loadShot(shot, resultSet, 1);
-	                   result.add(shot);
-	                }
-
-	                if (result.isEmpty()) {
-	                    System.out.println("No shots found.");
-	                }
-
-	                return result;
-
-	            } finally {
-	                DBUtil.closeQuietly(resultSet);
-	                DBUtil.closeQuietly(stmt);
-	            }
-	        }
-	    });
-	}
 	
 	@Override
 	public ArrayList<Shot> findAllShotsGivenFrame(String frameNum) {
@@ -519,133 +393,6 @@ public class DerbyDatabase implements IDatabase {
 	    });
 	}
 	
-	@Override
-	public ArrayList<Shot> findAllShotsGivenEvent(String event) {
-	    return executeTransaction(new Transaction<ArrayList<Shot>>() {
-	        @Override
-	        public ArrayList<Shot> execute(Connection conn) throws SQLException {
-	            PreparedStatement stmt1 = null;
-	            PreparedStatement stmt2 = null;
-	            ResultSet resultSet1 = null;
-	            ResultSet resultSet2 = null;
-
-	            ArrayList<Shot> result = new ArrayList<>();
-
-	            try {
-	                // Step 1: Get all game_ids for the given event
-	                stmt1 = conn.prepareStatement(
-	                    "SELECT game_id FROM games WHERE league = ?"
-	                );
-	                stmt1.setString(1, event);
-	                resultSet1 = stmt1.executeQuery();
-
-	                List<String> gameIds = new ArrayList<>();
-	                while (resultSet1.next()) {
-	                    gameIds.add(resultSet1.getString("game_id"));
-	                }
-
-	                if (gameIds.isEmpty()) {
-	                    System.out.println("No game_ids found for the given event.");
-	                    return result;
-	                }
-
-	                // Step 2: For each game_id, get matching shots
-	                stmt2 = conn.prepareStatement(
-	                    "SELECT * FROM shots WHERE game_id = ?"
-	                );
-
-	                for (String gameId : gameIds) {
-	                    stmt2.setString(1, gameId);
-	                    resultSet2 = stmt2.executeQuery();
-
-	                    while (resultSet2.next()) {
-	                        Shot shot = new Shot();
-	                        loadShot(shot, resultSet2, 1);
-	                        result.add(shot);
-	                    }
-
-	                    DBUtil.closeQuietly(resultSet2);  // Close between iterations
-	                }
-
-	                if (result.isEmpty()) {
-	                    System.out.println("No shots found for the given event.");
-	                }
-
-	                return result;
-
-	            } finally {
-	                DBUtil.closeQuietly(resultSet1);
-	                DBUtil.closeQuietly(stmt1);
-	                DBUtil.closeQuietly(resultSet2);
-	                DBUtil.closeQuietly(stmt2);
-	            }
-	        }
-	    });
-	}
-	
-	@Override
-	public ArrayList<Shot> findAllShotsGivenSeason(String season) {
-	    return executeTransaction(new Transaction<ArrayList<Shot>>() {
-	        @Override
-	        public ArrayList<Shot> execute(Connection conn) throws SQLException {
-	            PreparedStatement stmt1 = null;
-	            PreparedStatement stmt2 = null;
-	            ResultSet resultSet1 = null;
-	            ResultSet resultSet2 = null;
-
-	            ArrayList<Shot> result = new ArrayList<>();
-
-	            try {
-	                // Step 1: Get all game_ids for the given event
-	                stmt1 = conn.prepareStatement(
-	                    "SELECT game_id FROM games WHERE season = ?"
-	                );
-	                stmt1.setString(1, season);
-	                resultSet1 = stmt1.executeQuery();
-
-	                List<String> gameIds = new ArrayList<>();
-	                while (resultSet1.next()) {
-	                    gameIds.add(resultSet1.getString("game_id"));
-	                }
-
-	                if (gameIds.isEmpty()) {
-	                    System.out.println("No game_ids found for the given event.");
-	                    return result;
-	                }
-
-	                // Step 2: For each game_id, get matching shots
-	                stmt2 = conn.prepareStatement(
-	                    "SELECT * FROM shots WHERE game_id = ?"
-	                );
-
-	                for (String gameId : gameIds) {
-	                    stmt2.setString(1, gameId);
-	                    resultSet2 = stmt2.executeQuery();
-
-	                    while (resultSet2.next()) {
-	                        Shot shot = new Shot();
-	                        loadShot(shot, resultSet2, 1);
-	                        result.add(shot);
-	                    }
-
-	                    DBUtil.closeQuietly(resultSet2);  // Close between iterations
-	                }
-
-	                if (result.isEmpty()) {
-	                    System.out.println("No shots found for the given event.");
-	                }
-
-	                return result;
-
-	            } finally {
-	                DBUtil.closeQuietly(resultSet1);
-	                DBUtil.closeQuietly(stmt1);
-	                DBUtil.closeQuietly(resultSet2);
-	                DBUtil.closeQuietly(stmt2);
-	            }
-	        }
-	    });
-	}
 	
 	@Override
 	public ArrayList<Shot> findAllShotsGivenFrameEvent(String event, String frameNum) {
@@ -712,135 +459,9 @@ public class DerbyDatabase implements IDatabase {
 	    });
 	}
 	
-	@Override
-	public ArrayList<Shot> findAllShotsGivenFrameSeason(String frameNum, String season) {
-	    return executeTransaction(new Transaction<ArrayList<Shot>>() {
-	        @Override
-	        public ArrayList<Shot> execute(Connection conn) throws SQLException {
-	            PreparedStatement stmt1 = null;
-	            PreparedStatement stmt2 = null;
-	            ResultSet resultSet1 = null;
-	            ResultSet resultSet2 = null;
-
-	            ArrayList<Shot> result = new ArrayList<>();
-
-	            try {
-	                // Step 1: Get all game_ids for the given event
-	                stmt1 = conn.prepareStatement(
-	                    "SELECT game_id FROM games WHERE season = ?"
-	                );
-	                stmt1.setString(1, season);
-	                resultSet1 = stmt1.executeQuery();
-
-	                List<String> gameIds = new ArrayList<>();
-	                while (resultSet1.next()) {
-	                    gameIds.add(resultSet1.getString("game_id"));
-	                }
-
-	                if (gameIds.isEmpty()) {
-	                    System.out.println("No game_ids found for the given event.");
-	                    return result;
-	                }
-
-	                // Step 2: For each game_id, get matching shots
-	                stmt2 = conn.prepareStatement(
-	                    "SELECT * FROM shots WHERE game_id = ? AND frame_number = ?"
-	                );
-
-	                for (String gameId : gameIds) {
-	                    stmt2.setString(1, gameId);
-	                    stmt2.setString(2, frameNum);
-	                    resultSet2 = stmt2.executeQuery();
-
-	                    while (resultSet2.next()) {
-	                        Shot shot = new Shot();
-	                        loadShot(shot, resultSet2, 1);
-	                        result.add(shot);
-	                    }
-
-	                    DBUtil.closeQuietly(resultSet2);  // Close between iterations
-	                }
-
-	                if (result.isEmpty()) {
-	                    System.out.println("No shots found for the given frame and season.");
-	                }
-
-	                return result;
-
-	            } finally {
-	                DBUtil.closeQuietly(resultSet1);
-	                DBUtil.closeQuietly(stmt1);
-	                DBUtil.closeQuietly(resultSet2);
-	                DBUtil.closeQuietly(stmt2);
-	            }
-	        }
-	    });
-	}
 	
-	@Override
-	public ArrayList<Shot> findAllShotsGivenEventSeason(String event, String season) {
-	    return executeTransaction(new Transaction<ArrayList<Shot>>() {
-	        @Override
-	        public ArrayList<Shot> execute(Connection conn) throws SQLException {
-	            PreparedStatement stmt1 = null;
-	            PreparedStatement stmt2 = null;
-	            ResultSet resultSet1 = null;
-	            ResultSet resultSet2 = null;
-
-	            ArrayList<Shot> result = new ArrayList<>();
-
-	            try {
-	                // Step 1: Get all game_ids for the given event
-	                stmt1 = conn.prepareStatement(
-	                    "SELECT game_id FROM games WHERE league = ? AND season = ?"
-	                );
-	                stmt1.setString(1, event);
-	                stmt1.setString(2, season);
-	                resultSet1 = stmt1.executeQuery();
-
-	                List<String> gameIds = new ArrayList<>();
-	                while (resultSet1.next()) {
-	                    gameIds.add(resultSet1.getString("game_id"));
-	                }
-
-	                if (gameIds.isEmpty()) {
-	                    System.out.println("No game_ids found for the given event.");
-	                    return result;
-	                }
-
-	                // Step 2: For each game_id, get matching shots
-	                stmt2 = conn.prepareStatement(
-	                    "SELECT * FROM shots WHERE game_id = ?"
-	                );
-
-	                for (String gameId : gameIds) {
-	                    stmt2.setString(1, gameId);
-	                    resultSet2 = stmt2.executeQuery();
-
-	                    while (resultSet2.next()) {
-	                        Shot shot = new Shot();
-	                        loadShot(shot, resultSet2, 1);
-	                        result.add(shot);
-	                    }
-
-	                    DBUtil.closeQuietly(resultSet2);  // Close between iterations
-	                }
-
-	                if (result.isEmpty()) {
-	                    System.out.println("No shots found for the given event and season.");
-	                }
-
-	                return result;
-
-	            } finally {
-	                DBUtil.closeQuietly(resultSet1);
-	                DBUtil.closeQuietly(stmt1);
-	                DBUtil.closeQuietly(resultSet2);
-	                DBUtil.closeQuietly(stmt2);
-	            }
-	        }
-	    });
-	}
+	
+	
 	
 	@Override
 	public ArrayList<Shot> findAllShotsGivenFrameEventSeason(String event, String season, String frameNum) {
@@ -908,53 +529,12 @@ public class DerbyDatabase implements IDatabase {
 	    });
 	}
 	
-	@Override
-	public ArrayList<Event> findAllEvents() {
-		return executeTransaction(new Transaction<ArrayList<Event>>() {
-			@Override
-			public ArrayList<Event> execute(Connection conn) throws SQLException {
-				PreparedStatement stmt = null;
-				ResultSet resultSet = null;
-				
-				try {
-					stmt = conn.prepareStatement(
-							"select * from events "
-					);
-					
-					ArrayList<Event> result = new ArrayList<Event>();
-					
-					resultSet = stmt.executeQuery();
-					
-					// for testing that a result was returned
-					Boolean found = false;
-					
-					while (resultSet.next()) {
-						found = true;
-						
-						Event event = new Event();
-						loadEvent(event, resultSet, 1);
-						
-						result.add(event);
-					}
-					
-					// check if any events were found
-					if (!found) {
-						System.out.println("No events were found in the database");
-					}
-					
-					return result;
-				} finally {
-					DBUtil.closeQuietly(resultSet);
-					DBUtil.closeQuietly(stmt);
-				}
-			}
-		});
-	}
+	
 	
 	// transaction that inserts new Book into the Books table
 	// also first inserts new Author into Authors table, if necessary
 	// and then inserts entry into BookAuthors junction table
-	@Override
+	/*@Override
 	public Integer insertBookIntoBooksTable(final String title, final String isbn, final int published, final String lastName, final String firstName) {
 		return executeTransaction(new Transaction<Integer>() {
 			@Override
@@ -1111,79 +691,6 @@ public class DerbyDatabase implements IDatabase {
 	}
 	
 	@Override
-	public Integer insertEstablishmentIntoEstablishmentsTable(final String longName, final String shortName, final String address, final String phone, final Integer lanes, final String type) {
-		return executeTransaction(new Transaction<Integer>() {
-			@Override
-			public Integer execute(Connection conn) throws SQLException {
-				PreparedStatement stmt4 = null;
-				PreparedStatement stmt5 = null;
-				PreparedStatement stmt6 = null;				
-				
-				ResultSet resultSet5 = null;				
-				
-				Integer establishment_id = -1;
-				try {
-					
-					// now insert new Establishment into Establishments table
-					// prepare SQL insert statement to add new Establishment to Establishments table
-					stmt4 = conn.prepareStatement(
-							"insert into establishments (longname, shortname, address, phone, lanes, type) " +
-							"  values(?, ?, ?, ?, ?, ?) "
-					);
-					stmt4.setString(1, longName);
-					stmt4.setString(2, shortName);
-					stmt4.setString(3, address);
-					stmt4.setString(4, phone);
-					stmt4.setInt(5, lanes);
-					stmt4.setString(6, type);
-					
-					// execute the update
-					stmt4.executeUpdate();
-					
-					System.out.println("New establishment <" + longName + "> inserted into Establishments table");					
-
-					// now retrieve establishment_id for new Establishment, so that we can set up Establishment entry
-					// and return the establishment_id, which the DB auto-generates
-					// prepare SQL statement to retrieve establishment_id for new Book
-					stmt5 = conn.prepareStatement(
-							"select establishment_id from establishments " +
-							"  where longName = ? and shortName = ? and address = ? and phone = ? and lanes = ? and type = ? "
-									
-					);
-					stmt5.setString(1, longName);
-					stmt5.setString(2, shortName);
-					stmt5.setString(3, address);
-					stmt5.setString(4, phone);
-					stmt5.setInt(5, lanes);
-					stmt5.setString(6, type);
-
-					// execute the query
-					resultSet5 = stmt5.executeQuery();
-					
-					// get the result - there had better be one
-					if (resultSet5.next())
-					{
-						establishment_id = resultSet5.getInt(1);
-						System.out.println("New establishment <" + longName + "> ID: " + establishment_id);						
-					}
-					else	// really should throw an exception here - the new establishment should have been inserted, but we didn't find it
-					{
-						System.out.println("New establishment <" + longName + "> not found in Establishments table (ID: " + establishment_id);
-					}				
-					
-					return establishment_id;
-				} finally {				
-					DBUtil.closeQuietly(stmt4);
-					DBUtil.closeQuietly(resultSet5);
-					DBUtil.closeQuietly(stmt5);
-					DBUtil.closeQuietly(stmt6);
-				}
-			}
-		});
-	}
-	
-	
-	@Override
 	public Integer insertBallIntoArsenal(final String longname, final String shortname, final String brand, final String type, final String core, final String cover, final String color, final String surface, final String year, final String serialNumber, final String weight, final String mapping) {
 		return executeTransaction(new Transaction<Integer>() {
 			@Override
@@ -1268,7 +775,7 @@ public class DerbyDatabase implements IDatabase {
 				}
 			}
 		});
-	}
+	}*/
 	
 	@Override
 	public Integer insertGame(final String league, final String season, final String week, final String date, final String game, final String lane) {
@@ -1344,7 +851,7 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	
-	@Override
+	/*@Override
 	public Integer getLastInsertedGameID() {
 		return executeTransaction(new Transaction<Integer>() {
 			@Override
@@ -1384,7 +891,7 @@ public class DerbyDatabase implements IDatabase {
 				}
 			}
 		});
-	}
+	}*/
 	
 	//@Override
 	public Integer insertShotIntoGame(final String shotNumber, final int gameID, final int frameNumber, final String count, final String leave, final String score, final String type, final String board, final String lane, final String ball) {
@@ -1471,189 +978,7 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	
-	@Override
-	public Integer insertEvent(final String longname, final String shortname, final String type, final String establishment, final String season, final Integer team, final String composition, final String day, final String time, final String start, final String end_date, final Integer gamesPerSession, final Integer weeks, final Integer playoffs) {
-		return executeTransaction(new Transaction<Integer>() {
-			@Override
-			public Integer execute(Connection conn) throws SQLException {
-				PreparedStatement stmt1 = null;
-				PreparedStatement stmt2 = null;
-				//PreparedStatement stmt3 = null;				
-				
-				ResultSet resultSet1 = null;
-				//ResultSet resultSet3 = null;				
-				
-				// for saving event ID
-				Integer event_id = -1;
 
-				// try to retrieve event_id (if it exists) from DB, for Event's long and short names
-				try {
-
-					// now insert new Establishment into Establishments table
-					// prepare SQL insert statement to add new Establishment to Establishments table
-					stmt1 = conn.prepareStatement(
-							"insert into events (longname, shortname, type, establishment, season, team, composition, day, time, start_date, end_date, games_per_session, weeks, playoffs) " +
-							"  values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) "
-					);
-					stmt1.setString(1, longname);
-					stmt1.setString(2, shortname);
-					stmt1.setString(3, type);
-					stmt1.setString(4, establishment);
-					stmt1.setString(5, season);
-					stmt1.setInt(6, team);
-					stmt1.setString(7, composition);
-					stmt1.setString(8, day);
-					stmt1.setString(9, time);
-					stmt1.setString(10, start);
-					stmt1.setString(11, end_date);
-					stmt1.setInt(12, gamesPerSession);
-					stmt1.setInt(13, weeks);
-					stmt1.setInt(14, playoffs);
-					
-					// execute the update
-					stmt1.executeUpdate();
-					
-					System.out.println("New event <" + longname + "> inserted into Events table");					
-
-					// now retrieve establishment_id for new Establishment, so that we can set up Establishment entry
-					// and return the establishment_id, which the DB auto-generates
-					// prepare SQL statement to retrieve establishment_id for new Book
-					stmt2 = conn.prepareStatement(
-							"select event_id from events " +
-							"  where longname = ? and shortname = ? and type = ? and establishment = ? and season = ? and team = ? and composition = ? and day = ? and time = ? and start_date = ? and end_date = ? and games_per_session = ? and weeks = ? and playoffs = ? "
-									
-					);
-					stmt2.setString(1, longname);
-					stmt2.setString(2, shortname);
-					stmt2.setString(3, type);
-					stmt2.setString(4, establishment);
-					stmt2.setString(5, season);
-					stmt2.setInt(6, team);
-					stmt2.setString(7, composition);
-					stmt2.setString(8, day);
-					stmt2.setString(9, time);
-					stmt2.setString(10, start);
-					stmt2.setString(11, end_date);
-					stmt2.setInt(12, gamesPerSession);
-					stmt2.setInt(13, weeks);
-					stmt2.setInt(14, playoffs);
-					
-					// execute the query
-					resultSet1 = stmt2.executeQuery();
-					
-					// get the result - there had better be one
-					if (resultSet1.next())
-					{
-						event_id = resultSet1.getInt(1);
-						System.out.println("New event <" + longname + "> ID: " + event_id);						
-					}
-					else	// really should throw an exception here - the new establishment should have been inserted, but we didn't find it
-					{
-						System.out.println("New event <" + longname + "> not found in Events table (ID: " + event_id + ")");
-					}				
-					
-					return event_id;
-				} finally {
-					DBUtil.closeQuietly(resultSet1);
-					DBUtil.closeQuietly(stmt1);
-					DBUtil.closeQuietly(stmt2);					
-				}
-			}
-		});
-	}
-	
-	@Override
-	public Integer insertEstablishment(final String longname, final String shortname, final String address, final String phone, final Integer lanes, final String type) {
-		return executeTransaction(new Transaction<Integer>() {
-			@Override
-			public Integer execute(Connection conn) throws SQLException {
-				PreparedStatement stmt1 = null;
-				PreparedStatement stmt2 = null;
-				PreparedStatement stmt3 = null;				
-				
-				ResultSet resultSet1 = null;
-				ResultSet resultSet3 = null;				
-				
-				// for saving establishment ID
-				Integer establishment_id = -1;
-
-				// try to retrieve establishment_id (if it exists) from DB, for Establishment's long and short names
-				try {
-					stmt1 = conn.prepareStatement(
-							"select establishment_id from establishments " +
-							"  where longname = ? and shortname = ? "
-					);
-					stmt1.setString(1, longname);
-					stmt1.setString(2, shortname);
-					
-					// execute the query, get the result
-					resultSet1 = stmt1.executeQuery();
-
-					
-					// if Establishment was found then save establishment_id					
-					if (resultSet1.next())
-					{
-						establishment_id = resultSet1.getInt(1);
-						System.out.println("Establishment <" + longname + ", " + shortname + "> found with ID: " + establishment_id);						
-					}
-					else
-					{
-						System.out.println("Establishment <" + longname + ", " + shortname + "> not found");
-				
-						// if the Establishment is new, insert new Establishment into Establishments table
-						if (establishment_id <= 0) {
-							// prepare SQL insert statement to add Establishment to Establishments table
-							stmt2 = conn.prepareStatement(
-									"insert into establishments (longname, shortname, address, phone, lanes, type) " +
-									"  values(?, ?, ?, ?, ?, ?) "
-							);
-							stmt2.setString(1, longname);
-							stmt2.setString(2, shortname);
-							stmt2.setString(3, address);
-							stmt2.setString(4, phone);
-							stmt2.setString(5, lanes);
-							stmt2.setString(6, type);
-							
-							// execute the update
-							stmt2.executeUpdate();
-							
-							System.out.println("New Establishment <" + longname + ", " + shortname + "> inserted in Establishments table");						
-						
-							// try to retrieve establishment_id for new Establishment - DB auto-generates establishment_id
-							stmt3 = conn.prepareStatement(
-									"select establishment_id from establishments " +
-									"  where longname = ? and shortname = ? "
-							);
-							stmt3.setString(1, longname);
-							stmt3.setString(2, shortname);
-							
-							// execute the query							
-							resultSet3 = stmt3.executeQuery();
-							
-							// get the result - there had better be one							
-							if (resultSet3.next())
-							{
-								establishment_id = resultSet3.getInt(1);
-								System.out.println("New Establishment <" + longname + ", " + shortname + "> ID: " + establishment_id);						
-							}
-							else	// really should throw an exception here - the new establishment should have been inserted, but we didn't find them
-							{
-								System.out.println("New establishment <" + longname + ", " + shortname + "> not found in Establishments table (ID: " + establishment_id);
-							}
-						}
-					}				
-					
-					return establishment_id;
-				} finally {
-					DBUtil.closeQuietly(resultSet1);
-					DBUtil.closeQuietly(stmt1);
-					DBUtil.closeQuietly(stmt2);					
-					DBUtil.closeQuietly(resultSet3);
-					DBUtil.closeQuietly(stmt3);					
-				}
-			}
-		});
-	}
 	
 	/*@Override
 	public Integer insertSession(final String league, final Date bowled, final String ball, final int startLane) {
@@ -1853,7 +1178,7 @@ public class DerbyDatabase implements IDatabase {
 						"	bit_id integer primary key " +
 						"		generated always as identity (start with 1, increment by 1), " +									
 						"	type varchar(40)," +
-						"	cheekpiece varchar(40)" +
+						"	cheekpiece varchar(40)," +
 						"	size varchar(40)," +
 						"	purpose varchar(40)," +
 						"	comment1 varchar(100)," +

@@ -34,7 +34,7 @@ public class InitialData {
 				Iterator<String> i = tuple.iterator();
 				Bit bit = new Bit();
 				
-				Integer.parseInt(i.next());
+				// Integer.parseInt(i.next());
 				bit.setType(i.next());
 				bit.setCheekpiece(i.next());
 				bit.setSize(i.next());
