@@ -54,7 +54,8 @@ public class SQLDemo {
 			System.out.println("This is not a mac");
 			try {
 				Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
-				conn = DriverManager.getConnection("jdbc:derby:C:/CS320-2025-LibraryExample-DB/library;create=true");
+				// conn = DriverManager.getConnection("jdbc:derby:C:/CS320-2025-LibraryExample-DB/library;create=true");
+				conn = DriverManager.getConnection("jdbc:derby:C:/PamsBits-2025-DB/library;create=true");
 				conn.setAutoCommit(true);
 			
 				queryLoop(conn);

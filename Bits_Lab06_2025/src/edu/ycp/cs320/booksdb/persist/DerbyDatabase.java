@@ -10,17 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.ycp.cs320.booksdb.model.Author;
-import edu.ycp.cs320.booksdb.model.Book;
-import edu.ycp.cs320.booksdb.model.BookAuthor;
-import edu.ycp.cs320.booksdb.model.Pair;
-import edu.ycp.cs320.booksdb.model.Session;
-import edu.ycp.cs320.booksdb.model.Shot;
-import edu.ycp.cs320.booksdb.model.Event;
-import edu.ycp.cs320.booksdb.model.Frame;
-import edu.ycp.cs320.booksdb.model.Game;
-import edu.ycp.cs320.booksdb.model.Establishment;
-import edu.ycp.cs320.booksdb.model.Ball;
+import edu.ycp.cs320.booksdb.model.Bit;
 
 public class DerbyDatabase implements IDatabase {
 	static {
@@ -2007,7 +1997,7 @@ public class DerbyDatabase implements IDatabase {
 
 	        if (!os_name.startsWith("mac os")) {
 	            System.out.println("Not a Mac, using Windows path");
-	            conn = DriverManager.getConnection("jdbc:derby:C:/CS320-2025-LibraryExample-DB/library;create=true");
+	            conn = DriverManager.getConnection("jdbc:derby:C:/PamsBits-2025-DB/library;create=true");
 	        } else {
 	            System.out.println("Running on Mac, using Mac path");
 	            conn = DriverManager.getConnection("jdbc:derby:/Users/caroline/Desktop/cs320-Spring2025/RevMextrixTeamProject_CS320/CS320_LibraryExample_Lab06_2025/CS320-2025-LibraryExample-DB/library;create=true");
@@ -2020,99 +2010,21 @@ public class DerbyDatabase implements IDatabase {
 
 	    return conn;
 	}
+
 	
-	// retrieves Author information from query result set
-	private void loadAuthor(Author author, ResultSet resultSet, int index) throws SQLException {
+
+	// retrieves bit information from query result set
+	private void loadBit(Bit bit, ResultSet resultSet, int index) throws SQLException {
 		
-		author.setAuthorId(resultSet.getInt(index++));
-		author.setLastname(resultSet.getString(index++));
-		author.setFirstname(resultSet.getString(index++));
-	}
-	
-	// retrieves Book information from query result set
-	private void loadBook(Book book, ResultSet resultSet, int index) throws SQLException {
-		
-		book.setBookId(resultSet.getInt(index++));
-//		book.setAuthorId(resultSet.getInt(index++));  // no longer used
-		book.setTitle(resultSet.getString(index++));
-		book.setIsbn(resultSet.getString(index++));
-		book.setPublished(resultSet.getInt(index++));
-	}
-	
-	// retrieves WrittenBy information from query result set
-	private void loadBookAuthors(BookAuthor bookAuthor, ResultSet resultSet, int index) throws SQLException {
-		
-		bookAuthor.setBookId(resultSet.getInt(index++));
-		bookAuthor.setAuthorId(resultSet.getInt(index++));
-	}
-	
-	private void loadBall(Ball ball, ResultSet resultSet, int index) throws SQLException {
-		
+		System.out.println("loading a bit");
 		resultSet.getString(index++);
-		ball.setLongname(resultSet.getString(index++));
-		ball.setShortname(resultSet.getString(index++));
-		ball.setBrand(resultSet.getString(index++));
-		ball.setType(resultSet.getString(index++));
-		ball.setCore(resultSet.getString(index++));
-		ball.setCover(resultSet.getString(index++));
-		ball.setColor(resultSet.getString(index++));
-		ball.setSurface(resultSet.getString(index++));
-		ball.setYear(resultSet.getString(index++));
-		ball.setSerialNumber(resultSet.getString(index++));
-		ball.setWeight(resultSet.getString(index++));
-		ball.setMapping(resultSet.getString(index++));
-	}
-	
-	private void loadEvent(Event event, ResultSet resultSet, int index) throws SQLException {
-		
-		resultSet.getString(index++);
-		event.setLongname(resultSet.getString(index++));
-		event.setShortname(resultSet.getString(index++));
-		event.setType(resultSet.getString(index++));
-		event.setEstablishment(resultSet.getString(index++));
-		event.setSeason(resultSet.getString(index++));
-		event.setTeam(Integer.parseInt(resultSet.getString(index++)));
-		event.setComposition(resultSet.getString(index++));
-		event.setDay(resultSet.getString(index++));
-		event.setTime(resultSet.getString(index++));
-		event.setStart(resultSet.getString(index++));
-		event.setEnd(resultSet.getString(index++));
-		event.setGamesPerSession(Integer.parseInt(resultSet.getString(index++)));
-		event.setWeeks(Integer.parseInt(resultSet.getString(index++)));
-		event.setPlayoffs(Integer.parseInt(resultSet.getString(index++)));
-	}
-	
-	private void loadSession(Session session, ResultSet resultSet, int index) throws SQLException {
-		
-		resultSet.getString(index++);
-		session.setLeague(resultSet.getString(index++));
-		session.setSeason(resultSet.getString(index++));
-		session.setWeek(Integer.parseInt(resultSet.getString(index++)));
-		session.setBowled(Date.valueOf(resultSet.getString(index++))); //might need to be adjusted- should realistically be date bowled but...would adjust if more time
-		session.setRegSub(resultSet.getString(index++));
-		session.setOpponent(resultSet.getString(index++));
-		session.setStart(Integer.parseInt(resultSet.getString(index++)));
-		session.setBall(resultSet.getString(index++));
-		session.setGameOneScore(Integer.parseInt(resultSet.getString(index++)));
-		session.setGameTwoScore(Integer.parseInt(resultSet.getString(index++)));
-		session.setGameThreeScore(Integer.parseInt(resultSet.getString(index++)));
-		session.setSeries(Integer.parseInt(resultSet.getString(index++)));
-	}
-	
-	private void loadShot(Shot shot, ResultSet resultSet, int index) throws SQLException {
-		
-		System.out.println("loading a shot");
-		resultSet.getString(index++);
-		shot.setGameID(Integer.valueOf(resultSet.getString(index++))); 		// game ID
-		shot.setFrameNumber(Integer.valueOf(resultSet.getString(index++)));
-		shot.setShotNumber(String.valueOf(resultSet.getInt(index++)));
-		shot.setCount(resultSet.getString(index++));
-		shot.setLeave(resultSet.getString(index++));
-		shot.setScore(resultSet.getString(index++));
 		shot.setType(resultSet.getString(index++));
-		shot.setBoard(resultSet.getString(index++));
-		shot.setLane(resultSet.getString(index++));
-		shot.setBall(resultSet.getString(index++));
+		shot.setCheekpiece(resultSet.getString(index++));
+		shot.setSize(resultSet.getString(index++));
+		shot.setPurpose(resultSet.getString(index++));
+		shot.setComment1(resultSet.getString(index++));
+		shot.setComment2(resultSet.getString(index++));
+		shot.setComment3(resultSet.getString(index++));
 	}
 	
 	
@@ -2123,30 +2035,35 @@ public class DerbyDatabase implements IDatabase {
 			public Boolean execute(Connection conn) throws SQLException {
 				
 				PreparedStatement stmt1 = null;
-				PreparedStatement stmt2 = null;
+				/*PreparedStatement stmt2 = null;
 				PreparedStatement stmt3 = null;	
 				PreparedStatement stmt4 = null;	
 				PreparedStatement stmt5 = null;	
 				PreparedStatement stmt6 = null;	
 				PreparedStatement stmt7 = null;
-				PreparedStatement stmt8 = null;
+				PreparedStatement stmt8 = null;*/
 				
 			
 				try {
 					
 					stmt1 = conn.prepareStatement(
-						"create table authors (" +
-						"	author_id integer primary key " +
+						"create table bits (" +
+						"	bit_id integer primary key " +
 						"		generated always as identity (start with 1, increment by 1), " +									
-						"	lastname varchar(40)," +
-						"	firstname varchar(40)" +
+						"	type varchar(40)," +
+						"	cheekpiece varchar(40)" +
+						"	size varchar(40)," +
+						"	purpose varchar(40)," +
+						"	comment1 varchar(100)," +
+						"	comment2 varchar(100)," +
+						"	comment3 varchar(100)" +
 						")"
 					);	
 					stmt1.executeUpdate();					
-					System.out.println("Authors table created");
+					System.out.println("Bit table created");
 					
 					
-					stmt2 = conn.prepareStatement(
+					/*stmt2 = conn.prepareStatement(
 							"create table books (" +
 							"	book_id integer primary key " +
 							"		generated always as identity (start with 1, increment by 1), " +
@@ -2297,18 +2214,18 @@ public class DerbyDatabase implements IDatabase {
 									")"
 					);
 					stmt8.executeUpdate();
-					System.out.println("Shots table created");									
+					System.out.println("Shots table created");		*/							
 					
 					return true;
 					
 				} finally {
 					DBUtil.closeQuietly(stmt1);
-					DBUtil.closeQuietly(stmt2);
+					/*DBUtil.closeQuietly(stmt2);
 					DBUtil.closeQuietly(stmt3);
 					DBUtil.closeQuietly(stmt4);
 					DBUtil.closeQuietly(stmt5);
 					DBUtil.closeQuietly(stmt6);
-					DBUtil.closeQuietly(stmt7);
+					DBUtil.closeQuietly(stmt7);*/
 				}
 			}
 		});
@@ -2320,8 +2237,8 @@ public class DerbyDatabase implements IDatabase {
 			@Override
 			public Boolean execute(Connection conn) throws SQLException {
 				
-				List<Author> authorList;
-				List<Book> bookList;
+				List<Bit> bitList;
+				/*List<Book> bookList;
 				List<BookAuthor> bookAuthorList;
 				List<Establishment> establishmentList;		// new
 				List<Event> eventList;						// new
@@ -2329,12 +2246,12 @@ public class DerbyDatabase implements IDatabase {
 				List<Session> sessionList;					// new
 				List<Game> gameList;
 				List<Frame> frameList;	
-				List<Shot> shotList;	
+				List<Shot> shotList;	*/
 				
 				try {
 					
-					authorList         = InitialData.getAuthors();
-					bookList           = InitialData.getBooks();
+					bitList         = InitialData.getAuthors();
+					/*bookList           = InitialData.getBooks();
 					bookAuthorList     = InitialData.getBookAuthors();	
 					establishmentList  = InitialData.getEstablishments();
 					eventList 	   	   = InitialData.getEvents();
@@ -2342,14 +2259,14 @@ public class DerbyDatabase implements IDatabase {
 					sessionList		   = InitialData.getSessions();
 					gameList		   = (List<Game>)InitialData.getGames().get(0);
 					frameList		   = (List<Frame>)InitialData.getGames().get(1);
-					shotList		   = (List<Shot>)InitialData.getGames().get(2);
+					shotList		   = (List<Shot>)InitialData.getGames().get(2);*/
 					
 				} catch (IOException e) {
 					throw new SQLException("Couldn't read initial data", e);
 				}
 
-				PreparedStatement insertAuthor     		= null;
-				PreparedStatement insertBook       		= null;
+				PreparedStatement insertBit     		= null;
+				/*PreparedStatement insertBook       		= null;
 				PreparedStatement insertBookAuthor 		= null;
 				
 				PreparedStatement insertEstablishment 	= null;		// new
@@ -2358,23 +2275,28 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement insertSession 		= null;
 				PreparedStatement insertGame	 		= null;
 				PreparedStatement insertFrame	 		= null;
-				PreparedStatement insertShot	 		= null;
+				PreparedStatement insertShot	 		= null; */
 
 				try {
 					// must completely populate Authors table before populating BookAuthors table because of primary keys
-					insertAuthor = conn.prepareStatement("insert into authors (lastname, firstname) values (?, ?)");
-					for (Author author : authorList) {
+					insertBit = conn.prepareStatement("insert into bits (type, cheekpiece, size, purpose, comment1, comment2, comment3) values (?, ?, ?, ?, ?, ?, ?)");
+					for (Bit bit : bitList) {
 //						insertAuthor.setInt(1, author.getAuthorId());	// auto-generated primary key, don't insert this
-						insertAuthor.setString(1, author.getLastname());
-						insertAuthor.setString(2, author.getFirstname());
-						insertAuthor.addBatch();
+						insertBit.setString(1, bit.getType());
+						insertBit.setString(2, bit.getCheekpiece());
+						insertBit.setString(3, bit.getSize());
+						insertBit.setString(4, bit.getPurpose());
+						insertBit.setString(5, bit.getComment1());
+						insertBit.setString(6, bit.getComment2());
+						insertBit.setString(7, bit.getComment3());
+						insertBit.addBatch();
 					}
-					insertAuthor.executeBatch();
-					System.out.println("Authors table populated");
+					insertBit.executeBatch();
+					System.out.println("Bit table populated");
 					
 					
 					// must completely populate Books table before populating BookAuthors table because of primary keys
-					insertBook = conn.prepareStatement("insert into books (title, isbn, published) values (?, ?, ?)");
+					/* insertBook = conn.prepareStatement("insert into books (title, isbn, published) values (?, ?, ?)");
 					for (Book book : bookList) {
 						insertBook.setString(1, book.getTitle());
 						insertBook.setString(2, book.getIsbn());
@@ -2518,12 +2440,12 @@ public class DerbyDatabase implements IDatabase {
 					}
 					insertShot.executeBatch();
 					System.out.println("Shot table populated!");
-					//YIPPEE
+					//YIPPEE */
 					
 					return true;
 				} finally {
-					DBUtil.closeQuietly(insertBook);
-					DBUtil.closeQuietly(insertAuthor);
+					DBUtil.closeQuietly(insertBit);
+					/*DBUtil.closeQuietly(insertAuthor);
 					DBUtil.closeQuietly(insertBookAuthor);	
 					DBUtil.closeQuietly(insertEstablishment);
 					DBUtil.closeQuietly(insertEvent);	
@@ -2531,7 +2453,7 @@ public class DerbyDatabase implements IDatabase {
 					DBUtil.closeQuietly(insertSession);
 					DBUtil.closeQuietly(insertGame);
 					DBUtil.closeQuietly(insertFrame);
-					DBUtil.closeQuietly(insertShot);
+					DBUtil.closeQuietly(insertShot);*/
 				}
 			}
 		});
