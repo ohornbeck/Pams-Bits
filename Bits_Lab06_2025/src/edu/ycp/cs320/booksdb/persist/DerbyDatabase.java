@@ -1191,12 +1191,15 @@ public class DerbyDatabase implements IDatabase {
 					stmt1.executeUpdate();					
 					System.out.println("Bit table created");
 					
+					// holds unique horse IDs to connect to info in horse table
+					// may not have all 3 horses in system yet
 					stmt2 = conn.prepareStatement(
 						"create table clients (" +
 						"	client_id integer primary key " +
 						"		generated always as identity (start with 1, increment by 1), " +									
 						"	first_name varchar(40)," +
 						"	last_name varchar(40)," +
+						"	farm_name varchar(40)," +
 						"	address varchar(40)," +
 						"	horse_1 integer," +
 						"	horse_2 integer," +
@@ -1207,6 +1210,9 @@ public class DerbyDatabase implements IDatabase {
 					stmt2.executeUpdate();					
 					System.out.println("Client table created");
 					
+					// holds unique client IDs to link to info in client table
+					// client IDs must exist before horses are entered into system
+					// when horses are entered into system, their client horse id must be updated with new entry
 					stmt3 = conn.prepareStatement(
 						"create table horses (" +
 						"	horse_id integer primary key " +
@@ -1223,6 +1229,11 @@ public class DerbyDatabase implements IDatabase {
 					System.out.println("Horse table created");
 					
 					return true;
+					
+					
+					// bit order table - client, specifications... horse
+					// bridle order table - same
+					
 					
 				} finally {
 					DBUtil.closeQuietly(stmt1);

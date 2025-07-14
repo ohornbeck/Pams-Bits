@@ -32,5 +32,16 @@ public interface IDatabase {
 	
 	public ArrayList<Bit> BitsByTypeCheekpieceSizePurpose();
 	
+	// no horses in here because they will be automatically inserted 
+	// when the horses are entered into their table
+	public Integer insertClient(final String firstName, final String lastName, final String farmName, 
+			final String address, final String comment);
+	
+	// here it will be given the client ID, create the horse entry in the table, then retrieve the new horse ID
+	// and update the client entry with that new horse ID that it retrieved in a few sql methods
+	public Integer insertHorse(final int clientID, final String barnName, final String showName, final String breed, 
+			final String height, final String sport);
+	
+	
 	
 }
