@@ -273,8 +273,8 @@ public class DerbyDatabase implements IDatabase {
 				
 				try {
 					stmt = conn.prepareStatement(
-							"select * from bits " +
-							" order by type"
+							"select * from bits "
+							// " order by type"
 					);
 					
 					ArrayList<Bit> result = new ArrayList<Bit>();
