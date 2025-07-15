@@ -983,6 +983,7 @@ public class DerbyDatabase implements IDatabase {
 	@Override
 	public Integer insertClient(final String firstName, final String lastName, final String farmName, 
 		final String address, final String comment) {
+		
 		return executeTransaction(new Transaction<Integer>() {
 			@Override
 			public Integer execute(Connection conn) throws SQLException {
@@ -1023,7 +1024,7 @@ public class DerbyDatabase implements IDatabase {
 					// prepare SQL statement to retrieve client_id for new Client
 					stmt2 = conn.prepareStatement(
 							"select client_id from clients  " +
-							"  where firstName = ? and lastName = ? "
+							"  where first_name = ? and last_name = ? "
 									
 					);
 					stmt2.setString(1, firstName);
@@ -1064,96 +1065,130 @@ public class DerbyDatabase implements IDatabase {
 	public Integer insertHorse(final int clientID, final String barnName, final String showName, final String breed, 
 			final String height, final String sport) {
 		
-		return 0;
-	}
-	
-
-	
-	/*@Override
-	public Integer insertSession(final String league, final Date bowled, final String ball, final int startLane) {
 		return executeTransaction(new Transaction<Integer>() {
 			@Override
 			public Integer execute(Connection conn) throws SQLException {
-				PreparedStatement stmt = null;
 				PreparedStatement stmt1 = null;
 				PreparedStatement stmt2 = null;
-				PreparedStatement stmt3 = null;
-				PreparedStatement stmt4 = null;
-				PreparedStatement stmt5 = null;
-				PreparedStatement stmt6 = null;				
+				PreparedStatement stmt3 = null;			
 				
-				ResultSet resultSet = null;
 				ResultSet resultSet1 = null;
-				ResultSet resultSet3 = null;
-				ResultSet resultSet5 = null;				
+				ResultSet resultSet2 = null;
+				ResultSet resultSet3 = null;				
 				
-				// for saving author ID and book ID
-				//do event id and session id instead
-				Integer session_id = -1;
-				Integer event_id   = -1;
-				Integer newWeek = -1;
+				// for saving client_id
+				Integer horse_id   = -1;
 
-				// try to retrieve author_id (if it exists) from DB, for Author's full name, passed into query
+				// try to retrieve client_id (if it exists) from DB, for Author's full name, passed into query
+				// do this after
 				try {
-					
-					stmt = conn.prepareStatement(
-							"select sessions.week from sessions " +
-							"  where sessions.league = ? " +
-							"  order by sessions.session_id desc "					);
-					stmt.setString(1, league);
-					
-					// execute the query, get the result
-					resultSet = stmt.executeQuery();
-
-					
-					// if last session was found then update newWeek for this session based on last					
-					if (resultSet.next()) {
-						newWeek = resultSet.getInt(1) + 1;
-					} else {
-						newWeek = 1;
-					}
-					
-					
-					// now insert new Session into Sessions table
-					// prepare SQL insert statement to add new Session to Sessions table
-					stmt4 = conn.prepareStatement(
-							"insert into sessions (league, date_bowled, start_lane, ball, week, game_one, game_two, game_three, series) " +
-							"  values(?, ?, ?, ?, ?, 0, 0, 0, 0) "
+					// now insert new client into client table
+					// prepare SQL insert statement to add new client to client table w/o horses
+					stmt1 = conn.prepareStatement(
+							"insert into horses (client_id, barn_name, show_name, breed, height, sport) " +
+							"  values(?, ?, ?, ?, ?, ?) "
 					);
-					stmt4.setString(1, league);
-					stmt4.setDate(2, bowled);
-					stmt4.setInt(3, startLane);
-					stmt4.setString(4, ball);
-					stmt4.setInt(5, Integer.valueOf(newWeek));					
+					
+					stmt1.setInt(1, clientID);
+					stmt1.setString(2, barnName);
+					stmt1.setString(3, showName);
+					stmt1.setString(4, breed);
+					stmt1.setString(5, height);
+					stmt1.setString(6, sport);
 					
 					// execute the update
-					stmt4.executeUpdate();
-					
-					System.out.println("New session week<" + newWeek + "> inserted into Sessions table");					
+					stmt1.executeUpdate();
+					System.out.println("New Horse <" + showName + " '" + barnName + "'> inserted into Horses Table");					
 
-					// now retrieve session_id for new Session, so that we can set up SessionEvent entry
-					// and return the session_id, which the DB SHOULD NOT-auto-generate. THE REASON-
-					// User entered the week, so can't have two id's for the same thing
-					// prepare SQL statement to retrieve book_id for new Book
-				
-					return newWeek;
+					
+					// retrieve horse_id of brand new horse entry
+					// to enter into existing clients horse column
+					stmt2 = conn.prepareStatement(
+							"select * from horses order by desc"			
+					);
+
+					// execute the query
+					resultSet2 = stmt2.executeQuery();
+					
+					// get the result - there had better be one
+					if (resultSet2.next()) {
+					
+						horse_id = resultSet2.getInt(1);
+						System.out.println("New Horse ID: <" + horse_id + ">");						
+					
+					// really should throw an exception here - the new client should have been inserted, but we didn't find it
+					} else { 	
+						System.out.println("New Horse ID: <" + horse_id + "> not found in Horse table");
+					}
+					
+					stmt2 = conn.prepareStatement(
+							"select * from clients where client_id = ?"			
+					);
+					stmt2.setInt(1, clientID);
+					resultSet2 = stmt2.executeQuery();
+					
+					if (resultSet2.next()) {
+						
+						// horse_id = resultSet2.getInt(6);
+						if (resultSet2.getInt(6) == -1) {
+							// update client data with new horseID for horse 1
+							stmt3 = conn.prepareStatement(
+									"update clients " +
+									"set horse_1 = ? " +
+									"where client_id = ?" 
+							);
+							stmt3.setInt(1, horse_id);
+							stmt3.setInt(2, clientID);
+							stmt3.executeUpdate();
+							
+						} else if(resultSet2.getInt(7) == -1) {
+							// update client data with new horseID for horse 2
+							stmt3 = conn.prepareStatement(
+									"UPDATE clients " +
+									"SET horse_2 = ? " +
+									"WHERE client_id = ? " 
+							);
+							stmt3.setInt(1, horse_id);
+							stmt3.setInt(2, clientID);
+							stmt3.executeUpdate();
+							
+						} else if(resultSet2.getInt(8) == -1) {
+							// update client data with new horseID for horse 3
+							stmt3 = conn.prepareStatement(
+									"UPDATE clients " +
+									"SET horse_3 = ? " +
+									"WHERE client_id = ? " 
+							);
+							stmt3.setInt(1, horse_id);
+							stmt3.setInt(2, clientID);
+							stmt3.executeUpdate();
+							
+						} else {
+							// all three horses are already filled, throw exception
+							// for now return -2 to (not to be confused with -1 of empty
+							// horse slots)
+							return -2;
+						}
+	
+					} else {			// really should throw an exception here - the new horse should have been inserted, but we didn't find it
+						System.out.println("New Horse ID: <" + horse_id + "> not found in Horse table");
+					}
+					
+					return horse_id; 	// should be a positive integer
+					
 				} finally {
-					DBUtil.closeQuietly(resultSet);
-					DBUtil.closeQuietly(stmt);
 					DBUtil.closeQuietly(resultSet1);
-					DBUtil.closeQuietly(stmt1);
-					DBUtil.closeQuietly(stmt2);					
+					DBUtil.closeQuietly(stmt1);				
+					DBUtil.closeQuietly(resultSet2);
+					DBUtil.closeQuietly(stmt2);	
 					DBUtil.closeQuietly(resultSet3);
-					DBUtil.closeQuietly(stmt3);					
-					DBUtil.closeQuietly(stmt4);
-					DBUtil.closeQuietly(resultSet5);
-					DBUtil.closeQuietly(stmt5);
-					DBUtil.closeQuietly(stmt6);
+					DBUtil.closeQuietly(stmt3);
 				}
 			}
 		});
-	}*/
+	}
 	
+
 	
 	// wrapper SQL transaction function that calls actual transaction function (which has retries)
 	public<ResultType> ResultType executeTransaction(Transaction<ResultType> txn) {
