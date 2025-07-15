@@ -357,44 +357,6 @@ public class DerbyDatabase implements IDatabase {
 	
 	
 	@Override
-	public ArrayList<Shot> findAllShotsGivenFrame(String frameNum) {
-	    return executeTransaction(new Transaction<ArrayList<Shot>>() {
-	        @Override
-	        public ArrayList<Shot> execute(Connection conn) throws SQLException {
-	            PreparedStatement stmt = null;
-	            ResultSet resultSet = null;
-	            
-	            ArrayList<Shot> result = new ArrayList<>();
-
-	            try {
-	                stmt = conn.prepareStatement(
-	                    "SELECT * FROM shots WHERE frame_number = ?"
-	                );
-	                stmt.setString(1, frameNum);
-	                resultSet = stmt.executeQuery();
-
-	                while (resultSet.next()) {
-	                   Shot shot = new Shot();
-	                   loadShot(shot, resultSet, 1);
-	                   result.add(shot);
-	                }
-
-	                if (result.isEmpty()) {
-	                    System.out.println("No shots found for the given frame.");
-	                }
-
-	                return result;
-
-	            } finally {
-	                DBUtil.closeQuietly(resultSet);
-	                DBUtil.closeQuietly(stmt);
-	            }
-	        }
-	    });
-	}
-	
-	
-	@Override
 	public ArrayList<Shot> findAllShotsGivenFrameEvent(String event, String frameNum) {
 	    return executeTransaction(new Transaction<ArrayList<Shot>>() {
 	        @Override
@@ -777,80 +739,6 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}*/
 	
-	@Override
-	public Integer insertGame(final String league, final String season, final String week, final String date, final String game, final String lane) {
-		return executeTransaction(new Transaction<Integer>() {
-			@Override
-			public Integer execute(Connection conn) throws SQLException {
-				PreparedStatement stmt4 = null;
-				PreparedStatement stmt5 = null;		
-				
-				ResultSet resultSet1 = null;
-				ResultSet resultSet3 = null;
-				ResultSet resultSet5 = null;				
-				
-				// for saving ball_id
-				Integer game_id   = -1;
-
-				// try to retrieve author_id (if it exists) from DB, for Author's full name, passed into query
-				try {
-					// now insert new ball into Arsenal table
-					// prepare SQL insert statement to add new Book to Books table
-					stmt4 = conn.prepareStatement(
-							"insert into games (league, season, week, date, game, lane) " +
-							"  values(?, ?, ?, ?, ?, ?) "
-					);
-					stmt4.setString(1, league);
-					stmt4.setString(2, season);
-					stmt4.setString(3, week);
-					stmt4.setString(4, date);
-					stmt4.setString(5, game);
-					stmt4.setString(6, lane);
-					
-					
-					// execute the update
-					stmt4.executeUpdate();
-					
-					System.out.println("New game for <" + date + "> game number <" + game + "> inserted into Games table");					
-
-					// now retrieve book_id for new Book, so that we can set up BookAuthor entry
-					// and return the book_id, which the DB auto-generates
-					// prepare SQL statement to retrieve book_id for new Book
-					stmt5 = conn.prepareStatement(
-							"select game_id from games " +
-							"  where date = ? and game = ? and league = ?"
-									
-					);
-					stmt5.setString(1, date);
-					stmt5.setString(2, game);
-					stmt5.setString(3, league);
-
-					// execute the query
-					resultSet5 = stmt5.executeQuery();
-					
-					// get the result - there had better be one
-					if (resultSet5.next())
-					{
-						game_id = resultSet5.getInt(1);
-						System.out.println("New game ID: " + game_id);						
-					}
-					else	// really should throw an exception here - the new book should have been inserted, but we didn't find it
-					{
-						System.out.println("New game <" + game_id + "> not found in Game table");
-					}
-					
-					return game_id;
-				} finally {
-					DBUtil.closeQuietly(resultSet1);			
-					DBUtil.closeQuietly(resultSet3);		
-					DBUtil.closeQuietly(stmt4);
-					DBUtil.closeQuietly(resultSet5);
-					DBUtil.closeQuietly(stmt5);
-				}
-			}
-		});
-	}
-	
 	/*@Override
 	public Integer getLastInsertedGameID() {
 		return executeTransaction(new Transaction<Integer>() {
@@ -894,7 +782,7 @@ public class DerbyDatabase implements IDatabase {
 	}*/
 	
 	//@Override
-	public Integer insertShotIntoGame(final String shotNumber, final int gameID, final int frameNumber, final String count, final String leave, final String score, final String type, final String board, final String lane, final String ball) {
+	/*public Integer insertShotIntoGame(final String shotNumber, final int gameID, final int frameNumber, final String count, final String leave, final String score, final String type, final String board, final String lane, final String ball) {
 		return executeTransaction(new Transaction<Integer>() {
 			@Override
 			public Integer execute(Connection conn) throws SQLException {
@@ -976,7 +864,7 @@ public class DerbyDatabase implements IDatabase {
 				}
 			}
 		});
-	}
+	}*/
 	
 	// no horses in here because they will be automatically inserted 
 	// when the horses are entered into their table
@@ -985,8 +873,10 @@ public class DerbyDatabase implements IDatabase {
 		final String address, final String comment) {
 		
 		return executeTransaction(new Transaction<Integer>() {
+			
 			@Override
 			public Integer execute(Connection conn) throws SQLException {
+				
 				PreparedStatement stmt1 = null;
 				PreparedStatement stmt2 = null;
 				PreparedStatement stmt3 = null;			
@@ -1001,8 +891,9 @@ public class DerbyDatabase implements IDatabase {
 				// try to retrieve client_id (if it exists) from DB, for Author's full name, passed into query
 				// do this after
 				try {
+					
 					// now insert new client into client table
-					// prepare SQL insert statement to add new client to client table w/o horses
+					// prepare SQL insert statement to add new client to client table w/o horses (set to -1 to start)
 					stmt1 = conn.prepareStatement(
 							"insert into clients (first_name, last_name, farm_name, address, comment) " +
 							"  values(?, ?, ?, ?, ?) "
@@ -1012,13 +903,11 @@ public class DerbyDatabase implements IDatabase {
 					stmt1.setString(3, farmName);
 					stmt1.setString(4, address);
 					stmt1.setString(5, comment);
-					
-					
 					// execute the update
 					stmt1.executeUpdate();
-					
 					System.out.println("New Client <" + firstName + " " + lastName + "> inserted into Client Table");					
 
+					
 					// now retrieve client_id for new client, so that we can set up horse entry for client
 					// and return the client_id, which the DB auto-generates
 					// prepare SQL statement to retrieve client_id for new Client
@@ -1029,18 +918,16 @@ public class DerbyDatabase implements IDatabase {
 					);
 					stmt2.setString(1, firstName);
 					stmt2.setString(2, lastName);
-
 					// execute the query
 					resultSet2 = stmt2.executeQuery();
 					
 					// get the result - there had better be one
-					if (resultSet2.next())
-					{
+					if (resultSet2.next()) {
+						
 						client_id = resultSet2.getInt(1);
-						System.out.println("New Client ID: <" + client_id + ">");						
-					}
-					else	// really should throw an exception here - the new client should have been inserted, but we didn't find it
-					{
+						System.out.println("New Client ID: <" + client_id + ">");	
+						
+					} else {	// really should throw an exception here - the new client should have been inserted, but we didn't find it
 						System.out.println("New Client ID: <" + client_id + "> not found in Client table");
 					}
 					
@@ -1056,7 +943,6 @@ public class DerbyDatabase implements IDatabase {
 				}
 			}
 		});
-		
 	}
 	
 	// here it will be given the client ID, create the horse entry in the table, then retrieve the new horse ID
@@ -1121,8 +1007,8 @@ public class DerbyDatabase implements IDatabase {
 						System.out.println("New Horse ID: <" + horse_id + "> not found in Horse table");
 					}
 					
-					stmt2 = conn.prepareStatement(
-							"select * from clients where client_id = ?"			
+					/*stmt2 = conn.prepareStatement(						// do not need to put the horses into the client table
+							"select * from clients where client_id = ?"		// have reference through client ID
 					);
 					stmt2.setInt(1, clientID);
 					resultSet2 = stmt2.executeQuery();
@@ -1172,7 +1058,7 @@ public class DerbyDatabase implements IDatabase {
 	
 					} else {			// really should throw an exception here - the new horse should have been inserted, but we didn't find it
 						System.out.println("New Horse ID: <" + horse_id + "> not found in Horse table");
-					}
+					}*/
 					
 					return horse_id; 	// should be a positive integer
 					
@@ -1288,6 +1174,7 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement stmt1 = null;
 				PreparedStatement stmt2 = null;
 				PreparedStatement stmt3 = null;
+				PreparedStatement stmt4 = null;
 				
 				/*PreparedStatement stmt3 = null;	
 				PreparedStatement stmt4 = null;	
@@ -1325,10 +1212,10 @@ public class DerbyDatabase implements IDatabase {
 						"	last_name varchar(40)," +
 						"	farm_name varchar(40)," +
 						"	address varchar(40)," +
-						"	horse_1 integer," +
+						/*"	horse_1 integer," +
 						"	horse_2 integer," +
-						"	horse_3 integer," +
-						"	comment varchar(100)" +
+						"	horse_3 integer," +*/			// don't need the horses to be in the clients table
+						"	comment varchar(100)" +			// horses each have a client reference, now unlimited
 						")"
 					);	
 					stmt2.executeUpdate();					
@@ -1352,6 +1239,17 @@ public class DerbyDatabase implements IDatabase {
 					stmt3.executeUpdate();					
 					System.out.println("Horse table created");
 					
+					stmt4 = conn.prepareStatement(
+						"create table horse_comments (" +
+						"	comment_id integer primary key " +
+						"		generated always as identity (start with 1, increment by 1), " +	
+						"	horse_id integer," +
+						"	comment varchar(300)" +
+						")"
+					);	
+					stmt4.executeUpdate();					
+					System.out.println("Horse Comment table created");
+					
 					return true;
 					
 					
@@ -1363,6 +1261,7 @@ public class DerbyDatabase implements IDatabase {
 					DBUtil.closeQuietly(stmt1);
 					DBUtil.closeQuietly(stmt2);
 					DBUtil.closeQuietly(stmt3);
+					DBUtil.closeQuietly(stmt4);
 					/*DBUtil.closeQuietly(stmt4);
 					DBUtil.closeQuietly(stmt5);
 					DBUtil.closeQuietly(stmt6);

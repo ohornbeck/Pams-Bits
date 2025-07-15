@@ -6,9 +6,9 @@ public class Client {
 	private String lastName;
 	private String farmName;
 	private String address;
-	private int horse1;
+	/*private int horse1;
 	private int horse2;
-	private int horse3;
+	private int horse3;*/
 	private String comment;
 	
 	
@@ -45,7 +45,7 @@ public class Client {
 		this.address = address;
 	}
 
-	public int getHorse1() {
+	/*public int getHorse1() {
 		return horse1;
 	}
 	public void setHorse1(int horse1) {
@@ -64,7 +64,7 @@ public class Client {
 	}
 	public void setHorse3(int horse3) {
 		this.horse3 = horse3;
-	}
+	}*/
 
 	public String getComment() {
 		return comment;
