@@ -8,10 +8,11 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 
 import edu.ycp.cs320.booksdb.model.Bit;
+
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 public class InitialData {
 

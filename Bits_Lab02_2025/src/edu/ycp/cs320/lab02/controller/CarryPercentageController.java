@@ -1,9 +1,10 @@
 package edu.ycp.cs320.lab02.controller;
 
+import edu.ycp.cs320.booksdb.model.Shot;
 import edu.ycp.cs320.booksdb.persist.DatabaseProvider;
 import edu.ycp.cs320.booksdb.persist.DerbyDatabase;
 import edu.ycp.cs320.booksdb.persist.IDatabase;
-import edu.ycp.cs320.booksdb.model.Shot;
+
 import java.util.ArrayList;
 
 public class CarryPercentageController {

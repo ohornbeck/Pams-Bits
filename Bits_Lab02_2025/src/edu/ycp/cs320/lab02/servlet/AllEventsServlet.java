@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import edu.ycp.cs320.booksdb.model.Author;
 import edu.ycp.cs320.booksdb.model.Book;
+import edu.ycp.cs320.booksdb.model.Event;
 import edu.ycp.cs320.booksdb.model.Pair;
 import edu.ycp.cs320.lab02.controller.AllEventsController;
-import edu.ycp.cs320.booksdb.model.Event;
 
 public class AllEventsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;

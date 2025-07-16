@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.ycp.cs320.booksdb.model.Author;
+import edu.ycp.cs320.booksdb.model.Session;
 import edu.ycp.cs320.booksdb.persist.DatabaseProvider;
 import edu.ycp.cs320.booksdb.persist.DerbyDatabase;
 import edu.ycp.cs320.booksdb.persist.IDatabase;
-import edu.ycp.cs320.booksdb.model.Session;
 
 public class AllSessionsController {
 

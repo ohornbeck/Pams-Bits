@@ -11,6 +11,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/CS320_Derby"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/CS320_Jetty9"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/CS320_LibraryExample_Lab06_2025"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Bits_Lab06_2025"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

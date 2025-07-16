@@ -2,10 +2,11 @@ package edu.ycp.cs320.lab02.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import edu.ycp.cs320.booksdb.model.Shot;
 import edu.ycp.cs320.booksdb.persist.DatabaseProvider;
 import edu.ycp.cs320.booksdb.persist.DerbyDatabase;
 import edu.ycp.cs320.booksdb.persist.IDatabase;
-import edu.ycp.cs320.booksdb.model.Shot;
 
 public class FindAllShotsInGameController {
 

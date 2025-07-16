@@ -2,10 +2,12 @@ package edu.ycp.cs320.lab02.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import edu.ycp.cs320.booksdb.model.Bit;
 import edu.ycp.cs320.booksdb.persist.DatabaseProvider;
 import edu.ycp.cs320.booksdb.persist.DerbyDatabase;
 import edu.ycp.cs320.booksdb.persist.IDatabase;
+
 
 public class BitsController {
 
@@ -20,7 +22,7 @@ public class BitsController {
 
 	public ArrayList<Bit> getAllBits() {
 		
-		// get the list of (Author, Book) pairs from DB
+		// get the list Bits from DB
 		ArrayList<Bit> bitList = db.findAllBits();
 		ArrayList<Bit> bits = null;
 		
@@ -36,8 +38,7 @@ public class BitsController {
 			}			
 		}
 		
-		// return authors for this title
-		// return arsenal;
+		// return bits 
 		return bitList;
 	}
 }

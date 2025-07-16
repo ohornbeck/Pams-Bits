@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import edu.ycp.cs320.lab02.controller.InsertEventController;
-import edu.ycp.cs320.booksdb.model.Event;
 import edu.ycp.cs320.booksdb.model.Establishment;
+import edu.ycp.cs320.booksdb.model.Event;
 import edu.ycp.cs320.lab02.controller.AllEventsController;
 import edu.ycp.cs320.lab02.controller.StrikePercentageGameController;
 

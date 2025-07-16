@@ -1,11 +1,14 @@
 package edu.ycp.cs320.booksdb.persist;
+
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ArrayList;
+
 import edu.ycp.cs320.booksdb.model.Bit;
 import edu.ycp.cs320.booksdb.model.Client;
 import edu.ycp.cs320.booksdb.model.Horse;
+
+import java.util.ArrayList;
 
 
 public interface IDatabase {

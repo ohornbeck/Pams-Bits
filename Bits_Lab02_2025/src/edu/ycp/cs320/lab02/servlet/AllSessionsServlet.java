@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import edu.ycp.cs320.booksdb.model.Author;
 import edu.ycp.cs320.booksdb.model.Book;
 import edu.ycp.cs320.booksdb.model.Pair;
-import edu.ycp.cs320.lab02.controller.AllSessionsController;
 import edu.ycp.cs320.booksdb.model.Session;
+import edu.ycp.cs320.lab02.controller.AllSessionsController;
 
 public class AllSessionsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
