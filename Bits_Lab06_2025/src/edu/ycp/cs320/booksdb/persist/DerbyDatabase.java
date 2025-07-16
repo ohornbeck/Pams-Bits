@@ -176,7 +176,6 @@ public class DerbyDatabase implements IDatabase {
 	}	
 	
 	
-	
 	@Override
 	public ArrayList<Session> findGamesForSessionLeague(final String eventShortname) {
 	    return executeTransaction(new Transaction<ArrayList<Session>>() {
@@ -219,48 +218,6 @@ public class DerbyDatabase implements IDatabase {
 	        }
 	    });
 	}
-
-
-	
-	/*@Override
-	public ArrayList<Session> findGamesWithSessionDate(final String date) {
-		return executeTransaction(new Transaction<ArrayList<Session>>() {
-			@Override
-			public ArrayList<Session> execute(Connection conn) throws SQLException {
-				PreparedStatement stmt = null;
-				ResultSet resultSet = null;
-
-				try {
-					stmt = conn.prepareStatement(
-						"SELECT game_one, game_two, game_three FROM sessions WHERE date_bowled = ?"
-					);
-					stmt.setString(1, date);
-					resultSet = stmt.executeQuery();
-					ArrayList<Session> sessions = new ArrayList<>();
-
-					while (resultSet.next()) {
-						Session session = new Session();
-						session.setGameOneScore(Integer.parseInt(resultSet.getString("game_one")));
-						session.setGameTwoScore(Integer.parseInt(resultSet.getString("game_one")));
-						session.setGameThreeScore(Integer.parseInt(resultSet.getString("game_one")));
-						sessions.add(session);
-					}
-
-					if (sessions.isEmpty()) {
-						System.out.println("No sessions found for this date: " + date);
-					}
-
-					return sessions;
-
-				} finally {
-					DBUtil.closeQuietly(resultSet);
-					DBUtil.closeQuietly(stmt);
-				}
-			}
-		});
-	}
-
-	*/
 
 	
 	@Override
@@ -306,54 +263,6 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
-	
-
-	/*@Override
-	public ArrayList<Shot> findAllShotsInGame(String gameID) {
-		return executeTransaction(new Transaction<ArrayList<Shot>>() {
-			@Override
-			public ArrayList<Shot> execute(Connection conn) throws SQLException {
-				PreparedStatement stmt = null;
-				ResultSet resultSet = null;
-				
-				try {
-					stmt = conn.prepareStatement(
-							"select * from shots " +
-							" where game_id = ?" +
-							" order by shot_number"
-					);
-					stmt.setString(1, gameID);
-					
-					ArrayList<Shot> result = new ArrayList<Shot>();
-					
-					resultSet = stmt.executeQuery();
-					
-					// for testing that a result was returned
-					Boolean found = false;
-					
-					while (resultSet.next()) {
-						found = true;
-						
-						Shot shot = new Shot();
-						loadShot(shot, resultSet, 1);
-						
-						result.add(shot);
-						System.out.println("gameID: " + gameID+ " frame: " + shot.getFrameNumber() + " shot: " + shot.getShotNumber());
-					}
-					
-					// check if any authors were found
-					if (!found) {
-						System.out.println("No shots were found in the database");
-					}
-					
-					return result;
-				} finally {
-					DBUtil.closeQuietly(resultSet);
-					DBUtil.closeQuietly(stmt);
-				}
-			}
-		});
-	}*/
 	
 	
 	@Override
@@ -420,9 +329,6 @@ public class DerbyDatabase implements IDatabase {
 	        }
 	    });
 	}
-	
-	
-	
 	
 	
 	@Override
@@ -492,382 +398,7 @@ public class DerbyDatabase implements IDatabase {
 	}
 	
 	
-	
-	// transaction that inserts new Book into the Books table
-	// also first inserts new Author into Authors table, if necessary
-	// and then inserts entry into BookAuthors junction table
-	/*@Override
-	public Integer insertBookIntoBooksTable(final String title, final String isbn, final int published, final String lastName, final String firstName) {
-		return executeTransaction(new Transaction<Integer>() {
-			@Override
-			public Integer execute(Connection conn) throws SQLException {
-				PreparedStatement stmt1 = null;
-				PreparedStatement stmt2 = null;
-				PreparedStatement stmt3 = null;
-				PreparedStatement stmt4 = null;
-				PreparedStatement stmt5 = null;
-				PreparedStatement stmt6 = null;				
-				
-				ResultSet resultSet1 = null;
-				ResultSet resultSet3 = null;
-				ResultSet resultSet5 = null;				
-				
-				// for saving author ID and book ID
-				Integer author_id = -1;
-				Integer book_id   = -1;
-
-				// try to retrieve author_id (if it exists) from DB, for Author's full name, passed into query
-				try {
-					stmt1 = conn.prepareStatement(
-							"select author_id from authors " +
-							"  where lastname = ? and firstname = ? "
-					);
-					stmt1.setString(1, lastName);
-					stmt1.setString(2, firstName);
-					
-					// execute the query, get the result
-					resultSet1 = stmt1.executeQuery();
-
-					
-					// if Author was found then save author_id					
-					if (resultSet1.next())
-					{
-						author_id = resultSet1.getInt(1);
-						System.out.println("Author <" + lastName + ", " + firstName + "> found with ID: " + author_id);						
-					}
-					else
-					{
-						System.out.println("Author <" + lastName + ", " + firstName + "> not found");
-				
-						// if the Author is new, insert new Author into Authors table
-						if (author_id <= 0) {
-							// prepare SQL insert statement to add Author to Authors table
-							stmt2 = conn.prepareStatement(
-									"insert into authors (lastname, firstname) " +
-									"  values(?, ?) "
-							);
-							stmt2.setString(1, lastName);
-							stmt2.setString(2, firstName);
-							
-							// execute the update
-							stmt2.executeUpdate();
-							
-							System.out.println("New author <" + lastName + ", " + firstName + "> inserted in Authors table");						
-						
-							// try to retrieve author_id for new Author - DB auto-generates author_id
-							stmt3 = conn.prepareStatement(
-									"select author_id from authors " +
-									"  where lastname = ? and firstname = ? "
-							);
-							stmt3.setString(1, lastName);
-							stmt3.setString(2, firstName);
-							
-							// execute the query							
-							resultSet3 = stmt3.executeQuery();
-							
-							// get the result - there had better be one							
-							if (resultSet3.next())
-							{
-								author_id = resultSet3.getInt(1);
-								System.out.println("New author <" + lastName + ", " + firstName + "> ID: " + author_id);						
-							}
-							else	// really should throw an exception here - the new author should have been inserted, but we didn't find them
-							{
-								System.out.println("New author <" + lastName + ", " + firstName + "> not found in Authors table (ID: " + author_id);
-							}
-						}
-					}
-					
-					// now insert new Book into Books table
-					// prepare SQL insert statement to add new Book to Books table
-					stmt4 = conn.prepareStatement(
-							"insert into books (title, isbn, published) " +
-							"  values(?, ?, ?) "
-					);
-					stmt4.setString(1, title);
-					stmt4.setString(2, isbn);
-					stmt4.setInt(3, published);
-					
-					// execute the update
-					stmt4.executeUpdate();
-					
-					System.out.println("New book <" + title + "> inserted into Books table");					
-
-					// now retrieve book_id for new Book, so that we can set up BookAuthor entry
-					// and return the book_id, which the DB auto-generates
-					// prepare SQL statement to retrieve book_id for new Book
-					stmt5 = conn.prepareStatement(
-							"select book_id from books " +
-							"  where title = ? and isbn = ? and published = ? "
-									
-					);
-					stmt5.setString(1, title);
-					stmt5.setString(2, isbn);
-					stmt5.setInt(3, published);
-
-					// execute the query
-					resultSet5 = stmt5.executeQuery();
-					
-					// get the result - there had better be one
-					if (resultSet5.next())
-					{
-						book_id = resultSet5.getInt(1);
-						System.out.println("New book <" + title + "> ID: " + book_id);						
-					}
-					else	// really should throw an exception here - the new book should have been inserted, but we didn't find it
-					{
-						System.out.println("New book <" + title + "> not found in Books table (ID: " + book_id);
-					}
-					
-					// now that we have all the information, insert entry into BookAuthors table
-					// which is the junction table for Books and Authors
-					// prepare SQL insert statement to add new Book to Books table
-					stmt6 = conn.prepareStatement(
-							"insert into bookAuthors (book_id, author_id) " +
-							"  values(?, ?) "
-					);
-					stmt6.setInt(1, book_id);
-					stmt6.setInt(2, author_id);
-					
-					// execute the update
-					stmt6.executeUpdate();
-					
-					System.out.println("New entry for book ID <" + book_id + "> and author ID <" + author_id + "> inserted into BookAuthors junction table");						
-					
-					System.out.println("New book <" + title + "> inserted into Books table");					
-					
-					return book_id;
-				} finally {
-					DBUtil.closeQuietly(resultSet1);
-					DBUtil.closeQuietly(stmt1);
-					DBUtil.closeQuietly(stmt2);					
-					DBUtil.closeQuietly(resultSet3);
-					DBUtil.closeQuietly(stmt3);					
-					DBUtil.closeQuietly(stmt4);
-					DBUtil.closeQuietly(resultSet5);
-					DBUtil.closeQuietly(stmt5);
-					DBUtil.closeQuietly(stmt6);
-				}
-			}
-		});
-	}
-	
-	@Override
-	public Integer insertBallIntoArsenal(final String longname, final String shortname, final String brand, final String type, final String core, final String cover, final String color, final String surface, final String year, final String serialNumber, final String weight, final String mapping) {
-		return executeTransaction(new Transaction<Integer>() {
-			@Override
-			public Integer execute(Connection conn) throws SQLException {
-				PreparedStatement stmt1 = null;
-				PreparedStatement stmt2 = null;
-				PreparedStatement stmt3 = null;
-				PreparedStatement stmt4 = null;
-				PreparedStatement stmt5 = null;
-				PreparedStatement stmt6 = null;				
-				
-				ResultSet resultSet1 = null;
-				ResultSet resultSet3 = null;
-				ResultSet resultSet5 = null;				
-				
-				// for saving ball_id
-				Integer ball_id   = -1;
-
-				// try to retrieve author_id (if it exists) from DB, for Author's full name, passed into query
-				try {
-					// now insert new ball into Arsenal table
-					// prepare SQL insert statement to add new Book to Books table
-					stmt4 = conn.prepareStatement(
-							"insert into arsenal (long_name, short_name, brand, type, core, cover, color, surface, ball_year, serial_number, weight, mapping) " +
-							"  values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) "
-					);
-					stmt4.setString(1, longname);
-					stmt4.setString(2, shortname);
-					stmt4.setString(3, brand);
-					stmt4.setString(4, type);
-					stmt4.setString(5, core);
-					stmt4.setString(6, cover);
-					stmt4.setString(7, color);
-					stmt4.setString(8, surface);
-					stmt4.setString(9, year);
-					stmt4.setString(10, serialNumber);
-					stmt4.setString(11, weight);
-					stmt4.setString(12, mapping);
-					
-					
-					// execute the update
-					stmt4.executeUpdate();
-					
-					System.out.println("New ball <" + longname + "> inserted into Arsenal table");					
-
-					// now retrieve book_id for new Book, so that we can set up BookAuthor entry
-					// and return the book_id, which the DB auto-generates
-					// prepare SQL statement to retrieve book_id for new Book
-					stmt5 = conn.prepareStatement(
-							"select ball_id from arsenal " +
-							"  where short_name = ? and serial_number = ? "
-									
-					);
-					stmt5.setString(1, shortname);
-					stmt5.setString(2, serialNumber);
-
-					// execute the query
-					resultSet5 = stmt5.executeQuery();
-					
-					// get the result - there had better be one
-					if (resultSet5.next())
-					{
-						ball_id = resultSet5.getInt(1);
-						System.out.println("New ball (shortname)< " + shortname + "> ID: " + ball_id);						
-					}
-					else	// really should throw an exception here - the new book should have been inserted, but we didn't find it
-					{
-						System.out.println("New ball <" + shortname + "> not found in Arsenal table (ID: " + ball_id);
-					}
-					
-					return ball_id;
-				} finally {
-					DBUtil.closeQuietly(resultSet1);
-					DBUtil.closeQuietly(stmt1);
-					DBUtil.closeQuietly(stmt2);					
-					DBUtil.closeQuietly(resultSet3);
-					DBUtil.closeQuietly(stmt3);					
-					DBUtil.closeQuietly(stmt4);
-					DBUtil.closeQuietly(resultSet5);
-					DBUtil.closeQuietly(stmt5);
-					DBUtil.closeQuietly(stmt6);
-				}
-			}
-		});
-	}*/
-	
-	/*@Override
-	public Integer getLastInsertedGameID() {
-		return executeTransaction(new Transaction<Integer>() {
-			@Override
-			public Integer execute(Connection conn) throws SQLException {
-				
-				PreparedStatement stmt5 = null;		
-				ResultSet resultSet5 = null;				
-				
-				// for saving game_id
-				Integer game_id   = -1;
-
-				// try to retrieve author_id (if it exists) from DB, for Author's full name, passed into query
-				try {
-					
-					stmt5 = conn.prepareStatement(
-							"select game_id from games order by game_id desc"
-					);
-
-					// execute the query
-					resultSet5 = stmt5.executeQuery();
-					
-					// get the result - there had better be one
-					if (resultSet5.next()) {
-						game_id = resultSet5.getInt(1);
-						System.out.println("Most recently entered game ID: " + game_id);
-						
-					// really should throw an exception here - the new book should have been inserted, but we didn't find it
-					} else {	
-						System.out.println("New game <" + game_id + "> not found in Game table");
-					}
-					
-					return game_id;
-					
-				} finally {
-					DBUtil.closeQuietly(resultSet5);
-					DBUtil.closeQuietly(stmt5);
-				}
-			}
-		});
-	}*/
-	
-	//@Override
-	/*public Integer insertShotIntoGame(final String shotNumber, final int gameID, final int frameNumber, final String count, final String leave, final String score, final String type, final String board, final String lane, final String ball) {
-		return executeTransaction(new Transaction<Integer>() {
-			@Override
-			public Integer execute(Connection conn) throws SQLException {
-				PreparedStatement stmt1 = null;
-				PreparedStatement stmt2 = null;
-				PreparedStatement stmt3 = null;
-				PreparedStatement stmt4 = null;
-				PreparedStatement stmt5 = null;
-				PreparedStatement stmt6 = null;				
-				
-				ResultSet resultSet1 = null;
-				ResultSet resultSet3 = null;
-				ResultSet resultSet5 = null;				
-				
-				// for saving ball_id
-				Integer shot_id   = -1;
-
-				// try to retrieve author_id (if it exists) from DB, for Author's full name, passed into query
-				try {
-					// now insert new ball into Arsenal table
-					// prepare SQL insert statement to add new Book to Books table
-					stmt4 = conn.prepareStatement(
-							"insert into shots (shot_number, game_id, frame_number, count, leave, score, type, board, lane, ball) " +
-							"  values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) "
-					);
-					stmt4.setString(1, shotNumber);
-					stmt4.setString(2, String.valueOf(gameID));
-					stmt4.setString(3, String.valueOf(frameNumber));
-					stmt4.setString(4, count);
-					stmt4.setString(5, leave);
-					stmt4.setString(6, score);
-					stmt4.setString(7, type);
-					stmt4.setString(8, board);
-					stmt4.setString(9, lane);
-					stmt4.setString(10, ball);
-					
-					
-					// execute the update
-					stmt4.executeUpdate();
-					
-					System.out.println("New Shot <" + shotNumber + "> in Frame <" + frameNumber + "> inserted into Shot Table of Game <" + gameID + ">");					
-
-					// now retrieve book_id for new Book, so that we can set up BookAuthor entry
-					// and return the book_id, which the DB auto-generates
-					// prepare SQL statement to retrieve book_id for new Book
-					stmt5 = conn.prepareStatement(
-							"select shot_id from shots  " +
-							"  where game_id = ? and shot_number = ? "
-									
-					);
-					stmt5.setInt(1, gameID);
-					stmt5.setString(2, shotNumber);
-
-					// execute the query
-					resultSet5 = stmt5.executeQuery();
-					
-					// get the result - there had better be one
-					if (resultSet5.next())
-					{
-						shot_id = resultSet5.getInt(1);
-						System.out.println("New shot number < " + shotNumber + "> ID: " + shot_id);						
-					}
-					else	// really should throw an exception here - the new book should have been inserted, but we didn't find it
-					{
-						System.out.println("New shot number <" + shotNumber + "> not found in Shot table (ID: " + shot_id + ") of Game ID <" + gameID + ">");
-					}
-					
-					return shot_id;
-				} finally {
-					DBUtil.closeQuietly(resultSet1);
-					DBUtil.closeQuietly(stmt1);
-					DBUtil.closeQuietly(stmt2);					
-					DBUtil.closeQuietly(resultSet3);
-					DBUtil.closeQuietly(stmt3);					
-					DBUtil.closeQuietly(stmt4);
-					DBUtil.closeQuietly(resultSet5);
-					DBUtil.closeQuietly(stmt5);
-					DBUtil.closeQuietly(stmt6);
-				}
-			}
-		});
-	}*/
-	
-	// no horses in here because they will be automatically inserted 
-	// when the horses are entered into their table
+	// no horses in here because all horses will have a client ID
 	@Override
 	public Integer insertClient(final String firstName, final String lastName, final String farmName, 
 		final String address, final String comment) {
@@ -888,7 +419,7 @@ public class DerbyDatabase implements IDatabase {
 				// for saving client_id
 				Integer client_id   = -1;
 
-				// try to retrieve client_id (if it exists) from DB, for Author's full name, passed into query
+				// try to retrieve client_id (if it exists) from DB
 				// do this after
 				try {
 					
@@ -945,8 +476,8 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	
-	// here it will be given the client ID, create the horse entry in the table, then retrieve the new horse ID
-	// and update the client entry with that new horse ID that it retrieved in a few sql methods
+	
+	// create new horse entry in horse table given unique client ID
 	@Override
 	public Integer insertHorse(final int clientID, final String barnName, final String showName, final String breed, 
 			final String height, final String sport) {
@@ -1167,6 +698,7 @@ public class DerbyDatabase implements IDatabase {
 	
 	//  creates the Authors and Books tables
 	public void createTables() {
+		
 		executeTransaction(new Transaction<Boolean>() {
 			@Override
 			public Boolean execute(Connection conn) throws SQLException {
@@ -1174,15 +706,7 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement stmt1 = null;
 				PreparedStatement stmt2 = null;
 				PreparedStatement stmt3 = null;
-				PreparedStatement stmt4 = null;
-				
-				/*PreparedStatement stmt3 = null;	
-				PreparedStatement stmt4 = null;	
-				PreparedStatement stmt5 = null;	
-				PreparedStatement stmt6 = null;	
-				PreparedStatement stmt7 = null;
-				PreparedStatement stmt8 = null;*/
-				
+				PreparedStatement stmt4 = null;				
 			
 				try {
 					
@@ -1211,10 +735,7 @@ public class DerbyDatabase implements IDatabase {
 						"	first_name varchar(40)," +
 						"	last_name varchar(40)," +
 						"	farm_name varchar(40)," +
-						"	address varchar(40)," +
-						/*"	horse_1 integer," +
-						"	horse_2 integer," +
-						"	horse_3 integer," +*/			// don't need the horses to be in the clients table
+						"	address varchar(40)," +		 	// don't need the horses to be in the clients table
 						"	comment varchar(100)" +			// horses each have a client reference, now unlimited
 						")"
 					);	
@@ -1262,10 +783,6 @@ public class DerbyDatabase implements IDatabase {
 					DBUtil.closeQuietly(stmt2);
 					DBUtil.closeQuietly(stmt3);
 					DBUtil.closeQuietly(stmt4);
-					/*DBUtil.closeQuietly(stmt4);
-					DBUtil.closeQuietly(stmt5);
-					DBUtil.closeQuietly(stmt6);
-					DBUtil.closeQuietly(stmt7);*/
 				}
 			}
 		});
@@ -1273,6 +790,7 @@ public class DerbyDatabase implements IDatabase {
 	
 	// loads data retrieved from CSV files into DB tables in batch mode
 	public void loadInitialData() {
+		
 		executeTransaction(new Transaction<Boolean>() {
 			@Override
 			public Boolean execute(Connection conn) throws SQLException {
@@ -1280,14 +798,12 @@ public class DerbyDatabase implements IDatabase {
 				List<Bit> bitList;
 				
 				try {
-					
-					bitList         = InitialData.getBits();
-					
+					bitList = InitialData.getBits();
 				} catch (IOException e) {
 					throw new SQLException("Couldn't read initial data", e);
 				}
 
-				PreparedStatement insertBit     		= null;
+				PreparedStatement insertBit = null;
 
 				try {
 					// must completely populate B table before populating BookAuthors table because of primary keys
@@ -1307,6 +823,7 @@ public class DerbyDatabase implements IDatabase {
 					System.out.println("Bit table populated");
 					
 					return true;	
+					
 				} finally {
 					DBUtil.closeQuietly(insertBit);
 				}
