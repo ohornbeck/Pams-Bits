@@ -29,8 +29,8 @@ public class BitsController {
 		if (bitList.isEmpty()) {
 			System.out.println("No bits found in bit table");
 			return null;
-		}
-		else {
+			
+		} else {
 			bits = new ArrayList<Bit>();
 			for (Bit bit : bitList) {
 				bits.add(bit);

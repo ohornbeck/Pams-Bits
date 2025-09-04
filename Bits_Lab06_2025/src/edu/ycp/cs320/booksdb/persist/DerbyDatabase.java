@@ -80,51 +80,6 @@ public class DerbyDatabase implements IDatabase {
 	}
 	
 	
-	// transaction that retrieves a list of Books with their Authors, given Author's last name
-	@Override
-	public List<Pair<Author, Book>> findAuthorAndBookByAuthorLastName(final String lastName) {
-		return executeTransaction(new Transaction<List<Pair<Author,Book>>>() {
-			@Override
-			public List<Pair<Author, Book>> execute(Connection conn) throws SQLException {
-				PreparedStatement stmt = null;
-				ResultSet resultSet = null;
-
-				// try to retrieve Authors and Books based on Author's last name, passed into query
-				try {
-					stmt = conn.prepareStatement(
-							"select authors.*, books.* " +
-							"  from  authors, books, bookAuthors " +
-							"  where authors.lastname = ? " +
-							"    and authors.author_id = bookAuthors.author_id " +
-							"    and books.book_id     = bookAuthors.book_id "   +
-							"  order by books.title asc, books.published asc"
-					);
-					stmt.setString(1, lastName);
-					
-					// establish the list of (Author, Book) Pairs to receive the result
-					List<Pair<Author, Book>> result = new ArrayList<Pair<Author,Book>>();
-					
-					// execute the query, get the results, and assemble them in an ArrayLsit
-					resultSet = stmt.executeQuery();
-					while (resultSet.next()) {
-						Author author = new Author();
-						loadAuthor(author, resultSet, 1);
-						Book book = new Book();
-						loadBook(book, resultSet, 4);
-						
-						result.add(new Pair<Author, Book>(author, book));
-					}
-					
-					return result;
-				} finally {
-					DBUtil.closeQuietly(resultSet);
-					DBUtil.closeQuietly(stmt);
-				}
-			}
-		});
-	}
-	
-	
 	// transaction that retrieves all Books in Library, with their respective Authors
 	@Override
 	public List<Pair<Author, Book>> findAllBooksWithAuthors() {

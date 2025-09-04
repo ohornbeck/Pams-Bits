@@ -52,6 +52,7 @@ public interface IDatabase {
 			final String height, final String sport);
 	public ArrayList<Horse> findAllHorses();						// third
 	public ArrayList<Horse> HorsesByClient();
+	// public ArrayList<Bit> findAllBits();
 	
 	
 }
