@@ -4,9 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pam's Bits and Bridles</title>
-    <meta name="description" content="Quality horse bit and bridle fitting for riders.">
+    <meta name="description" content="Quality horse bits, bridles, and tack for riders.">
+    
+    <!-- Google Fonts: Playfair Display for a fancy look -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+
     <style>
-        /* Reset some default styles */
+        /* Reset some defaults */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -14,114 +18,152 @@
         }
 
         body {
-            font-family: Arial, Helvetica, sans-serif;
-            line-height: 1.6;
-            background-color: #f9f9f9;
+            font-family: 'Playfair Display', serif;
+            background-color: #f4f1ee;
             color: #333;
-            padding: 0 20px; /* side padding */
+            padding: 0 20px;
         }
 
         header {
             text-align: center;
-            padding: 40px 20px 20px 20px;
-            background-color: #8B4513; /* brown header */
+            padding: 50px 20px 30px 20px;
+            background-color: #b85c38; /* rich brown-orange */
             color: #fff;
-            border-radius: 10px;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
 
         header h1 {
-            font-size: 2.5rem;
+            font-size: 3rem;
             margin-bottom: 10px;
         }
 
         header p {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
+            font-style: italic;
         }
 
         main {
-            max-width: 900px;
-            margin: 0 auto; /* center content */
+            max-width: 1100px;
+            margin: 0 auto;
         }
 
         section {
-            background-color: #fff;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
         }
 
         h2 {
-            margin-bottom: 15px;
-            color: #8B4513;
+            margin-bottom: 20px;
+            color: #b85c38;
+            font-size: 2rem;
         }
 
         p {
+            margin-bottom: 15px;
+        }
+
+        /* Product Gallery */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .product {
+            background-color: #fff;
+            padding: 15px;
+            border: 2px solid #b85c38;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .product img {
+            max-width: 100%;
+            height: auto;
             margin-bottom: 10px;
         }
 
-        img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            margin-bottom: 15px;
-            border-radius: 5px;
+        .product:hover {
+            transform: scale(1.05);
         }
 
-        /* Responsive layout for smaller screens */
-        @media (max-width: 600px) {
-            header h1 {
-                font-size: 2rem;
-            }
+        .product-name {
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
 
-            header p {
-                font-size: 1rem;
-            }
-
-            section {
-                padding: 15px;
-            }
+        .product-price {
+            color: #b85c38;
+            font-weight: 600;
         }
 
         footer {
             text-align: center;
-            padding: 20px;
-            color: #777;
+            padding: 25px 10px;
+            color: #555;
             font-size: 0.9rem;
         }
 
         a {
-            color: #8B4513;
+            color: #b85c38;
             text-decoration: none;
         }
 
         a:hover {
             text-decoration: underline;
         }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            header p {
+                font-size: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
     <header>
         <h1>Pam's Bits and Bridles</h1>
-        <p>Quality horse bits and bridles for riders</p>
+        <p>High-quality horse tack and fittings for riders of all levels</p>
     </header>
 
     <main>
         <section>
             <h2>About Us</h2>
-            <p>Welcome to Pam's Bits and Bridles! We are passionate about providing high-quality bit and bridle fitting for riders of all levels. Our products are carefully selected to ensure durability, comfort, and style.</p>
+            <p>Welcome to Pam's Bits and Bridles! We are dedicated to providing durable, stylish, comfortable horse tack and custom fittings. Our selection of bits and bridles are perfect for every rider.</p>
         </section>
 
         <section>
             <h2>Featured Products</h2>
-            <img src="https://via.placeholder.com/800x400?text=Horse+Bit+Example" alt="Horse Bit">
-            <p>Check out our premium range of horse bits, designed for optimal comfort and performance.</p>
+            <div class="gallery">
+                <div class="product">
+                    <img src="https://via.placeholder.com/250x150?text=Classic+Bit" alt="Classic Bit">
+                    <div class="product-name">Classic Bit</div>
+                    <div class="product-price">$45</div>
+                </div>
+                <div class="product">
+                    <img src="https://via.placeholder.com/250x150?text=Bridle+Set" alt="Bridle Set">
+                    <div class="product-name">Bridle Set</div>
+                    <div class="product-price">$75</div>
+                </div>
+                <div class="product">
+                    <img src="https://via.placeholder.com/250x150?text=Silver+Bit" alt="Silver Bit">
+                    <div class="product-name">Silver Bit</div>
+                    <div class="product-price">$60</div>
+                </div>
+                <div class="product">
+                    <img src="https://via.placeholder.com/250x150?text=Leather+Bridle" alt="Leather Bridle">
+                    <div class="product-name">Leather Bridle</div>
+                    <div class="product-price">$90</div>
+                </div>
+            </div>
         </section>
 
         <section>
             <h2>Contact Us</h2>
-            <p>Email: <a href="mailto:hornbeckpx@gmail.com">hornbeckpc@gmail.com</a></p>
+            <p>Email: <a href="mailto:hornbeckpc@gmail.com">hornbeckpc@gmail.com</a></p>
             <p>Phone: (443) 619-3904</p>
         </section>
     </main>
@@ -131,4 +173,3 @@
     </footer>
 </body>
 </html>
-
