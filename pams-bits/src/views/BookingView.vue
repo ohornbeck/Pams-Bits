@@ -85,10 +85,11 @@ nav {
 }
 
 .nav-logo {
-  height: 60px; /* Adjusted for visibility */
+  height: 60px;
   width: auto;
   margin-right: 15px;
   border-radius: 50%;
+  filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.1));
 }
 
 .brand-font {
