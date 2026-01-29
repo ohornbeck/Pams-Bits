@@ -15,7 +15,7 @@
     <header class="hero">
       <h1>Quality Gear for Quality Rides</h1>
       <p>Expertly fitted to your horse's unique needs.</p>
-      <a href="#" class="cta-button">View Our Services</a>
+      <a href="#services" class="cta-button">View Our Services</a>
     </header>
 
     <main>
