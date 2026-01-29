@@ -36,7 +36,7 @@
         <div class="text-box">
           <h2>Our Mission</h2>
           <p>What is Bits and Bridles about? It's about safety, style, and the perfect fit. We provide a curated selection of high-quality gear sourced from trusted manufacturers.</p>
-          <a href="#" class="cta-button">Learn More About Our Fittings</a>
+          <a href="#booking" class="cta-button">Learn More About Our Fittings</a>
         </div>
       </section>
     </main>
