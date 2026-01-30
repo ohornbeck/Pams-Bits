@@ -6,7 +6,7 @@
         <div class="brand-font">Pam's Bits & Bridles</div>
       </div>
       <div class="nav-links">
-       <router-link to="/">Home</router-link>
+        <router-link to="/">Home</router-link>
         <router-link to="/services">Services</router-link>
         <router-link to="/booking">Book Appointment</router-link>
       </div>
@@ -15,7 +15,7 @@
     <header class="hero">
       <h1>Booking Page</h1>
       <p>Expertly fitted to your horse's unique needs.</p>
-      <a href="#services" class="cta-button">View Our Services</a>
+      <router-link to="/services" class="cta-button">View Our Services</router-link>
     </header>
 
     <main>
@@ -36,7 +36,7 @@
         <div class="text-box">
           <h2>Our Mission</h2>
           <p>What is Bits and Bridles about? It's about safety, style, and the perfect fit. We provide a curated selection of high-quality gear sourced from trusted manufacturers.</p>
-          <a href="#booking" class="cta-button">Learn More About Our Fittings</a>
+          <router-link to="/booking" class="cta-button">Learn More About Our Fittings</router-link>
         </div>
       </section>
     </main>
@@ -57,7 +57,7 @@ export default {
 <style scoped>
 .home-container {
   font-family: 'Lato', sans-serif;
-  background-color: #f8f9fa; /* Slightly cooler background to match the logo */
+  background-color: #f8f9fa;
   color: #333;
   line-height: 1.6;
 }
@@ -66,10 +66,10 @@ h1, h2, h3, .brand-font {
   font-family: 'Playfair Display', serif;
 }
 
-/* Navigation Updates */
+/* Navigation Styles */
 nav {
   background: #fff;
-  padding: 0.5rem 20px;
+  padding: 1rem 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -85,17 +85,16 @@ nav {
 }
 
 .nav-logo {
-  height: 60px;
+  height: 100px; /* Large size to read logo text */
   width: auto;
-  margin-right: 15px;
+  margin-right: 20px;
   border-radius: 50%;
-  filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.1));
 }
 
 .brand-font {
-  font-size: 1.5rem; 
+  font-size: 1.7rem; 
   font-weight: bold; 
-  color: #1A2B49; /* Logo Navy */
+  color: #1A2B49;
 }
 
 nav a {
@@ -107,10 +106,10 @@ nav a {
 }
 
 nav a:hover {
-  color: #C5A059; /* Logo Gold */
+  color: #C5A059;
 }
 
-/* Hero Section */
+/* Hero Styles */
 .hero {
   background: linear-gradient(rgba(26, 43, 73, 0.6), rgba(26, 43, 73, 0.6)), 
               url('https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?auto=format&fit=crop&q=80&w=1470') no-repeat center center/cover;
@@ -127,7 +126,7 @@ nav a:hover {
 .hero h1 { font-size: 3.5rem; }
 .hero p { font-size: 1.5rem; font-style: italic; }
 
-/* Content Sections */
+/* Main Content Styles */
 main {
   max-width: 1100px;
   margin: 40px auto;
@@ -149,16 +148,16 @@ main {
 .image-box img {
   width: 100%;
   border-radius: 8px;
-  box-shadow: 10px 10px 0px #C5A059; /* Gold shadow */
+  box-shadow: 10px 10px 0px #C5A059;
 }
 
 h2 {
   font-size: 2.5rem;
-  color: #1A2B49; /* Navy Headers */
+  color: #1A2B49;
   margin-bottom: 20px;
 }
 
-/* Buttons */
+/* Button Styles */
 .cta-button {
   display: inline-block;
   background: #C5A059;
@@ -172,21 +171,20 @@ h2 {
 }
 
 .cta-button:hover {
-  background: #C5A059;
-  color: #1A2B49;
-  font-weight: bold;
+  background: #1A2B49;
+  color: white;
 }
 
+/* Footer Styles */
 footer {
   text-align: center;
   padding: 40px 20px;
-  background: #1A2B49; /* Navy Footer */
+  background: #1A2B49;
   color: #fff;
 }
 
 @media (max-width: 768px) {
   .content-section, .content-section.reverse { flex-direction: column; }
   .hero h1 { font-size: 2.5rem; }
-  .nav-links { display: none; } /* Consider a burger menu for mobile later */
 }
 </style>

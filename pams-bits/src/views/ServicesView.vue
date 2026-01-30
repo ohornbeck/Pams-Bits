@@ -1,44 +1,53 @@
 <template>
-  <div class="home-container">
+  <div class="services-container">
     <nav>
       <div class="brand-container">
-        <img src="../assets/PBB Logo.png" alt="Pam's Bits and Bridles Logo" class="nav-logo">
+        <img src="../assets/PBB Logo.png" alt="Logo" class="nav-logo">
         <div class="brand-font">Pam's Bits & Bridles</div>
       </div>
       <div class="nav-links">
         <router-link to="/">Home</router-link>
-           <router-link to="/services">Services</router-link>
+        <router-link to="/services">Services</router-link>
         <router-link to="/booking">Book Appointment</router-link>
       </div>
     </nav>
 
-    <header class="hero">
-      <h1>Services Page</h1>
-      <p>Expertly fitted to your horse's unique needs.</p>
-      <a href="#services" class="cta-button">View Our Services</a>
+    <header class="hero-triple">
+      <div class="hero-img img-1"></div>
+      <div class="hero-img img-2">
+        <div class="hero-overlay-text">
+          <h1>Our Services</h1>
+          <p>Precision fitting for performance.</p>
+        </div>
+      </div>
+      <div class="hero-img img-3"></div>
     </header>
 
     <main>
-      <section class="content-section">
-        <div class="image-box">
-          <img src="../assets/Pam Holding Medal.png" alt="Pam holding a medal">
+      <section class="wireframe-row">
+        <div class="row-image img-focus-1">
+          <div class="label-box">What Can We Do</div>
         </div>
-        <div class="text-box">
-          <h2>Meet Pam</h2>
-          <p>With years of experience in equine ergonomics, Pam ensures that every bit and bridle is more than just equipment—it's a gateway to better communication between horse and rider.</p>
+        <div class="row-text">
+          <h3>Equine Ergonomics</h3>
+          <p>We analyze the biomechanics of your horse to ensure that every piece of tack supports natural movement rather than hindering it. This includes mouth measurements and nerve pressure relief.</p>
         </div>
       </section>
 
-      <section class="content-section reverse">
-        <div class="image-box">
-          <img src="../assets/Pam Jumping.png" alt="Pam jumping over obstacle with horse">
+      <section class="wireframe-row">
+        <div class="row-image img-focus-2">
+          <div class="label-box">What You Can Expect</div>
         </div>
-        <div class="text-box">
-          <h2>Our Mission</h2>
-          <p>What is Bits and Bridles about? It's about safety, style, and the perfect fit. We provide a curated selection of high-quality gear sourced from trusted manufacturers.</p>
-          <a href="#booking" class="cta-button">Learn More About Our Fittings</a>
+        <div class="row-text">
+          <h3>Professional Results</h3>
+          <p>Expect a thorough evaluation and a noticeable difference in your horse's comfort and willingness. We provide a detailed report of all adjustments and recommendations for future gear.</p>
         </div>
       </section>
+
+      <div class="cta-banner">
+        <h2>Ready for a better ride?</h2>
+        <router-link to="/booking" class="cta-button">Book an Appointment</router-link>
+      </div>
     </main>
 
     <footer>
@@ -48,28 +57,21 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'HomeView'
-};
-</script>
-
 <style scoped>
-.home-container {
+/* Reusing core branding from Home page */
+.services-container {
   font-family: 'Lato', sans-serif;
-  background-color: #f8f9fa; /* Slightly cooler background to match the logo */
+  background-color: #f8f9fa;
   color: #333;
-  line-height: 1.6;
 }
 
-h1, h2, h3, .brand-font {
-  font-family: 'Playfair Display', serif;
-}
+h1, h2, h3, .brand-font { font-family: 'Playfair Display', serif; }
 
-/* Navigation Updates */
+/* Navigation */
 nav {
   background: #fff;
-  padding: 0.5rem 20px;
+  /* Increased top/bottom padding to 1rem to fit the larger logo */
+  padding: 1rem 20px; 
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -78,114 +80,130 @@ nav {
   z-index: 1000;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
+.brand-container { display: flex; align-items: center; }
+.nav-logo {
+  height: 100px; 
+  width: auto;
+  margin-right: 20px;
+  border-radius: 50%;
+  object-fit: contain; 
+}
+.brand-font {
+  /* Adjusted font size slightly to balance with the larger logo */
+  font-size: 1.7rem; 
+  font-weight: bold; 
+  color: #1A2B49;
+}
+nav a { text-decoration: none; color: #1A2B49; margin-left: 20px; font-weight: 600; }
+nav a:hover { color: #C5A059; }
 
-.brand-container {
+/* TRIPLE IMAGE HERO */
+.hero-triple {
+  display: flex;
+  height: 45vh;
+  overflow: hidden;
+  background: #1A2B49;
+}
+
+.hero-img {
+  flex: 1;
+  background-size: cover;
+  background-position: center;
+  transition: flex 0.5s ease;
+  filter: brightness(0.7);
+}
+
+.hero-img:hover { flex: 1.2; filter: brightness(0.9); }
+
+.img-1 { background-image: url('https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?q=80&w=800'); }
+.img-2 { 
+  background-image: url('https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?q=80&w=800');
   display: flex;
   align-items: center;
+  justify-content: center;
+}
+.img-3 { background-image: url('https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?q=80&w=800'); }
+
+.hero-overlay-text {
+  text-align: center;
+  color: white;
+  background: rgba(26, 43, 73, 0.7);
+  padding: 10px 20px;
+  border: 1px solid #C5A059;
 }
 
-.nav-logo {
-  height: 60px; /* Adjusted for visibility */
-  width: auto;
-  margin-right: 15px;
-  border-radius: 50%;
+/* WIREFRAME ROWS */
+main { max-width: 1100px; margin: 60px auto; padding: 0 20px; }
+
+.wireframe-row {
+  display: flex;
+  background: #e9ecef; 
+  margin-bottom: 40px;
+  align-items: stretch;
+  border-radius: 4px;
+    border: 1px solid #C5A059;
+  overflow: hidden;
 }
 
-.brand-font {
-  font-size: 1.5rem; 
-  font-weight: bold; 
-  color: #1A2B49; /* Logo Navy */
+.row-image {
+  flex: 0 0 300px;
+  height: 250px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-nav a {
-  text-decoration: none;
-  color: #1A2B49;
-  margin-left: 20px;
-  font-weight: 600;
-  transition: color 0.3s;
+.img-focus-1 { background-image: url('https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?q=80&w=800'); }
+.img-focus-2 { background-image: url('https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?q=80&w=800'); }
+
+.label-box {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(5px);
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  font-weight: bold;
+  font-family: 'Playfair Display', serif;
+  border: 1px solid rgba(255,255,255,0.3);
 }
 
-nav a:hover {
-  color: #C5A059; /* Logo Gold */
-}
-
-/* Hero Section */
-.hero {
-  background: linear-gradient(rgba(26, 43, 73, 0.6), rgba(26, 43, 73, 0.6)), 
-              url('https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?auto=format&fit=crop&q=80&w=1470') no-repeat center center/cover;
-  height: 60vh;
+.row-text {
+  flex: 1;
+  padding: 40px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+}
+
+.row-text h3 { color: #1A2B49; margin-bottom: 15px; }
+
+/* CTA & Footer */
+.cta-banner {
+  background: #1A2B49;
   color: white;
+  padding: 60px 20px;
   text-align: center;
-  padding: 20px;
+  margin-top: 80px;
 }
-
-.hero h1 { font-size: 3.5rem; }
-.hero p { font-size: 1.5rem; font-style: italic; }
-
-/* Content Sections */
-main {
-  max-width: 1100px;
-  margin: 40px auto;
-  padding: 0 20px;
-}
-
-.content-section {
-  display: flex;
-  align-items: center;
-  gap: 40px;
-  margin-bottom: 80px;
-}
-
-.content-section.reverse { flex-direction: row-reverse; }
-
-.image-box { flex: 1; }
-.text-box { flex: 1; }
-
-.image-box img {
-  width: 100%;
-  border-radius: 8px;
-  box-shadow: 10px 10px 0px #C5A059; /* Gold shadow */
-}
-
-h2 {
-  font-size: 2.5rem;
-  color: #1A2B49; /* Navy Headers */
-  margin-bottom: 20px;
-}
-
-/* Buttons */
 .cta-button {
   display: inline-block;
   background: #C5A059;
   color: white;
-  padding: 12px 25px;
+  padding: 12px 30px;
   text-decoration: none;
   border-radius: 4px;
-  margin-top: 20px;
-  transition: all 0.3s ease;
-  border: 2px solid transparent;
-}
-
-.cta-button:hover {
-  background: #C5A059;
-  color: #1A2B49;
+  margin-top: 25px;
   font-weight: bold;
 }
-
-footer {
-  text-align: center;
-  padding: 40px 20px;
-  background: #1A2B49; /* Navy Footer */
-  color: #fff;
-}
+footer { text-align: center; padding: 40px 20px; background: #111; color: #fff; }
 
 @media (max-width: 768px) {
-  .content-section, .content-section.reverse { flex-direction: column; }
-  .hero h1 { font-size: 2.5rem; }
-  .nav-links { display: none; } /* Consider a burger menu for mobile later */
+  .hero-triple { height: 30vh; }
+  .img-1, .img-3 { display: none; }
+  .wireframe-row { flex-direction: column; }
+  .row-image { flex: 0 0 200px; width: 100%; }
 }
 </style>
