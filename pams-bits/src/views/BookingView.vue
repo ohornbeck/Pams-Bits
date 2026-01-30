@@ -1,17 +1,5 @@
 <template>
   <div class="home-container">
-    <nav>
-      <div class="brand-container">
-        <img src="../assets/PBB Logo.png" alt="Pam's Bits and Bridles Logo" class="nav-logo">
-        <div class="brand-font">Pam's Bits & Bridles</div>
-      </div>
-      <div class="nav-links">
-        <router-link to="/">Home</router-link>
-        <router-link to="/services">Services</router-link>
-        <router-link to="/booking">Book Appointment</router-link>
-      </div>
-    </nav>
-
     <header class="hero">
       <h1>Booking Page</h1>
       <p>Expertly fitted to your horse's unique needs.</p>
@@ -40,11 +28,6 @@
         </div>
       </section>
     </main>
-
-    <footer>
-      <p>&copy; 2026 Pam's Bits and Bridles. All rights reserved.</p>
-      <p>Contact: (443) 619-3904 | pamsbitsandbridles@gmail.com</p>
-    </footer>
   </div>
 </template>
 
@@ -56,60 +39,12 @@ export default {
 
 <style scoped>
 .home-container {
-  font-family: 'Lato', sans-serif;
-  background-color: #f8f9fa;
   color: #333;
   line-height: 1.6;
 }
 
-h1, h2, h3, .brand-font {
-  font-family: 'Playfair Display', serif;
-}
+h1, h2, h3 { font-family: 'Playfair Display', serif; }
 
-/* Navigation Styles */
-nav {
-  background: #fff;
-  padding: 1rem 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-.brand-container {
-  display: flex;
-  align-items: center;
-}
-
-.nav-logo {
-  height: 100px; /* Large size to read logo text */
-  width: auto;
-  margin-right: 20px;
-  border-radius: 50%;
-}
-
-.brand-font {
-  font-size: 1.7rem; 
-  font-weight: bold; 
-  color: #1A2B49;
-}
-
-nav a {
-  text-decoration: none;
-  color: #1A2B49;
-  margin-left: 20px;
-  font-weight: 600;
-  transition: color 0.3s;
-}
-
-nav a:hover {
-  color: #C5A059;
-}
-
-/* Hero Styles */
 .hero {
   background: linear-gradient(rgba(26, 43, 73, 0.6), rgba(26, 43, 73, 0.6)), 
               url('https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?auto=format&fit=crop&q=80&w=1470') no-repeat center center/cover;
@@ -126,7 +61,6 @@ nav a:hover {
 .hero h1 { font-size: 3.5rem; }
 .hero p { font-size: 1.5rem; font-style: italic; }
 
-/* Main Content Styles */
 main {
   max-width: 1100px;
   margin: 40px auto;
@@ -157,7 +91,6 @@ h2 {
   margin-bottom: 20px;
 }
 
-/* Button Styles */
 .cta-button {
   display: inline-block;
   background: #C5A059;
@@ -167,20 +100,11 @@ h2 {
   border-radius: 4px;
   margin-top: 20px;
   transition: all 0.3s ease;
-  border: 2px solid transparent;
+  font-weight: bold;
 }
 
 .cta-button:hover {
   background: #1A2B49;
-  color: white;
-}
-
-/* Footer Styles */
-footer {
-  text-align: center;
-  padding: 40px 20px;
-  background: #1A2B49;
-  color: #fff;
 }
 
 @media (max-width: 768px) {
