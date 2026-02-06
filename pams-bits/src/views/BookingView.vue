@@ -1,54 +1,155 @@
 <template>
-  <div class="home-container">
-    <header class="hero">
-      <h1>Booking Page</h1>
-      <p>Expertly fitted to your horse's unique needs.</p>
-      <router-link to="/services" class="cta-button">View Our Services</router-link>
+  <div class="booking-container">
+    <header class="hero-booking">
+      <h1>Contact Pam</h1>
+      <p>Have a question or ready to schedule a fitting? Reach out below.</p>
     </header>
 
     <main>
-      <section class="content-section">
-        <div class="image-box">
-          <img src="../assets/Pam Holding Medal.png" alt="Pam holding a medal">
-        </div>
-        <div class="text-box">
-          <h2>Meet Pam</h2>
-          <p>With years of experience in equine ergonomics, Pam ensures that every bit and bridle is more than just equipment—it's a gateway to better communication between horse and rider.</p>
-        </div>
-      </section>
+      <div class="form-wrapper">
+<div v-if="submitted" class="success-message">
+  <h2>Message Sent</h2>
+  <p>Thank you, {{ firstName }}. Pam has received your inquiry and will reach out to you at <strong>{{ email }}</strong> shortly.</p>
+  <button @click="resetForm" class="cta-button-outline">Send Another Message</button>
+</div>
 
-      <section class="content-section reverse">
-        <div class="image-box">
-          <img src="../assets/Pam Jumping.png" alt="Pam jumping over obstacle with horse">
-        </div>
-        <div class="text-box">
-          <h2>Our Mission</h2>
-          <p>What is Bits and Bridles about? It's about safety, style, and the perfect fit. We provide a curated selection of high-quality gear sourced from trusted manufacturers.</p>
-          <router-link to="/booking" class="cta-button">Learn More About Our Fittings</router-link>
-        </div>
-      </section>
+        <form v-else @submit.prevent="handleSubmit" class="contact-form" novalidate>
+          <div class="name-row">
+            <div class="form-group">
+              <label for="firstName">First Name</label>
+              <input 
+                type="text" 
+                id="firstName" 
+                v-model="firstName" 
+                :class="{ 'error-border': errors.firstName }"
+              >
+              <span v-if="errors.firstName" class="error-text">First name is required</span>
+            </div>
+            
+            <div class="form-group">
+              <label for="lastName">Last Name</label>
+              <input 
+                type="text" 
+                id="lastName" 
+                v-model="lastName" 
+                :class="{ 'error-border': errors.lastName }"
+              >
+              <span v-if="errors.lastName" class="error-text">Last name is required</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input 
+              type="email" 
+              id="email" 
+              v-model="email" 
+              :class="{ 'error-border': errors.email }"
+            >
+            <span v-if="errors.email" class="error-text">A valid email is required</span>
+          </div>
+
+          <div class="form-group">
+            <label for="message">How can Pam help you?</label>
+            <textarea 
+              id="message" 
+              v-model="message" 
+              rows="5" 
+              placeholder="Tell Pam about your horse or the services you're interested in..."
+              :class="{ 'error-border': errors.message }"
+            ></textarea>
+            <span v-if="errors.message" class="error-text">Please enter a message</span>
+          </div>
+
+          <button type="submit" class="submit-button">Send Message to Pam</button>
+        </form>
+      </div>
     </main>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'HomeView'
+  name: 'BookingView',
+  data() {
+    return {
+      firstName: '',
+      lastName: '',
+      email: '',
+      message: '',
+      submitted: false,
+      errors: {
+        firstName: false,
+        lastName: false,
+        email: false,
+        message: false
+      }
+    };
+  },
+  methods: {
+    handleSubmit() {
+      // Reset all errors before checking
+      this.errors = {
+        firstName: false,
+        lastName: false,
+        email: false,
+        message: false
+      };
+
+      let hasErrors = false;
+
+      // Check each field
+      if (!this.firstName.trim()) {
+        this.errors.firstName = true;
+        hasErrors = true;
+      }
+      if (!this.lastName.trim()) {
+        this.errors.lastName = true;
+        hasErrors = true;
+      }
+      if (!this.email.trim() || !this.email.includes('@')) {
+        this.errors.email = true;
+        hasErrors = true;
+      }
+      if (!this.message.trim()) {
+        this.errors.message = true;
+        hasErrors = true;
+      }
+
+      // If no errors, show success
+      if (!hasErrors) {
+        this.submitted = true;
+      }
+    },
+    resetForm() {
+      this.submitted = false;
+      this.firstName = '';
+      this.lastName = '';
+      this.email = '';
+      this.message = '';
+      this.errors = {
+        firstName: false,
+        lastName: false,
+        email: false,
+        message: false
+      };
+    }
+  }
 };
 </script>
 
 <style scoped>
-.home-container {
+.booking-container {
   color: #333;
   line-height: 1.6;
 }
 
-h1, h2, h3 { font-family: 'Playfair Display', serif; }
+h1, h2 { font-family: 'Playfair Display', serif; }
 
-.hero {
-  background: linear-gradient(rgba(26, 43, 73, 0.6), rgba(26, 43, 73, 0.6)), 
-              url('https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?auto=format&fit=crop&q=80&w=1470') no-repeat center center/cover;
-  height: 60vh;
+.hero-booking {
+  background: linear-gradient(rgba(26, 43, 73, 0.7), rgba(26, 43, 73, 0.7)), 
+              url('https://images.unsplash.com/photo-1551884831-bbf3cdc67170?auto=format&fit=crop&q=80&w=1470') no-repeat center center/cover;
+  height: 30vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -58,57 +159,134 @@ h1, h2, h3 { font-family: 'Playfair Display', serif; }
   padding: 20px;
 }
 
-.hero h1 { font-size: 3.5rem; }
-.hero p { font-size: 1.5rem; font-style: italic; }
+.hero-booking h1 { font-size: 3rem; margin-bottom: 10px; }
 
 main {
-  max-width: 1100px;
-  margin: 40px auto;
+  max-width: 800px;
+  margin: 40px auto 80px;
   padding: 0 20px;
 }
 
-.content-section {
-  display: flex;
-  align-items: center;
-  gap: 40px;
-  margin-bottom: 80px;
-}
-
-.content-section.reverse { flex-direction: row-reverse; }
-
-.image-box { flex: 1; }
-.text-box { flex: 1; }
-
-.image-box img {
-  width: 100%;
+.form-wrapper {
+  background: white;
+  padding: 40px;
   border-radius: 8px;
-  box-shadow: 10px 10px 0px #C5A059;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  border-top: 6px solid #C5A059;
 }
 
-h2 {
-  font-size: 2.5rem;
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.name-row {
+  display: flex;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+label {
+  font-weight: bold;
+  margin-bottom: 8px;
   color: #1A2B49;
-  margin-bottom: 20px;
 }
 
-.cta-button {
-  display: inline-block;
-  background: #C5A059;
-  color: white;
-  padding: 12px 25px;
-  text-decoration: none;
+input, textarea {
+  padding: 12px;
+  border: 1px solid #ddd;
   border-radius: 4px;
-  margin-top: 20px;
+  font-family: 'Lato', sans-serif;
+  font-size: 1rem;
   transition: all 0.3s ease;
+}
+
+/* Custom placeholder color for the textarea */
+textarea::placeholder {
+  color: #999;
+  font-style: italic;
+  font-size: 0.95rem;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  border-color: #C5A059;
+  box-shadow: 0 0 5px rgba(197, 160, 89, 0.2);
+}
+
+.error-border {
+  border-color: #d9534f !important;
+  background-color: #fff8f8;
+}
+
+.error-text {
+  color: #d9534f;
+  font-size: 0.85rem;
+  margin-top: 5px;
   font-weight: bold;
 }
 
-.cta-button:hover {
+.submit-button {
+  background: #C5A059;
+  color: white;
+  padding: 15px;
+  border: none;
+  border-radius: 4px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin-top: 10px;
+}
+
+.submit-button:hover {
   background: #1A2B49;
 }
 
-@media (max-width: 768px) {
-  .content-section, .content-section.reverse { flex-direction: column; }
-  .hero h1 { font-size: 2.5rem; }
+.success-message {
+  text-align: center;
+  padding: 40px 0;
+}
+
+.success-message h2 {
+  color: #1A2B49; /* Navy for a more formal look */
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.success-message p {
+  font-size: 1.1rem;
+  max-width: 500px;
+  margin: 0 auto 30px;
+  color: #555;
+}
+
+.cta-button-outline {
+  background: transparent;
+  color: #1A2B49;
+  border: 2px solid #1A2B49;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.cta-button-outline:hover {
+  background: #1A2B49;
+  color: white;
+}
+
+@media (max-width: 600px) {
+  .name-row {
+    flex-direction: column;
+    gap: 20px;
+  }
 }
 </style>
