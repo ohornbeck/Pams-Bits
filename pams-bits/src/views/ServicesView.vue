@@ -12,6 +12,27 @@
     </header>
 
     <main>
+
+          <section class="wireframe-row">
+        <div class="row-image img-focus-3">
+          <div class="label-box">What to Expect</div>
+        </div>
+        <div class="row-text">
+          <h3>Your Fitting Journey</h3>
+          <p>You will be provided with a questionnaire prior to our appointment to understand your history. We will then speak on the phone to discuss your specific goals and issues.</p>
+          
+          <div class="sub-steps">
+            <strong>During the fitting:</strong>
+            <ul>
+              <li>Inspection of horse’s head, mouth, and current equipment.</li>
+              <li>Observation of horse and rider in the current setup.</li>
+              <li>Collaborative solutions for bridle fit or bit type.</li>
+              <li>Opportunity to ride in multiple bits for trial or purchase.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
       <section class="wireframe-row">
         <div class="row-image img-focus-1">
           <div class="label-box">What Can We Do</div>
@@ -24,7 +45,7 @@
 
       <section class="wireframe-row">
         <div class="row-image img-focus-2">
-          <div class="label-box">What You Can Expect</div>
+          <div class="label-box">The Consultation</div>
         </div>
         <div class="row-text">
           <h3>Professional Results</h3>
@@ -87,7 +108,7 @@ main { max-width: 1100px; margin: 60px auto; padding: 0 20px; }
 
 .wireframe-row {
   display: flex;
-  background: #e9ecef; 
+  background: #f8f9fa; 
   margin-bottom: 40px;
   align-items: stretch;
   border-radius: 4px;
@@ -97,7 +118,8 @@ main { max-width: 1100px; margin: 60px auto; padding: 0 20px; }
 
 .row-image {
   flex: 0 0 300px;
-  height: 250px;
+  height: auto;
+  min-height: 250px;
   background-size: cover;
   background-position: center;
   position: relative;
@@ -108,14 +130,15 @@ main { max-width: 1100px; margin: 60px auto; padding: 0 20px; }
 
 .img-focus-1 { background-image: url('https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?q=80&w=800'); }
 .img-focus-2 { background-image: url('https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?q=80&w=800'); }
+.img-focus-3 { background-image: url('https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?q=80&w=800'); }
 
 .label-box {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(26, 43, 73, 0.8);
   backdrop-filter: blur(5px);
   color: white;
   padding: 10px 20px;
   font-weight: bold;
-  border: 1px solid rgba(255,255,255,0.3);
+  border: 1px solid #C5A059;
 }
 
 .row-text {
@@ -127,6 +150,22 @@ main { max-width: 1100px; margin: 60px auto; padding: 0 20px; }
 }
 
 .row-text h3 { color: #1A2B49; margin-bottom: 15px; }
+
+.sub-steps {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #dee2e6;
+}
+
+.sub-steps ul {
+  margin-top: 10px;
+  padding-left: 20px;
+}
+
+.sub-steps li {
+  margin-bottom: 8px;
+  list-style-type: square;
+}
 
 .cta-banner {
   background: #1A2B49;
