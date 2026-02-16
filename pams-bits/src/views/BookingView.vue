@@ -7,11 +7,11 @@
 
     <main>
       <div class="form-wrapper">
-<div v-if="submitted" class="success-message">
-  <h2>Message Sent</h2>
-  <p>Thank you, {{ firstName }}. Pam has received your inquiry and will reach out to you at <strong>{{ email }}</strong> shortly.</p>
-  <button @click="resetForm" class="cta-button-outline">Send Another Message</button>
-</div>
+        <div v-if="submitted" class="success-message">
+          <h2>Message Sent</h2>
+          <p>Thank you, {{ firstName }}. Pam has received your inquiry and will reach out to you at <strong>{{ email }}</strong> shortly.</p>
+          <button @click="resetForm" class="cta-button-outline">Send Another Message</button>
+        </div>
 
         <form v-else @submit.prevent="handleSubmit" class="contact-form" novalidate>
           <div class="name-row">
@@ -20,6 +20,7 @@
               <input 
                 type="text" 
                 id="firstName" 
+                name="firstName"
                 v-model="firstName" 
                 :class="{ 'error-border': errors.firstName }"
               >
@@ -31,6 +32,7 @@
               <input 
                 type="text" 
                 id="lastName" 
+                name="lastName"
                 v-model="lastName" 
                 :class="{ 'error-border': errors.lastName }"
               >
@@ -43,6 +45,7 @@
             <input 
               type="email" 
               id="email" 
+              name="email"
               v-model="email" 
               :class="{ 'error-border': errors.email }"
             >
@@ -53,6 +56,7 @@
             <label for="message">How can Pam help you?</label>
             <textarea 
               id="message" 
+              name="message"
               v-model="message" 
               rows="5" 
               placeholder="Tell Pam about your horse or the services you're interested in..."
@@ -61,7 +65,9 @@
             <span v-if="errors.message" class="error-text">Please enter a message</span>
           </div>
 
-          <button type="submit" class="submit-button">Send Message to Pam</button>
+          <button type="submit" class="submit-button" :disabled="isSubmitting">
+            {{ isSubmitting ? 'Sending...' : 'Send Message to Pam' }}
+          </button>
         </form>
       </div>
     </main>
@@ -78,6 +84,7 @@ export default {
       email: '',
       message: '',
       submitted: false,
+      isSubmitting: false,
       errors: {
         firstName: false,
         lastName: false,
@@ -87,38 +94,43 @@ export default {
     };
   },
   methods: {
-    handleSubmit() {
-      // Reset all errors before checking
-      this.errors = {
-        firstName: false,
-        lastName: false,
-        email: false,
-        message: false
-      };
-
+    async handleSubmit() {
+      // 1. Reset Errors
+      this.errors = { firstName: false, lastName: false, email: false, message: false };
       let hasErrors = false;
 
-      // Check each field
-      if (!this.firstName.trim()) {
-        this.errors.firstName = true;
-        hasErrors = true;
-      }
-      if (!this.lastName.trim()) {
-        this.errors.lastName = true;
-        hasErrors = true;
-      }
-      if (!this.email.trim() || !this.email.includes('@')) {
-        this.errors.email = true;
-        hasErrors = true;
-      }
-      if (!this.message.trim()) {
-        this.errors.message = true;
-        hasErrors = true;
-      }
+      // 2. Validation Logic
+      if (!this.firstName.trim()) { this.errors.firstName = true; hasErrors = true; }
+      if (!this.lastName.trim()) { this.errors.lastName = true; hasErrors = true; }
+      if (!this.email.trim() || !this.email.includes('@')) { this.errors.email = true; hasErrors = true; }
+      if (!this.message.trim()) { this.errors.message = true; hasErrors = true; }
 
-      // If no errors, show success
-      if (!hasErrors) {
-        this.submitted = true;
+      if (hasErrors) return;
+
+      // 3. Send Data to Formspree
+      this.isSubmitting = true;
+
+      try {
+        const response = await fetch("https://formspree.io/f/YOUR_FORMSPREE_ID", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
+          body: JSON.stringify({
+            firstName: this.firstName,
+            lastName: this.lastName,
+            email: this.email,
+            message: this.message
+          })
+        });
+
+        if (response.ok) {
+          this.submitted = true;
+        } else {
+          alert("Oops! There was a problem sending your message.");
+        }
+      } catch (error) {
+        alert("Oops! There was a connection error.");
+      } finally {
+        this.isSubmitting = false;
       }
     },
     resetForm() {
@@ -127,23 +139,14 @@ export default {
       this.lastName = '';
       this.email = '';
       this.message = '';
-      this.errors = {
-        firstName: false,
-        lastName: false,
-        email: false,
-        message: false
-      };
     }
   }
 };
 </script>
 
 <style scoped>
-.booking-container {
-  color: #333;
-  line-height: 1.6;
-}
-
+/* Keeping your existing styles exactly as they were */
+.booking-container { color: #333; line-height: 1.6; }
 h1, h2 { font-family: 'Playfair Display', serif; }
 
 .hero-booking {
@@ -161,11 +164,7 @@ h1, h2 { font-family: 'Playfair Display', serif; }
 
 .hero-booking h1 { font-size: 3rem; margin-bottom: 10px; }
 
-main {
-  max-width: 800px;
-  margin: 40px auto 80px;
-  padding: 0 20px;
-}
+main { max-width: 800px; margin: 40px auto 80px; padding: 0 20px; }
 
 .form-wrapper {
   background: white;
@@ -175,28 +174,11 @@ main {
   border-top: 6px solid #C5A059;
 }
 
-.contact-form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
+.contact-form { display: flex; flex-direction: column; gap: 20px; }
+.name-row { display: flex; gap: 20px; }
+.form-group { display: flex; flex-direction: column; flex: 1; }
 
-.name-row {
-  display: flex;
-  gap: 20px;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
-
-label {
-  font-weight: bold;
-  margin-bottom: 8px;
-  color: #1A2B49;
-}
+label { font-weight: bold; margin-bottom: 8px; color: #1A2B49; }
 
 input, textarea {
   padding: 12px;
@@ -207,30 +189,11 @@ input, textarea {
   transition: all 0.3s ease;
 }
 
-/* Custom placeholder color for the textarea */
-textarea::placeholder {
-  color: #999;
-  font-style: italic;
-  font-size: 0.95rem;
-}
+textarea::placeholder { color: #999; font-style: italic; font-size: 0.95rem; }
+input:focus, textarea:focus { outline: none; border-color: #C5A059; box-shadow: 0 0 5px rgba(197, 160, 89, 0.2); }
 
-input:focus, textarea:focus {
-  outline: none;
-  border-color: #C5A059;
-  box-shadow: 0 0 5px rgba(197, 160, 89, 0.2);
-}
-
-.error-border {
-  border-color: #d9534f !important;
-  background-color: #fff8f8;
-}
-
-.error-text {
-  color: #d9534f;
-  font-size: 0.85rem;
-  margin-top: 5px;
-  font-weight: bold;
-}
+.error-border { border-color: #d9534f !important; background-color: #fff8f8; }
+.error-text { color: #d9534f; font-size: 0.85rem; margin-top: 5px; font-weight: bold; }
 
 .submit-button {
   background: #C5A059;
@@ -245,27 +208,12 @@ input:focus, textarea:focus {
   margin-top: 10px;
 }
 
-.submit-button:hover {
-  background: #1A2B49;
-}
+.submit-button:disabled { background: #ccc; cursor: not-allowed; }
+.submit-button:hover:not(:disabled) { background: #1A2B49; }
 
-.success-message {
-  text-align: center;
-  padding: 40px 0;
-}
-
-.success-message h2 {
-  color: #1A2B49; /* Navy for a more formal look */
-  font-size: 2.5rem;
-  margin-bottom: 20px;
-}
-
-.success-message p {
-  font-size: 1.1rem;
-  max-width: 500px;
-  margin: 0 auto 30px;
-  color: #555;
-}
+.success-message { text-align: center; padding: 40px 0; }
+.success-message h2 { color: #1A2B49; font-size: 2.5rem; margin-bottom: 20px; }
+.success-message p { font-size: 1.1rem; max-width: 500px; margin: 0 auto 30px; color: #555; }
 
 .cta-button-outline {
   background: transparent;
@@ -278,15 +226,9 @@ input:focus, textarea:focus {
   margin-top: 20px;
 }
 
-.cta-button-outline:hover {
-  background: #1A2B49;
-  color: white;
-}
+.cta-button-outline:hover { background: #1A2B49; color: white; }
 
 @media (max-width: 600px) {
-  .name-row {
-    flex-direction: column;
-    gap: 20px;
-  }
+  .name-row { flex-direction: column; gap: 20px; }
 }
 </style>
