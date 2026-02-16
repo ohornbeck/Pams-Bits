@@ -32,7 +32,7 @@
           <p style="margin-bottom: 20px;">Regardless of your level of riding, your horse will perform better for you if he is comfortable in his bit and bridle.  Is your bridle something that needs adjustment - or do you need a different style to accommodate a specific type of head?  Is he comfortable in his bit that you are using?  Do you need to try a different size or different bit action altogether?</p>
 
            <p style="margin-bottom: 20px;">There are so many modern types of bits that have been researched and designed by companies specifically to address certain needs of horse and rider.  I am here to help you navigate that journey and find the best possible combination of bit and bridle that makes your horse comfortable and you as effective a rider as you can be. </p>
-          <router-link to="/booking" class="cta-button">Learn More About Our Fittings</router-link>
+          <router-link to="/booking" class="cta-button">Have Questions?</router-link>
         </div>
       </section>
     </main>

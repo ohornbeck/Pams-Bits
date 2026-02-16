@@ -12,8 +12,7 @@
     </header>
 
     <main>
-
-          <section class="wireframe-row">
+      <section class="wireframe-row">
         <div class="row-image img-focus-3">
           <div class="label-box">What to Expect</div>
         </div>
@@ -53,6 +52,20 @@
         </div>
       </section>
 
+      <section class="suppliers-section">
+        <h2>Our Trusted Suppliers</h2>
+        <div class="logo-slider">
+          <div class="logo-track">
+            <div v-for="(logo, index) in logos" :key="'a' + index" class="logo-slide">
+              <img :src="require(`@/assets/neue-scheule.png`)" :alt="logo" />
+            </div>
+            <div v-for="(logo, index) in logos" :key="'b' + index" class="logo-slide">
+              <img :src="require(`@/assets/sprenger.png`)" :alt="logo" />
+            </div>
+          </div>
+        </div>
+      </section>
+
       <div class="cta-banner">
         <h2>Ready for a better ride?</h2>
         <router-link to="/booking" class="cta-button">Book an Appointment</router-link>
@@ -63,7 +76,26 @@
 
 <script>
 export default {
-  name: 'ServicesView'
+  name: 'ServicesView',
+  data() {
+    return {
+      // Add your png filenames here
+      logos: [
+        'neue-scheule.png',
+        'bit1.png',
+        'bit2.png',
+        'bit3.png',
+        'sprenger.png',
+        'bit4.png',
+        'bit5.png',
+        'bit6.png',
+        'trust.png',
+        'bit7.png',
+        'bit8.png',
+        'bit9.png'
+      ]
+    }
+  }
 };
 </script>
 
@@ -165,6 +197,66 @@ main { max-width: 1100px; margin: 60px auto; padding: 0 20px; }
 .sub-steps li {
   margin-bottom: 8px;
   list-style-type: square;
+}
+
+/* SUPPLIERS SECTION STYLES */
+.suppliers-section {
+  margin-top: 80px;
+  text-align: center;
+}
+
+.suppliers-section h2 {
+  margin-bottom: 40px;
+  color: #1A2B49;
+}
+
+.logo-slider {
+  overflow: hidden;
+  padding: 20px 0;
+  background: white;
+  white-space: nowrap;
+  position: relative;
+}
+
+/* Gradient fade on the sides for a professional look */
+.logo-slider::before, .logo-slider::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 100px;
+  height: 100%;
+  z-index: 2;
+}
+.logo-slider::before { left: 0; background: linear-gradient(to right, white, transparent); }
+.logo-slider::after { right: 0; background: linear-gradient(to left, white, transparent); }
+
+.logo-track {
+  display: inline-flex;
+  align-items: center;
+  animation: scroll 30s linear infinite;
+  width: max-content;
+}
+
+.logo-slide {
+  margin: 0 40px;
+}
+
+.logo-slide img {
+  height: 60px; /* Adjust based on your logo shapes */
+  width: auto;
+  filter: grayscale(100%); /* Optional: makes logos match better */
+  opacity: 0.7;
+  transition: all 0.3s ease;
+}
+
+.logo-slide img:hover {
+  filter: grayscale(0%);
+  opacity: 1;
+}
+
+@keyframes scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }
 
 .cta-banner {
