@@ -114,9 +114,31 @@ h1, h2, h3 { font-family: 'Playfair Display', serif; }
 
 /* 3 image section */
 .hero-triple { display: flex; height: 45vh; overflow: hidden; background: #1A2B49; }
-.hero-img { flex: 1; background-size: cover; background-position: center; transition: flex 0.5s ease; filter: brightness(0.7); }
-.hero-img:hover { flex: 1.2; filter: brightness(0.9); }
-.img-1, .img-2, .img-3 { background-image: url('https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?q=80&w=800'); }
+.hero-img { 
+  flex: 1; 
+  background-size: cover; 
+  background-position: center; 
+  transition: flex 0.5s ease;
+  filter: brightness(0.7); 
+  }
+
+.hero-img:hover { 
+  flex: 1.2; 
+  filter: brightness(0.9); 
+  }
+
+.img-1 { 
+  background-image: url('../assets/Website Dante gallop.jpg');
+  filter: blur(7px); 
+  }
+.img-2 { 
+  background-image: url('../assets/Website Dante gallop.jpg'); 
+  filter: brightness(0.9);
+  }
+.img-3 { 
+  background-image: url('../assets/Website Dante gallop.jpg'); 
+  filter: blur(7px);
+  }
 
 
 .hero-wrapper {
@@ -148,7 +170,25 @@ main { max-width: 1100px; margin: 60px auto; padding: 0 20px; }
   flex: 0 0 300px; min-height: 250px; background-size: cover; background-position: center;
   display: flex; align-items: center; justify-content: center;
 }
-.img-focus-1, .img-focus-2, .img-focus-3 { background-image: url('https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?q=80&w=800'); }
+
+
+/*picture 1*/
+.img-focus-3 { 
+  background-image: url('../assets/website jax head.jpg'); 
+  background-size: 190%;     
+  background-position: 60% 10%;
+  background-repeat: no-repeat;
+}
+
+/*picture 2*/
+.img-focus-1 { 
+  background-image: url('../assets/website jax head.jpg'); 
+}
+
+/*picture 3*/
+.img-focus-2 { 
+  background-image: url('https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?q=80&w=800'); 
+}
 
 .label-box { 
   background: rgba(26, 43, 73, 0.8); color: white; padding: 10px 20px; 
