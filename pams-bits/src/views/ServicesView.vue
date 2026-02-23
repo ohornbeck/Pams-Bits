@@ -19,7 +19,7 @@
         </div>
         <div class="row-text">
           <h3>Your Fitting Journey</h3>
-          <p>You will be provided with a questionnaire prior to our appointment to understand your history. We will then speak on the phone to discuss your specific goals and issues.</p>
+          <p>Prior to your appointment, you will be provided with a questionnaire which will help Pam understand your history and your needs for bit fitting. Pam will then speak on the phone with you to discuss your specific goals and issues.</p>
           <div class="sub-steps">
             <strong>During the fitting:</strong>
             <ul>
@@ -38,7 +38,7 @@
         </div>
         <div class="row-text">
           <h3>Equine Ergonomics</h3>
-          <p>We analyze the biomechanics of your horse to ensure that every piece of tack supports natural movement. This includes mouth measurements and nerve pressure relief.</p>
+          <p>We analyze the biomechanics of your horse's head and mouth to ensure that both your bridle and bit support natural movement. This includes mouth anatomy and measurements which leads to equine comfort including mouth pressure equalization and nerve pressure relief.</p>
         </div>
       </section>
 
@@ -48,7 +48,7 @@
         </div>
         <div class="row-text">
           <h3>Professional Results</h3>
-          <p>Expect a thorough evaluation and a noticeable difference in your horse's comfort. We provide a detailed report of all adjustments and recommendations.</p>
+          <p>Expect a thorough evaluation and a noticeable difference in your horse's comfort. We provide a detailed report of all adjustments and recommendations as well as suggested follow up plans and information on how to perform mouth and head examinations yourself.</p>
         </div>
       </section>
 
