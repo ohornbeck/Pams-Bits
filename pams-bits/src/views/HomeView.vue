@@ -55,7 +55,7 @@ h1, h2, h3 { font-family: 'Playfair Display', serif; }
 
 .hero {
   background: linear-gradient(rgba(26, 43, 73, 0.6), rgba(26, 43, 73, 0.6)), 
-              url('https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?auto=format&fit=crop&q=80&w=1470') no-repeat center center/cover;
+              url('../assets/Website Dante gallop.jpg') no-repeat center 70%/cover;
   height: 60vh;
   display: flex;
   flex-direction: column;
