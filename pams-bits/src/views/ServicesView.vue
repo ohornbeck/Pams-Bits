@@ -82,17 +82,17 @@ export default {
     return {
       logos: [
         'neue-scheule.png',
-        'bit1.png',
-        'bit2.png',
-        'bit3.png',
+        'NS verbindend.png',
+        'NS turtle top.png',
+        'NS turtle tactio.png',
         'sprenger.png',
-        'bit4.png',
-        'bit5.png',
-        'bit6.png',
+        'HS WH ultra.png',
+        'HSduo.png',
+        'HSKK.png',
         'trust.png',
-        'bit7.png',
-        'bit8.png',
-        'bit9.png'
+        'Trust innosense.png',
+        'Trust sweet iron.png',
+        'trust waterford.png'
       ]
     };
   },
@@ -128,16 +128,15 @@ h1, h2, h3 { font-family: 'Playfair Display', serif; }
   }
 
 .img-1 { 
-  background-image: url('../assets/Website Dante gallop.jpg');
-  filter: blur(7px); 
+  background-image: url('../assets/Close up of horse.png');
   }
+
 .img-2 { 
-  background-image: url('../assets/Website Dante gallop.jpg'); 
-  filter: brightness(0.9);
+  background-image: url('../assets/up close of horse 3.png'); 
   }
+
 .img-3 { 
-  background-image: url('../assets/Website Dante gallop.jpg'); 
-  filter: blur(7px);
+  background-image: url('../assets/up close of horse 2.png'); 
   }
 
 
@@ -174,20 +173,20 @@ main { max-width: 1100px; margin: 60px auto; padding: 0 20px; }
 
 /*picture 1*/
 .img-focus-3 { 
-  background-image: url('../assets/website jax head.jpg'); 
-  background-size: 190%;     
-  background-position: 60% 10%;
-  background-repeat: no-repeat;
+  background-image: url('../assets/pam working 1.png'); 
+  /*background-size: 190%; */
+  /*background-position: 60% 10%; */
+ /* background-repeat: no-repeat; */
 }
 
 /*picture 2*/
 .img-focus-1 { 
-  background-image: url('../assets/website jax head.jpg'); 
+  background-image: url('../assets/pam working 3.png'); 
 }
 
 /*picture 3*/
 .img-focus-2 { 
-  background-image: url('https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?q=80&w=800'); 
+  background-image: url('../assets/pam working 4.png'); 
 }
 
 .label-box { 
