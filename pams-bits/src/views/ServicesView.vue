@@ -67,8 +67,12 @@
       </section>
 
       <div class="cta-banner">
-        <div class="cta-content"> <h2>Ready for a better ride?</h2>
-          <router-link to="/booking" class="cta-button">Book an Appointment</router-link>
+        <div class="cta-content"> 
+          <h2>Ready for a better ride?</h2>
+          <div class="contact-stack">
+            <p>Reach out to Pam at <a href="mailto:Pamsbitsandbridles@gmail.com">Pamsbitsandbridles@gmail.com</a></p>
+            <p>Or call at <a href="tel:+14436193904">+1 (443) 619-3904</a></p>
+          </div>
         </div>
       </div>
     </main>
@@ -255,5 +259,48 @@ main { max-width: 1100px; margin: 60px auto; padding: 0 20px; }
   .img-1, .img-3 { display: none; }
   .wireframe-row { flex-direction: column; }
   .row-image { flex: 0 0 200px; width: 100%; }
+}
+
+/* Styling for the new contact line inside the Navy banner */
+.elegant-contact-services {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.elegant-contact-services .contact-line {
+  font-size: 1.2rem;
+  color: #e0e0e0; 
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+}
+
+.contact-stack {
+  margin-top: 25px;
+  display: flex;
+  flex-direction: column; 
+  gap: 12px;
+}
+
+.contact-stack p {
+  font-size: 1.2rem;
+  color: #FFFFFF; 
+  margin: 0;
+}
+
+.contact-stack a {
+  color: #C5A059; 
+  text-decoration: none;
+  font-weight: 600;
+  border-bottom: 1px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.contact-stack a:hover {
+  color: #FFFFFF;
+  border-bottom: 1px solid #FFFFFF;
 }
 </style>

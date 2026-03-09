@@ -32,12 +32,20 @@
           <p style="margin-bottom: 20px;">Regardless of your level of riding, your horse will perform better for you if he is comfortable in his bit and bridle.  Is your bridle something that needs adjustment - or do you need a different style to accommodate a specific type of head?  Is he comfortable in his bit that you are using?  Do you need to try a different size or different bit action altogether?</p>
 
            <p style="margin-bottom: 20px;">There are so many modern types of bits that have been researched and designed by companies specifically to address certain needs of horse and rider.  Pam is here to help you navigate that journey and find the best possible combination of bit and bridle that makes your horse comfortable and you as effective a rider as you can be. </p>
-          <router-link to="/booking" class="cta-button">Have Questions?</router-link>
+          <div class="elegant-contact">
+            <div class="line"></div>
+            <div class="contact-text">
+              <h3>Have Questions?</h3>
+              <p>Email Pam at <a href="mailto:Pamsbitsandbridles@gmail.com">Pamsbitsandbridles@gmail.com</a></p>
+              <p>Or call at <a href="tel:+1234567890">+1 (443) 619-3904</a></p>
+            </div>
+          </div>
         </div>
       </section>
     </main>
   </div>
 </template>
+
 
 <script>
 export default {
@@ -118,5 +126,63 @@ h2 {
 @media (max-width: 768px) {
   .content-section, .content-section.reverse { flex-direction: column; }
   .hero h1 { font-size: 2.5rem; }
+}
+
+.elegant-contact {
+  display: flex;
+  align-items: center;
+  margin-top: 50px;
+  padding: 20px 0;
+  gap: 20px;
+}
+
+
+.elegant-contact .line {
+  width: 2px;
+  height: 60px;
+  background-color: #C5A059; 
+}
+
+.elegant-contact h3 {
+  margin: 0;
+  font-family: 'Playfair Display', serif; 
+  font-size: 1.6rem;
+  color: #1A2B49; 
+  letter-spacing: 1px;
+}
+
+.elegant-contact p {
+  margin: 5px 0 0 0;
+  font-style: italic;
+  color: #555;
+  font-size: 1.1rem;
+}
+
+.elegant-contact a {
+  color: #1A2B49;
+  text-decoration: none;
+  font-weight: bold;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+
+.elegant-contact a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 1px;
+  bottom: -2px;
+  left: 0;
+  background-color: #C5A059;
+  transition: width 0.3s ease;
+}
+
+.elegant-contact a:hover {
+  color: #C5A059;
+}
+
+.elegant-contact a:hover::after {
+  width: 100%;
 }
 </style>
