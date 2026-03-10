@@ -67,8 +67,12 @@
       </section>
 
       <div class="cta-banner">
-        <div class="cta-content"> <h2>Ready for a better ride?</h2>
-          <router-link to="/booking" class="cta-button">Book an Appointment</router-link>
+        <div class="cta-content"> 
+          <h2>Ready for a better ride?</h2>
+          <div class="contact-stack">
+            <p>Reach out to Pam at <a href="mailto:Pamsbitsandbridles@gmail.com">Pamsbitsandbridles@gmail.com</a></p>
+            <p>Or call at <a href="tel:+14436193904">+1 (443) 619-3904</a></p>
+          </div>
         </div>
       </div>
     </main>
@@ -82,17 +86,17 @@ export default {
     return {
       logos: [
         'neue-scheule.png',
-        'bit1.png',
-        'bit2.png',
-        'bit3.png',
+        'NS verbindend.png',
+        'NS turtle top.png',
+        'NS turtle tactio.png',
         'sprenger.png',
-        'bit4.png',
-        'bit5.png',
-        'bit6.png',
+        'HS WH ultra.png',
+        'HSduo.png',
+        'HSKK.png',
         'trust.png',
-        'bit7.png',
-        'bit8.png',
-        'bit9.png'
+        'Trust innosense.png',
+        'Trust sweet iron.png',
+        'trust waterford.png'
       ]
     };
   },
@@ -114,9 +118,30 @@ h1, h2, h3 { font-family: 'Playfair Display', serif; }
 
 /* 3 image section */
 .hero-triple { display: flex; height: 45vh; overflow: hidden; background: #1A2B49; }
-.hero-img { flex: 1; background-size: cover; background-position: center; transition: flex 0.5s ease; filter: brightness(0.7); }
-.hero-img:hover { flex: 1.2; filter: brightness(0.9); }
-.img-1, .img-2, .img-3 { background-image: url('https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?q=80&w=800'); }
+.hero-img { 
+  flex: 1; 
+  background-size: cover; 
+  background-position: center; 
+  transition: flex 0.5s ease;
+  filter: brightness(0.7); 
+  }
+
+.hero-img:hover { 
+  flex: 1.2; 
+  filter: brightness(0.9); 
+  }
+
+.img-1 { 
+  background-image: url('../assets/Close up of horse.png');
+  }
+
+.img-2 { 
+  background-image: url('../assets/up close of horse 3.png'); 
+  }
+
+.img-3 { 
+  background-image: url('../assets/up close of horse 2.png'); 
+  }
 
 
 .hero-wrapper {
@@ -148,7 +173,25 @@ main { max-width: 1100px; margin: 60px auto; padding: 0 20px; }
   flex: 0 0 300px; min-height: 250px; background-size: cover; background-position: center;
   display: flex; align-items: center; justify-content: center;
 }
-.img-focus-1, .img-focus-2, .img-focus-3 { background-image: url('https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?q=80&w=800'); }
+
+
+/*picture 1*/
+.img-focus-3 { 
+  background-image: url('../assets/pam working 1.png'); 
+  /*background-size: 190%; */
+  /*background-position: 60% 10%; */
+ /* background-repeat: no-repeat; */
+}
+
+/*picture 2*/
+.img-focus-1 { 
+  background-image: url('../assets/pam working 3.png'); 
+}
+
+/*picture 3*/
+.img-focus-2 { 
+  background-image: url('../assets/pam working 4.png'); 
+}
 
 .label-box { 
   background: rgba(26, 43, 73, 0.8); color: white; padding: 10px 20px; 
@@ -216,5 +259,48 @@ main { max-width: 1100px; margin: 60px auto; padding: 0 20px; }
   .img-1, .img-3 { display: none; }
   .wireframe-row { flex-direction: column; }
   .row-image { flex: 0 0 200px; width: 100%; }
+}
+
+/* Styling for the new contact line inside the Navy banner */
+.elegant-contact-services {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.elegant-contact-services .contact-line {
+  font-size: 1.2rem;
+  color: #e0e0e0; 
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+}
+
+.contact-stack {
+  margin-top: 25px;
+  display: flex;
+  flex-direction: column; 
+  gap: 12px;
+}
+
+.contact-stack p {
+  font-size: 1.2rem;
+  color: #FFFFFF; 
+  margin: 0;
+}
+
+.contact-stack a {
+  color: #C5A059; 
+  text-decoration: none;
+  font-weight: 600;
+  border-bottom: 1px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.contact-stack a:hover {
+  color: #FFFFFF;
+  border-bottom: 1px solid #FFFFFF;
 }
 </style>
