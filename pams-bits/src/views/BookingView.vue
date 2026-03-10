@@ -14,6 +14,12 @@
         </div>
 
         <form v-else @submit.prevent="handleSubmit" class="contact-form" novalidate>
+          <div class="hidden-field" aria-hidden="true">
+            <label for="nickname">If you are human, leave this blank</label>
+            <input type="text" id="nickname" v-model="honeypot" tabindex="-1" autocomplete="off">
+          </div> 
+          <!--Note 2-->
+
           <div class="name-row">
             <div class="form-group">
               <label for="firstName">First Name</label>
@@ -79,6 +85,7 @@ export default {
   name: 'BookingView',
   data() {
     return {
+      honeypot: '', // Note 2 Anti-bot
       firstName: '',
       lastName: '',
       email: '',
@@ -95,6 +102,12 @@ export default {
   },
   methods: {
     async handleSubmit() {
+      // 0. Check if a bot is attempting to submit a form (Note 2)
+      if (this.honeypot.length > 0) {
+        console.log("Bot submission ignored.");
+        this.submitted = true; // Pretend it worked so the bot doesn't keep trying
+        return;
+      }
       // 1. Reset Errors
       this.errors = { firstName: false, lastName: false, email: false, message: false };
       let hasErrors = false;
@@ -111,7 +124,7 @@ export default {
       this.isSubmitting = true;
 
       try {
-        const response = await fetch("https://formspree.io/f/xzdagnpe", {
+        const response = await fetch("https://formspree.io/f/xzdagnpe", { // NOTE 1
           method: "POST",
           headers: { "Content-Type": "application/json", "Accept": "application/json" },
           body: JSON.stringify({
@@ -225,6 +238,13 @@ input:focus, textarea:focus { outline: none; border-color: #C5A059; box-shadow: 
   cursor: pointer;
   margin-top: 20px;
 }
+
+.hidden-field {
+  display: none !important;
+  visibility: hidden;
+  position: absolute;
+  left: -5000px;
+} /* Part of Note 2 */
 
 .cta-button-outline:hover { background: #1A2B49; color: white; }
 
