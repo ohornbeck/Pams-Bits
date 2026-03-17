@@ -5,72 +5,13 @@
       <p>Have a question or ready to schedule a fitting? Reach out below.</p>
     </header>
 
-    <main>
-      <div class="form-wrapper">
-        <div v-if="submitted" class="success-message">
-          <h2>Message Sent</h2>
-          <p>Thank you, {{ firstName }}. Pam has received your inquiry and will reach out to you at <strong>{{ email }}</strong> shortly.</p>
-          <button @click="resetForm" class="cta-button-outline">Send Another Message</button>
-        </div>
-
-        <form v-else @submit.prevent="handleSubmit" class="contact-form" novalidate>
-          <div class="name-row">
-            <div class="form-group">
-              <label for="firstName">First Name</label>
-              <input 
-                type="text" 
-                id="firstName" 
-                name="firstName"
-                v-model="firstName" 
-                :class="{ 'error-border': errors.firstName }"
-              >
-              <span v-if="errors.firstName" class="error-text">First name is required</span>
-            </div>
-            
-            <div class="form-group">
-              <label for="lastName">Last Name</label>
-              <input 
-                type="text" 
-                id="lastName" 
-                name="lastName"
-                v-model="lastName" 
-                :class="{ 'error-border': errors.lastName }"
-              >
-              <span v-if="errors.lastName" class="error-text">Last name is required</span>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="email">Email Address</label>
-            <input 
-              type="email" 
-              id="email" 
-              name="email"
-              v-model="email" 
-              :class="{ 'error-border': errors.email }"
-            >
-            <span v-if="errors.email" class="error-text">A valid email is required</span>
-          </div>
-
-          <div class="form-group">
-            <label for="message">How can Pam help you?</label>
-            <textarea 
-              id="message" 
-              name="message"
-              v-model="message" 
-              rows="5" 
-              placeholder="Tell Pam about your horse or the services you're interested in..."
-              :class="{ 'error-border': errors.message }"
-            ></textarea>
-            <span v-if="errors.message" class="error-text">Please enter a message</span>
-          </div>
-
-          <button type="submit" class="submit-button" :disabled="isSubmitting">
-            {{ isSubmitting ? 'Sending...' : 'Send Message to Pam' }}
-          </button>
-        </form>
-      </div>
-    </main>
+<main>
+  <div class="form-wrapper">
+    <div class="iframe-container">
+      <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSc_iyWBOoJ9fXBBdzlJqHv_7-bUAsQvH1yWCh0FCZbWyTpiWA/viewform?embedded=true" width="640" height="2939" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+    </div>
+  </div>
+</main>
   </div>
 </template>
 
