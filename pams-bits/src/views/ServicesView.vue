@@ -56,10 +56,10 @@
         <h2>Our Trusted Suppliers</h2>
         <div class="logo-slider">
           <div class="logo-track">
-            <div v-for="(logo, index) in logos" :key="'a' + index" class="logo-slide">
+            <div v-for="(logo, index) in logos" :key="'a' + index" class="logo-slide" loading="lazy">
               <img :src="getImgUrl(logo)" :alt="logo" />
             </div>
-            <div v-for="(logo, index) in logos" :key="'b' + index" class="logo-slide">
+            <div v-for="(logo, index) in logos" :key="'b' + index" class="logo-slide" loading="lazy">
               <img :src="getImgUrl(logo)" :alt="logo" />
             </div>
           </div>
@@ -132,15 +132,15 @@ h1, h2, h3 { font-family: 'Playfair Display', serif; }
   }
 
 .img-1 { 
-  background-image: url('../assets/Close up of horse.png');
+  background-image: url('../assets/Close up of horse.jpg');
   }
 
 .img-2 { 
-  background-image: url('../assets/up close of horse 3.png'); 
+  background-image: url('../assets/up close of horse 3.jpg');
   }
 
 .img-3 { 
-  background-image: url('../assets/up close of horse 2.png'); 
+  background-image: url('../assets/up close of horse 2.jpg');
   }
 
 
@@ -177,7 +177,7 @@ main { max-width: 1100px; margin: 60px auto; padding: 0 20px; }
 
 /*picture 1*/
 .img-focus-3 { 
-  background-image: url('../assets/pam working 1.png'); 
+  background-image: url('../assets/pam working 1.jpg');
   /*background-size: 190%; */
   /*background-position: 60% 10%; */
  /* background-repeat: no-repeat; */
@@ -185,12 +185,12 @@ main { max-width: 1100px; margin: 60px auto; padding: 0 20px; }
 
 /*picture 2*/
 .img-focus-1 { 
-  background-image: url('../assets/pam working 3.png'); 
+  background-image: url('../assets/pam working 3.jpg');
 }
 
 /*picture 3*/
 .img-focus-2 { 
-  background-image: url('../assets/pam working 4.png'); 
+  background-image: url('../assets/pam working 4.jpg');
 }
 
 .label-box { 

@@ -9,7 +9,7 @@
     <main>
       <section class="content-section">
         <div class="image-box">
-          <img src="../assets/Pam Holding Medal.png" alt="Pam holding a medal">
+          <img src="../assets/Pam Holding Medal.jpg" alt="Pam holding a medal">
         </div>
         <div class="text-box">
           <h2>Meet Pam</h2>
@@ -21,7 +21,7 @@
 
       <section class="content-section reverse">
         <div class="image-box">
-          <img src="../assets/Pam Jumping.png" alt="Pam jumping over obstacle with horse">
+          <img src="../assets/Pam Jumping.jpg" alt="Pam jumping over obstacle with horse">
         </div>
         <div class="text-box">
           <h2>Our Mission</h2>
@@ -63,7 +63,7 @@ h1, h2, h3 { font-family: 'Playfair Display', serif; }
 
 .hero {
   background: linear-gradient(rgba(26, 43, 73, 0.6), rgba(26, 43, 73, 0.6)), 
-              url('../assets/Website Dante gallop.jpg') no-repeat center 70%/cover;
+              url('../assets/Website Dante gallop.jpeg') no-repeat center 70%/cover;
   height: 60vh;
   display: flex;
   flex-direction: column;
