@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView'
 import ServicesView from '@/views/ServicesView'
+import BookingView from '@/views/BookingView'
 
 const routes = [
   {
@@ -13,11 +14,11 @@ const routes = [
     name: 'services',
     component: ServicesView
   },
-  /*{
+  {
     path:'/booking',
     name:'booking',
     component: BookingView
-  }*/
+  }
 ]
 
 const router = createRouter({

@@ -7,6 +7,7 @@
     <div class="nav-links">
       <router-link to="/">Home</router-link>
       <router-link to="/services">Services</router-link>
+      <router-link to="/booking">Contact Pam</router-link>
     </div>
   </nav>
 </template>
