@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home | Pam's Bits and Bridles</title>
     <meta name="description" content="About Pam's Bits and Bridles. Learn about Pam's background and mission.">
-    
+
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400&display=swap" rel="stylesheet">
 
     <style>
+        /* CSS Reset */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -16,7 +17,7 @@
         }
 
         body {
-            font-family: 'Lato', sans-serif; /* Clean body font */
+            font-family: 'Lato', sans-serif;
             background-color: #f4f1ee;
             color: #333;
             line-height: 1.6;
@@ -26,7 +27,7 @@
             font-family: 'Playfair Display', serif;
         }
 
-        /* Navigation */
+        /* --- Navigation Styles --- */
         nav {
             background: #fff;
             padding: 1rem 20px;
@@ -39,22 +40,35 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
+        .brand-font {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #b85c38;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+        }
+
         nav a {
             text-decoration: none;
             color: #333;
             margin-left: 20px;
             font-weight: 600;
             transition: color 0.3s;
+            white-space: nowrap; /* Prevents text wrapping on small screens */
         }
 
         nav a:hover {
             color: #b85c38;
         }
 
-        /* Hero Section */
+        /* --- Hero Section --- */
         .hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
-                        url('https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?auto=format&fit=crop&q=80&w=1470') no-repeat center center/cover;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+            url('https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?auto=format&fit=crop&q=80&w=1470') no-repeat center center/cover;
             height: 60vh;
             display: flex;
             flex-direction: column;
@@ -68,7 +82,7 @@
         .hero h1 { font-size: 3.5rem; }
         .hero p { font-size: 1.5rem; font-style: italic; }
 
-        /* Main Content Layout */
+        /* --- Main Content Layout --- */
         main {
             max-width: 1100px;
             margin: 40px auto;
@@ -91,6 +105,7 @@
             width: 100%;
             border-radius: 8px;
             box-shadow: 10px 10px 0px #b85c38;
+            display: block;
         }
 
         h2 {
@@ -119,58 +134,88 @@
             color: #fff;
         }
 
+        /* --- Responsive Media Queries --- */
         @media (max-width: 768px) {
-            .content-section, .content-section.reverse { flex-direction: column; }
-            .hero h1 { font-size: 2.5rem; }
+            nav {
+                flex-direction: column; /* Stacks Brand above Links */
+                gap: 12px;
+                padding: 1rem 10px;
+            }
+
+            .nav-links {
+                width: 100%;
+                justify-content: center;
+            }
+
+            nav a {
+                margin: 0 10px; /* Even spacing on mobile */
+                font-size: 0.9rem;
+            }
+
+            .hero h1 { font-size: 2.2rem; }
+            .hero p { font-size: 1.1rem; }
+
+            .content-section,
+            .content-section.reverse {
+                flex-direction: column;
+                margin-bottom: 50px;
+                gap: 20px;
+            }
+
+            h2 { font-size: 2rem; }
+
+            .image-box img {
+                box-shadow: 6px 6px 0px #b85c38; /* Slightly smaller shadow for mobile */
+            }
         }
     </style>
 </head>
 <body>
 
-    <nav>
-        <div class="brand-font" style="font-size: 1.5rem; font-weight: bold; color: #b85c38;">Pam's Bits & Bridles</div>
-        <div>
-            <a href="index.html">Home</a>
-            <a href="#">Services</a>
-            <a href="#">Book Appointment</a>
+<nav>
+    <div class="brand-font">Pam's Bits & Bridles</div>
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="#">Services</a>
+        <a href="#">Contact</a>
+    </div>
+</nav>
+
+<header class="hero">
+    <h1>Quality Gear for Quality Rides</h1>
+    <p>Expertly fitted to your horse's unique needs.</p>
+    <a href="#" class="cta-button">View Our Services</a>
+</header>
+
+<main>
+    <section class="content-section">
+        <div class="image-box">
+            <img src="https://images.unsplash.com/photo-1598974357851-98166a9d9b56?auto=format&fit=crop&q=80&w=800" alt="Pam working with horse tack">
         </div>
-    </nav>
+        <div class="text-box">
+            <h2>Meet Pam</h2>
+            <p>Helping riders find the perfect harmony with their horses through precision equipment and years of experience.</p>
+            <p>Every horse is different, and every rider has a goal. My mission is to bridge that gap with the right bit and bridle.</p>
+        </div>
+    </section>
 
-    <header class="hero">
-        <h1>Quality Gear for Quality Rides</h1>
-        <p>Expertly fitted to your horse's unique needs.</p>
-        <a href="#" class="cta-button">View Our Services</a>
-    </header>
+    <section class="content-section reverse">
+        <div class="image-box">
+            <img src="https://images.unsplash.com/photo-1551884831-bbf3cdc67170?auto=format&fit=crop&q=80&w=800" alt="Detailed horse bridle">
+        </div>
+        <div class="text-box">
+            <h2>Our Mission</h2>
+            <p>What is Bits and Bridles about? It's about safety, style, and the perfect fit. We provide a curated selection of high-quality bits and bridles sourced from the most trusted manufacturers.</p>
+            <p>We don't just sell equipment; we provide the expertise to ensure your horse is performing at its best without discomfort.</p>
+            <a href="#" class="cta-button">Learn More About Our Fittings</a>
+        </div>
+    </section>
+</main>
 
-    <main>
-        <section class="content-section">
-            <div class="image-box">
-                <img src="https://images.unsplash.com/photo-1598974357851-98166a9d9b56?auto=format&fit=crop&q=80&w=800" alt="Pam working with horse tack">
-            </div>
-            <div class="text-box">
-                <h2>Meet Pam</h2>
-                <p>lorem ipsum...</p>
-                <p>lorem ipsum...</p>
-            </div>
-        </section>
-
-        <section class="content-section reverse">
-            <div class="image-box">
-                <img src="https://images.unsplash.com/photo-1551884831-bbf3cdc67170?auto=format&fit=crop&q=80&w=800" alt="Detailed horse bridle">
-            </div>
-            <div class="text-box">
-                <h2>Our Mission</h2>
-                <p>What is Bits and Bridles about? It's about safety, style, and the perfect fit. We provide a curated selection of high-quality bits and bridles sourced from the most trusted manufacturers in the industry.</p>
-                <p>We don't just sell equipment; we provide the expertise to ensure your horse is performing at its best without discomfort.</p>
-                <a href="#" class="cta-button">Learn More About Our Fittings</a>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <p>&copy; 2026 Pam's Bits and Bridles. All rights reserved.</p>
-        <p>Contact: (443) 619-3904 | pamsbitsandbridles@gmail.com</p>
-    </footer>
+<footer>
+    <p>&copy; 2026 Pam's Bits and Bridles. All rights reserved.</p>
+    <p>Contact: (443) 619-3904 | pamsbitsandbridles@gmail.com</p>
+</footer>
 
 </body>
 </html>

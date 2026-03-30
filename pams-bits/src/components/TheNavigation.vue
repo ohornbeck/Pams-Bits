@@ -37,7 +37,7 @@ nav {
 }
 
 .nav-logo {
-  height: 100px; 
+  height: 150px;
   width: auto;
   margin-right: 20px;
   border-radius: 50%;
@@ -45,7 +45,7 @@ nav {
 
 .brand-font {
   font-family: 'Playfair Display', serif;
-  font-size: 1.7rem; 
+  font-size: 2rem;
   font-weight: bold; 
   color: #1A2B49;
 }
@@ -64,6 +64,28 @@ nav {
 }
 
 @media (max-width: 768px) {
-  .nav-links { display: none; } 
+  nav {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .nav-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+  }
+
+  .nav-links a {
+    margin: 5px 0;
+  }
+
+  .nav-logo {
+    height: 80px;
+  }
+
+  .brand-font {
+    font-size: 1.2rem;
+  }
 }
 </style>

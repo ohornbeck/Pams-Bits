@@ -2,13 +2,13 @@
   <div class="booking-container">
     <header class="hero-booking">
       <h1>Contact Pam</h1>
-      <p>Have a question or ready to schedule a fitting? Reach out below.</p>
+      <p>Ready to schedule a fitting? Fill out the form below.</p>
     </header>
 
 <main>
   <div class="form-wrapper">
     <div class="iframe-container">
-      <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSc_iyWBOoJ9fXBBdzlJqHv_7-bUAsQvH1yWCh0FCZbWyTpiWA/viewform?embedded=true" width="640" height="2939" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+      <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSc_iyWBOoJ9fXBBdzlJqHv_7-bUAsQvH1yWCh0FCZbWyTpiWA/viewform?embedded=true" width="100%" height="800" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
     </div>
   </div>
 </main>

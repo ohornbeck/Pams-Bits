@@ -49,6 +49,14 @@
         <div class="row-text">
           <h3>Professional Results</h3>
           <p>Expect a thorough evaluation and a noticeable difference in your horse's comfort. We provide a detailed report of all adjustments and recommendations as well as suggested follow up plans and information on how to perform mouth and head examinations yourself.</p>
+          <div class="sub-steps">
+            <strong>Consultation Pricing:</strong>
+            <ul>
+              <li>Cost of consultation: $150 Session.</li>
+              <li>A discount is offered for multiple horses at the same time.</li>
+              <li>A travel cost will be added if location is over 75 miles.</li>
+            </ul>
+          </div>
         </div>
       </section>
 
