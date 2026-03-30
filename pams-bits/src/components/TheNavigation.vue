@@ -44,7 +44,8 @@ nav {
   align-items: center;
   position: sticky;
   top: 0;
-  z-index: 1000;
+  z-index: 1000 !important;
+  pointer-events: auto !important;
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 

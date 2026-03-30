@@ -40,7 +40,7 @@ export default {
   min-height: 100vh;
 }
 
-h1, h2 { font-family: 'Playfair Display', serif; }
+h1 { font-family: 'Playfair Display', serif; }
 
 .hero-booking {
   background: linear-gradient(rgba(26, 43, 73, 0.3), rgba(26, 43, 73, 0.3)),
