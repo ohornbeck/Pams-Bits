@@ -3,7 +3,8 @@
     <header class="hero-triple">
       <div class="hero-img img-1"></div>
       <div class="hero-img img-2">
-        <div class="hero-wrapper"> <div class="hero-overlay-text">
+        <div class="hero-wrapper">
+          <div class="hero-overlay-text">
             <h1>Our Services</h1>
             <p>Precision fitting for performance.</p>
           </div>
@@ -60,28 +61,29 @@
         </div>
       </section>
 
+      <!-- Updated Suppliers Section: Individual Sizing & Faster Speed -->
       <section class="suppliers-section">
         <h2>Our Trusted Suppliers</h2>
         <div class="logo-slider">
           <div class="logo-track">
-            <div v-for="(logo, index) in logos" :key="'a' + index" class="logo-slide" loading="lazy">
-              <img :src="getImgUrl(logo)" :alt="logo" />
+            <!-- First Loop -->
+            <div v-for="(logo, index) in supplierLogos" :key="'a' + index" class="logo-slide">
+              <img :src="getImgUrl(logo.file)" :alt="logo.name" :class="logo.sizeClass" />
             </div>
-            <div v-for="(logo, index) in logos" :key="'b' + index" class="logo-slide" loading="lazy">
-              <img :src="getImgUrl(logo)" :alt="logo" />
+            <!-- Second Loop for seamless scroll -->
+            <div v-for="(logo, index) in supplierLogos" :key="'b' + index" class="logo-slide">
+              <img :src="getImgUrl(logo.file)" :alt="logo.name" :class="logo.sizeClass" />
             </div>
           </div>
         </div>
       </section>
 
       <div class="cta-banner">
-        <div class="cta-content"> 
+        <div class="cta-content">
           <h2>Ready for a better ride?</h2>
           <div class="contact-stack">
-<!--          <p>Reach out to Pam at <a href="mailto:Pamsbitsandbridles@gmail.com">Pamsbitsandbridles@gmail.com</a></p>-->
-<!--          <p>Call at <a href="tel:+14436193904">+1 (443) 619-3904</a></p>-->
-            <p>Book a consultation <router-link to ="/booking" class="text-cta-button">here</router-link></p>
-        </div>
+            <p>Book a consultation <router-link to="/booking" class="text-cta-button">here</router-link></p>
+          </div>
         </div>
       </div>
     </main>
@@ -93,19 +95,22 @@ export default {
   name: 'ServicesView',
   data() {
     return {
-      logos: [
-        'neue-scheule.png',
-        'NS verbindend.png',
-        'NS turtle top.png',
-        'NS turtle tactio.png',
-        'sprenger.png',
-        'HS WH ultra.png',
-        'HSduo.png',
-        'HSKK.png',
-        'trust.png',
-        'Trust innosense.png',
-        'Trust sweet iron.png',
-        'trust waterford.png'
+      supplierLogos: [
+        { name: 'Neue Schule', file: 'neue-scheule.png', sizeClass: 'logo-large' },
+        { name: 'NS Verbindend', file: 'NS verbindend.png', sizeClass: 'logo-xl' },
+        { name: 'NS Turtle Top', file: 'NS turtle top.png', sizeClass: 'logo-xl' },
+        { name: 'NS Turtle Tactio', file: 'NS turtle tactio.png', sizeClass: 'logo-xl' },
+        { name: 'Neue Schule', file: 'neue-scheule.png', sizeClass: 'logo-large' },
+        { name: 'Sprenger', file: 'sprenger.png', sizeClass: 'logo-small' },
+        { name: 'HS WH Ultra', file: 'HS WH ultra.png', sizeClass: 'logo-xl' },
+        { name: 'HS Duo', file: 'HSduo.png', sizeClass: 'logo-xl' },
+        { name: 'HS KK', file: 'HSKK.png', sizeClass: 'logo-xl' },
+        { name: 'Sprenger', file: 'sprenger.png', sizeClass: 'logo-small' },
+        { name: 'Trust', file: 'trust.png', sizeClass: 'logo-xl' },
+        { name: 'Trust Innosense', file: 'Trust innosense.png', sizeClass: 'logo-xl' },
+        { name: 'Trust Sweet Iron', file: 'Trust sweet iron.png', sizeClass: 'logo-xl' },
+        { name: 'Trust Waterford', file: 'trust waterford.png', sizeClass: 'logo-xl' },
+        { name: 'Trust', file: 'trust.png', sizeClass: 'logo-xl' }
       ]
     };
   },
@@ -115,7 +120,7 @@ export default {
         return require(`@/assets/${name}`);
       } catch (e) {
         console.error("Missing asset:", name);
-        return ""; 
+        return "";
       }
     }
   }
@@ -127,46 +132,27 @@ h1, h2, h3 { font-family: 'Playfair Display', serif; }
 
 /* 3 image section */
 .hero-triple { display: flex; height: 45vh; overflow: hidden; background: #1A2B49; }
-.hero-img { 
-  flex: 1; 
-  background-size: cover; 
-  background-position: center; 
+.hero-img {
+  flex: 1;
+  background-size: cover;
+  background-position: center;
   transition: flex 0.5s ease;
-  filter: brightness(0.7); 
-  }
-
-.hero-img:hover { 
-  flex: 1.2; 
-  filter: brightness(0.9); 
-  }
-
-.img-1 { 
-  background-image: url('../assets/Close up of horse.jpg');
-  }
-
-.img-2 { 
-  background-image: url('../assets/up close of horse 3.jpg');
-  }
-
-.img-3 { 
-  background-image: url('../assets/up close of horse 2.jpg');
-  }
-
-
-.hero-wrapper {
-  display: flex;
-  width: 100%;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
+  filter: brightness(0.7);
 }
+.hero-img:hover { flex: 1.2; filter: brightness(0.9); }
 
-.hero-overlay-text { 
-  text-align: center; 
-  color: white; 
-  background: rgba(26, 43, 73, 0.7); 
-  padding: 20px 40px; 
-  border: 1px solid #C5A059; 
+.img-1 { background-image: url('../assets/Close up of horse.jpg'); }
+.img-2 { background-image: url('../assets/up close of horse 3.jpg'); }
+.img-3 { background-image: url('../assets/up close of horse 2.jpg'); }
+
+.hero-wrapper { display: flex; width: 100%; height: 100%; align-items: center; justify-content: center; }
+
+.hero-overlay-text {
+  text-align: center;
+  color: white;
+  background: rgba(26, 43, 73, 0.7);
+  padding: 20px 40px;
+  border: 1px solid #C5A059;
 }
 
 /* main content */
@@ -178,38 +164,23 @@ main { max-width: 1100px; margin: 60px auto; padding: 0 20px; }
   overflow: hidden;
 }
 
-.row-image { 
+.row-image {
   flex: 0 0 300px; min-height: 250px; background-size: cover; background-position: center;
   display: flex; align-items: center; justify-content: center;
 }
 
+.img-focus-3 { background-image: url('../assets/pam working 1.jpg'); }
+.img-focus-1 { background-image: url('../assets/pam working 3.jpg'); }
+.img-focus-2 { background-image: url('../assets/pam working 4.jpg'); }
 
-/*picture 1*/
-.img-focus-3 { 
-  background-image: url('../assets/pam working 1.jpg');
-  /*background-size: 190%; */
-  /*background-position: 60% 10%; */
- /* background-repeat: no-repeat; */
-}
-
-/*picture 2*/
-.img-focus-1 { 
-  background-image: url('../assets/pam working 3.jpg');
-}
-
-/*picture 3*/
-.img-focus-2 { 
-  background-image: url('../assets/pam working 4.jpg');
-}
-
-.label-box { 
-  background: rgba(26, 43, 73, 0.8); color: white; padding: 10px 20px; 
+.label-box {
+  background: rgba(26, 43, 73, 0.8); color: white; padding: 10px 20px;
   font-weight: bold; border: 1px solid #C5A059;
 }
 
-.row-text { 
-  flex: 1; padding: 40px; 
-  display: flex; flex-direction: column; 
+.row-text {
+  flex: 1; padding: 40px;
+  display: flex; flex-direction: column;
   justify-content: center;
   text-align: left;
 }
@@ -219,14 +190,46 @@ main { max-width: 1100px; margin: 60px auto; padding: 0 20px; }
 .sub-steps ul { margin-top: 10px; padding-left: 20px; }
 .sub-steps li { margin-bottom: 8px; list-style-type: square; }
 
-/* suppliers scroller */
+/* Suppliers Section Styles */
 .suppliers-section { margin-top: 100px; text-align: center; }
-.suppliers-section h2 { margin-bottom: 60px; color: #1A2B49; }
+.suppliers-section h2 { margin-bottom: 40px; color: #1A2B49; }
 
-.logo-slider { overflow: hidden; padding: 40px 0; background: white; white-space: nowrap; position: relative; }
-.logo-track { display: inline-flex; align-items: center; animation: scroll 60s linear infinite; width: max-content; }
-.logo-slide { margin: 0 50px; }
-.logo-slide img { height: 100px; width: auto; transition: transform 0.3s ease; }
+.logo-slider { overflow: hidden; padding: 60px 0; background: white; white-space: nowrap; position: relative; }
+.logo-track {
+  display: inline-flex;
+  align-items: center;
+  animation: scroll 30s linear infinite; /* Faster scroll */
+  width: max-content;
+}
+.logo-slide {
+  margin: 0 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Individual Logo Sizing Logic */
+.logo-slide img { width: auto; transition: transform 0.3s ease; }
+
+.logo-small { height: 75px !important; }  /* Sprenger/HS */
+.logo-large { height: 135px !important; } /* Neue Schule */
+.logo-xl { height: 160px !important; }    /* Trust */
+
+.logo-slide img:hover { transform: scale(1.05); }
+
+@keyframes scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* CTA Banner Style */
+.cta-banner {
+  background: #1A2B49; color: white; padding: 80px 20px;
+  display: flex; justify-content: center; align-items: center; margin-top: 80px;
+}
+.cta-content { text-align: center; }
+.contact-stack { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 25px; }
+.contact-stack p { font-size: 1.2rem; color: #FFFFFF; margin: 0; }
 
 .text-cta-button {
   display: inline-block;
@@ -237,98 +240,18 @@ main { max-width: 1100px; margin: 60px auto; padding: 0 20px; }
   transition: color 0.3s ease;
   cursor: pointer;
 }
-
-.text-cta-button:hover {
-  color: #FFFFFF;
-}
-.contact-stack {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-}
-@keyframes scroll {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-
-.cta-banner { 
-  background: #1A2B49; 
-  color: white; 
-  padding: 80px 20px; 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 80px; 
-}
-
-.cta-content {
-  text-align: center;
-}
-
-.cta-button { 
-  display: inline-block; 
-  background: #C5A059; 
-  color: white; 
-  padding: 14px 35px; 
-  text-decoration: none; 
-  border-radius: 4px; 
-  font-weight: bold;
-  margin-top: 25px;
-  transition: background 0.3s ease;
-}
-
-.cta-button:hover {
-  background: #b08d4a;
-}
+.text-cta-button:hover { color: #FFFFFF; }
 
 @media (max-width: 768px) {
   .hero-triple { height: 35vh; }
   .img-1, .img-3 { display: none; }
   .wireframe-row { flex-direction: column; }
   .row-image { flex: 0 0 200px; width: 100%; }
-}
 
-/* Styling for the new contact line inside the Navy banner */
-.elegant-contact-services {
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
-}
-
-.elegant-contact-services .contact-line {
-  font-size: 1.2rem;
-  color: #e0e0e0; 
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 15px;
-  justify-content: center;
-}
-
-.contact-stack {
-  margin-top: 25px;
-  display: flex;
-  flex-direction: column; 
-  gap: 12px;
-}
-
-.contact-stack p {
-  font-size: 1.2rem;
-  color: #FFFFFF; 
-  margin: 0;
-}
-
-.contact-stack a {
-  color: #C5A059; 
-  text-decoration: none;
-  font-weight: 600;
-  border-bottom: 1px solid transparent;
-  transition: all 0.3s ease;
-}
-
-.contact-stack a:hover {
-  color: #FFFFFF;
-  border-bottom: 1px solid #FFFFFF;
+  /* Mobile Logo Sizing */
+  .logo-small { height: 50px !important; }
+  .logo-large { height: 85px !important; }
+  .logo-xl { height: 100px !important; }
+  .logo-track { animation: scroll 20s linear infinite; }
 }
 </style>
