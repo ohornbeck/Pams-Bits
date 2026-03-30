@@ -92,13 +92,33 @@ main {
 
 .content-section.reverse { flex-direction: row-reverse; }
 
-.image-box { flex: 1; }
+.content-section.reverse .image-box {
+  align-self: flex-start; /* Keeps it at the top of the flex container */
+  margin-top: 140px;       /* Nudges it down slightly to start closer to the 'Our Mission' text */
+  transform: translateY(-20px);
+}
+
+.content-section .image-box {
+  border-radius: 0;
+}
+
+.image-box {
+  flex: 1;
+  border: 2px solid #C5A059;
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  background: #f8f9fa;
+}
+
 .text-box { flex: 1; }
 
 .image-box img {
   width: 100%;
-  border-radius: 8px;
-  box-shadow: 10px 10px 0px #C5A059;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 0;
 }
 
 h2 {

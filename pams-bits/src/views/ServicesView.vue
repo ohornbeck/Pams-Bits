@@ -78,9 +78,10 @@
         <div class="cta-content"> 
           <h2>Ready for a better ride?</h2>
           <div class="contact-stack">
-            <p>Reach out to Pam at <a href="mailto:Pamsbitsandbridles@gmail.com">Pamsbitsandbridles@gmail.com</a></p>
-            <p>Or call at <a href="tel:+14436193904">+1 (443) 619-3904</a></p>
-          </div>
+<!--          <p>Reach out to Pam at <a href="mailto:Pamsbitsandbridles@gmail.com">Pamsbitsandbridles@gmail.com</a></p>-->
+<!--          <p>Call at <a href="tel:+14436193904">+1 (443) 619-3904</a></p>-->
+            <p>Book a consultation <router-link to ="/booking" class="text-cta-button">here</router-link></p>
+        </div>
         </div>
       </div>
     </main>
@@ -203,7 +204,7 @@ main { max-width: 1100px; margin: 60px auto; padding: 0 20px; }
 
 .label-box { 
   background: rgba(26, 43, 73, 0.8); color: white; padding: 10px 20px; 
-  font-weight: bold; border: 1px solid #C5A059; 
+  font-weight: bold; border: 1px solid #C5A059;
 }
 
 .row-text { 
@@ -227,6 +228,25 @@ main { max-width: 1100px; margin: 60px auto; padding: 0 20px; }
 .logo-slide { margin: 0 50px; }
 .logo-slide img { height: 100px; width: auto; transition: transform 0.3s ease; }
 
+.text-cta-button {
+  display: inline-block;
+  color: #C5A059;
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: 1px;
+  transition: color 0.3s ease;
+  cursor: pointer;
+}
+
+.text-cta-button:hover {
+  color: #FFFFFF;
+}
+.contact-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
 @keyframes scroll {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }

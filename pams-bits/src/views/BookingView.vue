@@ -1,17 +1,24 @@
 <template>
   <div class="booking-container">
     <header class="hero-booking">
-      <h1>Contact Pam</h1>
-      <p>Ready to schedule a fitting? Fill out the form below.</p>
+      <h1>Ready to schedule a fitting?</h1>
+      <p>Fill out the form below.</p>
     </header>
 
-<main>
-  <div class="form-wrapper">
-    <div class="iframe-container">
-      <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSc_iyWBOoJ9fXBBdzlJqHv_7-bUAsQvH1yWCh0FCZbWyTpiWA/viewform?embedded=true" width="100%" height="800" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
-    </div>
-  </div>
-</main>
+    <main>
+      <div class="form-wrapper">
+        <div class="iframe-container">
+          <iframe
+              src="https://docs.google.com/forms/d/e/1FAIpQLSc_iyWBOoJ9fXBBdzlJqHv_7-bUAsQvH1yWCh0FCZbWyTpiWA/viewform?embedded=true"
+              width="100%"
+              height="800"
+              frameborder="0"
+              loading="lazy"
+              title="Booking Form"
+          >Loading…</iframe>
+        </div>
+      </div>
+    </main>
   </div>
 </template>
 
@@ -36,11 +43,9 @@ export default {
   },
   methods: {
     async handleSubmit() {
-      // 1. Reset Errors
       this.errors = { firstName: false, lastName: false, email: false, message: false };
       let hasErrors = false;
 
-      // 2. Validation Logic
       if (!this.firstName.trim()) { this.errors.firstName = true; hasErrors = true; }
       if (!this.lastName.trim()) { this.errors.lastName = true; hasErrors = true; }
       if (!this.email.trim() || !this.email.includes('@')) { this.errors.email = true; hasErrors = true; }
@@ -48,9 +53,7 @@ export default {
 
       if (hasErrors) return;
 
-      // 3. Send Data to Formspree
       this.isSubmitting = true;
-
       try {
         const response = await fetch("https://formspree.io/f/YOUR_FORMSPREE_ID", {
           method: "POST",
@@ -86,14 +89,19 @@ export default {
 </script>
 
 <style scoped>
-/* Keeping your existing styles exactly as they were */
-.booking-container { color: #333; line-height: 1.6; }
+.booking-container {
+  color: #333;
+  line-height: 1.6;
+  background-color: #f4f1ee;
+  min-height: 100vh;
+}
+
 h1, h2 { font-family: 'Playfair Display', serif; }
 
 .hero-booking {
-  background: linear-gradient(rgba(26, 43, 73, 0.7), rgba(26, 43, 73, 0.7)), 
-              url('https://images.unsplash.com/photo-1551884831-bbf3cdc67170?auto=format&fit=crop&q=80&w=1470') no-repeat center center/cover;
-  height: 30vh;
+  background: linear-gradient(rgba(26, 43, 73, 0.3), rgba(26, 43, 73, 0.3)),
+  url('../assets/bridles.jpeg') no-repeat center center/cover;
+  height: 35vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -101,75 +109,46 @@ h1, h2 { font-family: 'Playfair Display', serif; }
   color: white;
   text-align: center;
   padding: 20px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 
-.hero-booking h1 { font-size: 3rem; margin-bottom: 10px; }
+.hero-booking h1 { font-size: 3.5rem; margin-bottom: 10px; }
+.hero-booking p { font-size: 1.2rem; font-style: italic; }
 
-main { max-width: 800px; margin: 40px auto 80px; padding: 0 20px; }
+main {
+  max-width: 900px;
+  margin: 60px auto 100px;
+  padding: 0 20px;
+}
 
 .form-wrapper {
   background: white;
-  padding: 40px;
-  border-radius: 8px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-  border-top: 6px solid #C5A059;
-}
-
-.contact-form { display: flex; flex-direction: column; gap: 20px; }
-.name-row { display: flex; gap: 20px; }
-.form-group { display: flex; flex-direction: column; flex: 1; }
-
-label { font-weight: bold; margin-bottom: 8px; color: #1A2B49; }
-
-input, textarea {
-  padding: 12px;
-  border: 1px solid #ddd;
+  padding: 25px;
+  border: 1px solid #C5A059;
   border-radius: 4px;
-  font-family: 'Lato', sans-serif;
-  font-size: 1rem;
-  transition: all 0.3s ease;
+  box-shadow: none;
 }
 
-textarea::placeholder { color: #999; font-style: italic; font-size: 0.95rem; }
-input:focus, textarea:focus { outline: none; border-color: #C5A059; box-shadow: 0 0 5px rgba(197, 160, 89, 0.2); }
+.iframe-container {
+  width: 100%;
+  min-height: 800px;
+  overflow: hidden;
+  background: #fff;
+}
 
-.error-border { border-color: #d9534f !important; background-color: #fff8f8; }
-.error-text { color: #d9534f; font-size: 0.85rem; margin-top: 5px; font-weight: bold; }
-
-.submit-button {
-  background: #C5A059;
-  color: white;
-  padding: 15px;
+iframe {
+  display: block;
+  width: 100%;
   border: none;
-  border-radius: 4px;
-  font-size: 1.1rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background 0.3s ease;
-  margin-top: 10px;
 }
 
-.submit-button:disabled { background: #ccc; cursor: not-allowed; }
-.submit-button:hover:not(:disabled) { background: #1A2B49; }
 
-.success-message { text-align: center; padding: 40px 0; }
-.success-message h2 { color: #1A2B49; font-size: 2.5rem; margin-bottom: 20px; }
-.success-message p { font-size: 1.1rem; max-width: 500px; margin: 0 auto 30px; color: #555; }
+@media (max-width: 768px) {
+  .hero-booking h1 { font-size: 2.5rem; }
+  main { margin-top: 30px; }
 
-.cta-button-outline {
-  background: transparent;
-  color: #1A2B49;
-  border: 2px solid #1A2B49;
-  padding: 10px 20px;
-  border-radius: 4px;
-  font-weight: bold;
-  cursor: pointer;
-  margin-top: 20px;
-}
-
-.cta-button-outline:hover { background: #1A2B49; color: white; }
-
-@media (max-width: 600px) {
-  .name-row { flex-direction: column; gap: 20px; }
+  .form-wrapper {
+    padding: 10px;
+  }
 }
 </style>
