@@ -61,16 +61,14 @@
         </div>
       </section>
 
-      <!-- Updated Suppliers Section: Individual Sizing & Faster Speed -->
+
       <section class="suppliers-section">
         <h2>Our Trusted Suppliers</h2>
         <div class="logo-slider">
           <div class="logo-track">
-            <!-- First Loop -->
             <div v-for="(logo, index) in supplierLogos" :key="'a' + index" class="logo-slide">
               <img :src="getImgUrl(logo.file)" :alt="logo.name" :class="logo.sizeClass" />
             </div>
-            <!-- Second Loop for seamless scroll -->
             <div v-for="(logo, index) in supplierLogos" :key="'b' + index" class="logo-slide">
               <img :src="getImgUrl(logo.file)" :alt="logo.name" :class="logo.sizeClass" />
             </div>
@@ -130,7 +128,7 @@ export default {
 <style scoped>
 h1, h2, h3 { font-family: 'Playfair Display', serif; }
 
-/* 3 image section */
+
 .hero-triple { display: flex; height: 45vh; overflow: hidden; background: #1A2B49; }
 .hero-img {
   flex: 1;
@@ -155,7 +153,6 @@ h1, h2, h3 { font-family: 'Playfair Display', serif; }
   border: 1px solid #C5A059;
 }
 
-/* main content */
 main { max-width: 1100px; margin: 60px auto; padding: 0 20px; }
 
 .wireframe-row {
@@ -190,7 +187,7 @@ main { max-width: 1100px; margin: 60px auto; padding: 0 20px; }
 .sub-steps ul { margin-top: 10px; padding-left: 20px; }
 .sub-steps li { margin-bottom: 8px; list-style-type: square; }
 
-/* Suppliers Section Styles */
+
 .suppliers-section { margin-top: 100px; text-align: center; }
 .suppliers-section h2 { margin-bottom: 40px; color: #1A2B49; }
 
@@ -198,7 +195,7 @@ main { max-width: 1100px; margin: 60px auto; padding: 0 20px; }
 .logo-track {
   display: inline-flex;
   align-items: center;
-  animation: scroll 30s linear infinite; /* Faster scroll */
+  animation: scroll 31s linear infinite;
   width: max-content;
 }
 .logo-slide {
@@ -208,12 +205,12 @@ main { max-width: 1100px; margin: 60px auto; padding: 0 20px; }
   justify-content: center;
 }
 
-/* Individual Logo Sizing Logic */
+
 .logo-slide img { width: auto; transition: transform 0.3s ease; }
 
-.logo-small { height: 75px !important; }  /* Sprenger/HS */
-.logo-large { height: 135px !important; } /* Neue Schule */
-.logo-xl { height: 160px !important; }    /* Trust */
+.logo-small { height: 75px !important; }
+.logo-large { height: 135px !important; }
+.logo-xl { height: 160px !important; }
 
 .logo-slide img:hover { transform: scale(1.05); }
 
@@ -222,7 +219,7 @@ main { max-width: 1100px; margin: 60px auto; padding: 0 20px; }
   to { transform: translateX(-50%); }
 }
 
-/* CTA Banner Style */
+
 .cta-banner {
   background: #1A2B49; color: white; padding: 80px 20px;
   display: flex; justify-content: center; align-items: center; margin-top: 80px;
@@ -248,10 +245,10 @@ main { max-width: 1100px; margin: 60px auto; padding: 0 20px; }
   .wireframe-row { flex-direction: column; }
   .row-image { flex: 0 0 200px; width: 100%; }
 
-  /* Mobile Logo Sizing */
+
   .logo-small { height: 50px !important; }
   .logo-large { height: 85px !important; }
   .logo-xl { height: 100px !important; }
-  .logo-track { animation: scroll 20s linear infinite; }
+  .logo-track { animation: scroll 25s linear infinite; }
 }
 </style>
