@@ -17,8 +17,10 @@
               width="100%"
               height="800"
               frameborder="0"
-              loading="lazy"
+              marginheight="0"
+              marginwidth="0"
               title="Booking Form"
+              key="google-form"
           >Loading…</iframe>
         </div>
       </div>
